@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl" data-theme="system">
+<html lang="he" data-theme="system">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>t.Co. — Personal AI Travel Concierge</title>
+  <title>t.Co. — Personal AI Travel Concierge — v1.0</title>
   <meta name="description" content="פרויקט גמר — מכון טכנולוגי חולון HIT | דוד קסטיאל | תואר שני בעיצוב לסביבה טכנולוגית" />
   <link rel="stylesheet" href="assets/css/tco-design.css" />
   <style>
@@ -83,6 +83,7 @@
       .hero__visual { display: none; }
     }
   </style>
+  <meta name="version" content="v1.0">
 </head>
 <body>
 
@@ -101,13 +102,12 @@
       <div class="site-tagline">Personal AI Travel Concierge</div>
     </div>
     <nav>
-      <ul class="site-nav">
+            <ul class="site-nav">
         <li><a href="index.html" class="active">בית</a></li>
         <li><a href="pages/project-plan.html">תכנית הפרויקט</a></li>
-        <li><a href="pages/agents.html">סוכנים</a></li>
+        <li><a href="pages/agents.html">ארכיטקטורה</a></li>
         <li><a href="pages/design-system.html">Design System</a></li>
         <li><a href="pages/exhibition.html">תערוכה</a></li>
-        <li><a href="docs/tco_project_book_v2.pdf" target="_blank" class="btn btn-outline" style="padding:6px 16px">ספר הפרויקט ↗</a></li>
       </ul>
     </nav>
   </header>
@@ -117,13 +117,13 @@
     <div>
       <p class="section-label">M.Design Final Project — HIT 2026</p>
       <h1 class="hero__title">t.Co.<br><em>AI Travel<br>Concierge</em></h1>
-      <p class="hero__sub" dir="rtl">
+      <p class="hero__sub">
         קונסיירז׳ נסיעות חכם שלומד את ההעדפות שלך, בונה מסלולים מותאמים אישית,
         ומדריך אותך דרך תרבות, שפה וגילוי — בזמן אמת.
       </p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
         <a href="pages/project-plan.html" class="btn btn-primary">תכנית הפרויקט</a>
-        <a href="pages/agents.html"       class="btn btn-outline">סוכני AI</a>
+        <a href="pages/agents.html"       class="btn btn-outline">Architecture ↗</a>
       </div>
     </div>
     <div class="hero__visual">
@@ -188,24 +188,24 @@
           <div class="card__icon" style="background:var(--blue-pale)">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue-soft)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
           </div>
-          <p class="card__title" dir="rtl">AGT-01 · פרופיל העדפות</p>
-          <p class="card__body" dir="rtl">שאלות אדפטיביות שבונות פרופיל מובנה עבור הסוכנים הבאים.</p>
+          <p class="card__title">AGT-01 · פרופיל העדפות</p>
+          <p class="card__body">שאלות אדפטיביות שבונות פרופיל מובנה עבור הסוכנים הבאים.</p>
         </div>
 
         <div class="card">
           <div class="card__icon" style="background:var(--blue-pale)">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.5"><path d="M9 20l-5-5 5-5M15 4l5 5-5 5"/></svg>
           </div>
-          <p class="card__title" dir="rtl">AGT-02 · בניית מסלול</p>
-          <p class="card__body" dir="rtl">תכניות נסיעה יום-יום עם מפות, עלויות וזמני הגעה.</p>
+          <p class="card__title">AGT-02 · בניית מסלול</p>
+          <p class="card__body">תכניות נסיעה יום-יום עם מפות, עלויות וזמני הגעה.</p>
         </div>
 
         <div class="card">
           <div class="card__icon" style="background:var(--crimson-dim)">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--crimson)" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           </div>
-          <p class="card__title" dir="rtl">AGT-06 · שפה ותרבות</p>
-          <p class="card__body" dir="rtl">תרגום חי, טיפים לאתיקטה ומדריכי הגייה בזמן אמת.</p>
+          <p class="card__title">AGT-06 · שפה ותרבות</p>
+          <p class="card__body">תרגום חי, טיפים לאתיקטה ומדריכי הגייה בזמן אמת.</p>
         </div>
 
       </div>
@@ -223,31 +223,42 @@
             <th>תוצר</th>
             <th>סוג</th>
             <th>תאריך</th>
-            <th>סטטוס</th>
-            <th>קישור</th>
+            <th>גרסה</th>
+            <th>קישורים</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>עמוד Design System</td>
-            <td><span class="pill pill-design">Design</span></td>
-            <td class="text-mono" style="font-size:11px">2026-04-12</td>
+            <td>מסמך ארכיטקטורה</td>
             <td><span class="pill pill-key">KEY</span></td>
-            <td><a href="pages/design-system.html">פתח →</a></td>
+            <td class="text-mono" style="font-size:11px">2026-04-03</td>
+            <td class="text-mono" style="font-size:11px;color:var(--gold)">v2.0</td>
+            <td style="display:flex;gap:10px;flex-wrap:wrap">
+              <a href="pages/agents.html">HTML →</a>
+              <a href="docs/tco_architecture_v2.0.pdf" target="_blank">PDF →</a>
+              <a href="docs/tco_architecture_v2.0.docx" target="_blank">DOCX →</a>
+            </td>
           </tr>
           <tr>
             <td>תכנית הפרויקט</td>
             <td><span class="pill pill-docs">Docs</span></td>
             <td class="text-mono" style="font-size:11px">2026-04-01</td>
-            <td><span class="pill pill-key">KEY</span></td>
-            <td><a href="pages/project-plan.html">פתח →</a></td>
+            <td class="text-mono" style="font-size:11px;color:var(--gold)">v1.0</td>
+            <td><a href="pages/project-plan.html">HTML →</a></td>
           </tr>
           <tr>
-            <td>ספר הפרויקט PDF</td>
+            <td>Design System</td>
+            <td><span class="pill pill-design">עיצוב</span></td>
+            <td class="text-mono" style="font-size:11px">2026-04-03</td>
+            <td class="text-mono" style="font-size:11px;color:var(--gold)">v1.0</td>
+            <td><a href="pages/design-system.html">HTML →</a></td>
+          </tr>
+          <tr>
+            <td>ספר הפרויקט</td>
             <td><span class="pill pill-docs">Docs</span></td>
             <td class="text-mono" style="font-size:11px">2026-04-01</td>
-            <td><span class="pill pill-dev">Dev</span></td>
-            <td><a href="docs/tco_project_book_v2.pdf" target="_blank">הורד →</a></td>
+            <td class="text-mono" style="font-size:11px;color:var(--gold)">v2.0</td>
+            <td><a href="docs/tco_project_book_v2.0.pdf" target="_blank">PDF →</a></td>
           </tr>
         </tbody>
       </table>
@@ -256,11 +267,11 @@
 
   <!-- Footer -->
   <footer class="site-footer">
-    <div class="site-footer__left" dir="rtl">
+    <div class="site-footer__left">
       דוד קסטיאל · תואר שני בעיצוב לסביבה טכנולוגית<br>
       מכון טכנולוגי חולון HIT · הגשה: 4 אוגוסט 2026
     </div>
-    <div class="site-footer__right">t.Co. · v1 · 2026</div>
+    <div class="site-footer__right">t.Co. · v1.0 · 2026</div>
   </footer>
 
   <script>
