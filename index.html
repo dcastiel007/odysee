@@ -79,7 +79,12 @@
       .hero__title { font-size:2rem; }
       .hero__visual { display:none; }
     }
-  </style>
+  
+  /* Mobile scroll for all tables */
+  .ph-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  /* Prevent horizontal overflow on small screens */
+  body { overflow-x: hidden; }
+</style>
 </head>
 <body>
 
@@ -222,7 +227,8 @@
     <div class="container">
       <p class="section-label" data-he="תוצרים" data-en="Deliverables">תוצרים</p>
       <h2 style="margin-bottom:24px" data-he="תוצרי הפרויקט" data-en="Project Deliverables">תוצרי הפרויקט</h2>
-      <table class="tco-table">
+      <div class="tco-table-wrap">
+<table class="tco-table">
         <thead>
           <tr>
             <th data-he="תוצר"    data-en="Deliverable">תוצר</th>
@@ -267,7 +273,11 @@
             <td><span class="pill pill-design">Design</span></td>
             <td class="text-mono" style="font-size:11px">2026-04-03</td>
             <td class="text-mono" style="font-size:11px;color:var(--gold)">v1.0</td>
-            <td><a href="pages/design-system.html">HTML →</a></td>
+            <td style="display:flex;gap:10px;flex-wrap:wrap">
+              <a href="pages/design-system.html">HTML →</a>
+              <a href="docs/tco_design-system_v1.0.pdf" target="_blank">PDF →</a>
+              <a href="docs/tco_design-system_v1.0.docx" target="_blank">DOCX →</a>
+            </td>
           </tr>
           <tr>
             <td data-he="ספר הפרויקט" data-en="Project Book">ספר הפרויקט</td>
@@ -278,6 +288,7 @@
           </tr>
         </tbody>
       </table>
+</div>
     </div>
   </section>
 
