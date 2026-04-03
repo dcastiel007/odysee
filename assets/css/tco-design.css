@@ -172,7 +172,8 @@ pre {
   gap: 6px;
   padding: 8px 32px;
   background: var(--surface);
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--border);
+  direction: ltr; /* always right-aligned regardless of page direction */
 }
 
 .theme-bar__label {
@@ -205,13 +206,14 @@ pre {
 
 /* ── Header ──────────────────────────────────────────────────────────────── */
 .site-header {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--border);
   padding: 22px 32px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   background: var(--surface);
   position: relative;
+  direction: ltr; /* keep layout LTR: logo left, nav right — regardless of page language */
 }
 
 /* Thin crimson dot accent on far right of header bottom border */
