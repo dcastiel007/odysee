@@ -108,35 +108,60 @@ body {
   transition: background 0.25s ease, color 0.25s ease;
 }
 
-[lang="he"], .rtl, [dir="rtl"] {
-  direction: rtl;
-}
+/* RTL: only direction, NOT text-align — text-align is set per element */
+[lang="he"] { direction: rtl; }
 
-/* Hebrew font only on Hebrew-language text elements */
+/* Hebrew elements — right-aligned Hebrew font */
 [lang="he"] [data-he],
-[lang="he"] .site-tagline,
-[lang="he"] .site-footer__left {
+[lang="he"] .site-tagline {
   font-family: var(--font-hebrew);
   text-align: right;
 }
 
-/* English/Latin content always stays left-aligned regardless of page language */
+/* All English/Latin content sections — always left-aligned */
+/* This overrides the RTL direction inheritance */
+[lang="he"] h1,
+[lang="he"] h2,
+[lang="he"] h3,
 [lang="he"] p,
 [lang="he"] li,
+[lang="he"] .section-label,
+[lang="he"] .card__title,
 [lang="he"] .card__body,
+[lang="he"] .mc-title,
 [lang="he"] .mc-desc,
 [lang="he"] .mc-example,
+[lang="he"] .voice-trait,
 [lang="he"] .voice-desc,
 [lang="he"] .voice-eg,
 [lang="he"] .voice-no,
+[lang="he"] .do-lbl,
+[lang="he"] .no-lbl,
 [lang="he"] .rule-it,
-[lang="he"] .type-specimen,
-[lang="he"] .diagram-wrap,
-[lang="he"] .q-table,
-[lang="he"] [style*="font-family:var(--font-latin)"],
-[lang="he"] [style*="font-family: var(--font-latin)"] {
+[lang="he"] .swatch-name,
+[lang="he"] .swatch-hex,
+[lang="he"] .swatch-role,
+[lang="he"] .type-meta,
+[lang="he"] .trow,
+[lang="he"] .sp-val,
+[lang="he"] .comp-lbl,
+[lang="he"] .logo-box-lbl,
+[lang="he"] .pp-label,
+[lang="he"] .pp-tag,
+[lang="he"] .q-branch,
+[lang="he"] table,
+[lang="he"] th,
+[lang="he"] td,
+[lang="he"] code,
+[lang="he"] pre {
   text-align: left;
   font-family: var(--font-latin);
+}
+
+/* Exception: footer left side can be Hebrew */
+[lang="he"] .site-footer__left {
+  font-family: var(--font-hebrew);
+  text-align: right;
 }
 
 /* ── Typography ──────────────────────────────────────────────────────────── */
@@ -569,4 +594,43 @@ pre {
   .lang-btn   { padding: 3px 8px; font-size: 10px; }
   h1 { font-size: 1.4rem; }
   .stack-grid { grid-template-columns: 1fr; }
+}
+
+/* ── RTL override: force LTR text-align on all English content ─────────── */
+/* When page lang=he, direction:rtl would make text-align default to right.  */
+/* These rules explicitly set left-align on every English content element.   */
+:root:not([lang="he"]) body,
+[lang="en"] body { text-align: left; }
+
+[lang="he"] .ds-section p,
+[lang="he"] .ds-section li,
+[lang="he"] .ds-section h1,
+[lang="he"] .ds-section h2,
+[lang="he"] .ds-section h3,
+[lang="he"] .doc-section p,
+[lang="he"] .doc-section li,
+[lang="he"] .doc-section h1,
+[lang="he"] .doc-section h2,
+[lang="he"] .doc-section h3,
+[lang="he"] .mechanic-card *,
+[lang="he"] .voice-card *,
+[lang="he"] .do-box *,
+[lang="he"] .no-box *,
+[lang="he"] .card *:not([data-he]),
+[lang="he"] .type-specimen *,
+[lang="he"] .comp-row *,
+[lang="he"] .logo-box *,
+[lang="he"] .trow *,
+[lang="he"] .spacing-row * {
+  text-align: left !important;
+  font-family: var(--font-latin) !important;
+}
+
+/* Only these elements stay right-aligned in Hebrew mode */
+[lang="he"] [data-he],
+[lang="he"] .site-tagline,
+[lang="he"] .site-footer__left,
+[lang="he"] .site-logo {
+  text-align: right;
+  font-family: var(--font-hebrew);
 }
