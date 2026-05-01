@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odysee — System Architecture — v2.0</title>
-<link rel="stylesheet" href="../assets/css/odysee-design.css">
+<title>t.Co. — System Architecture — v2.0</title>
+<link rel="stylesheet" href="../assets/css/tco-design.css">
 <style>
   .cover { min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 40px 80px;background:var(--bg);border-bottom:1px solid var(--border);position:relative;overflow:hidden; }
   .cover::before { content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(200,169,110,0.05) 0%,transparent 65%);top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none; }
@@ -141,7 +141,7 @@
 
 <header class="site-header">
   <div>
-    <div class="site-logo">Odysee</div>
+    <div class="site-logo">t.Co.</div>
     <div class="site-tagline" data-he="קונסיירז׳ נסיעות AI אישי" data-en="Personal AI Travel Concierge">Personal AI Travel Concierge</div>
   </div>
   <nav>
@@ -554,19 +554,19 @@
 
 <div class="doc-foot">
   <div class="foot-rule"></div>
-  <p  >Odysee · Architecture Document v2.0 · M.Design Thesis · HIT 2026</p>
+  <p  >t.Co. · Architecture Document v2.0 · M.Design Thesis · HIT 2026</p>
   <p style="margin-top:8px"  >11 Agents · 4 Stages · 1 Evolving Companion</p>
 </div>
 
 <footer class="site-footer">
   <div class="site-footer__left">David Castiel · M.Design in Design for Technological Environments<br>HIT Holon Institute of Technology · Submission: August 4, 2026</div>
-  <div class="site-footer__right">Odysee · v2.0 · 2026</div>
+  <div class="site-footer__right">t.Co. · v2.0 · 2026</div>
 </footer>
 
 <script>
 const root=document.documentElement,mq=window.matchMedia('(prefers-color-scheme:dark)');
-let cur=localStorage.getItem('odysee-theme')||'dark';
-function applyTheme(t){root.setAttribute('data-theme',t==='system'?(mq.matches?'dark':'light'):t);['light','system','dark'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===t));cur=t;localStorage.setItem('odysee-theme',t);}
+let cur=localStorage.getItem('tco-theme')||'dark';
+function applyTheme(t){root.setAttribute('data-theme',t==='system'?(mq.matches?'dark':'light'):t);['light','system','dark'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===t));cur=t;localStorage.setItem('tco-theme',t);}
 function setTheme(t){applyTheme(t);}
 mq.addEventListener('change',()=>{if(cur==='system')applyTheme('system');});
 applyTheme(cur);

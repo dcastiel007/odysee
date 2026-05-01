@@ -1,9 +1,9 @@
-# Odysee — Personal AI Travel Concierge
+# t.Co. — Personal AI Travel Concierge
 
 > פרויקט גמר לתואר שני בעיצוב לסביבה טכנולוגית  
 > דוד קסטיאל | מכון טכנולוגי חולון HIT | תערוכה: 6–19 אוגוסט 2026
 
-🌐 **Live site:** https://odysee.me
+🌐 **Live site:** https://tico.mytico.me
 
 ---
 
@@ -25,17 +25,17 @@ tco-project/
 │
 ├── assets/
 │   ├── css/
-│   │   └── odysee-design.css             ← Design System מרכזי
+│   │   └── tco-design.css             ← Design System מרכזי
 │   └── icons/
 │       ├── tco-mark.svg               ← Globe Mark — סמל גרפי
 │       └── tco-wordmark.svg           ← Horizontal lockup
 │
 ├── docs/
-│   ├── odysee_architecture_v2.0.pdf/docx  ← מסמך ארכיטקטורה
-│   ├── odysee_project_book_v2.0.pdf       ← ספר הפרויקט האקדמי
-│   ├── odysee_ux-flows_v1.0.pdf/docx      ← UX Flows + Personas
-│   ├── odysee_design-system_v1.0.pdf/docx ← Brand Identity & Design System
-│   ├── odysee_onboarding_v1.0.pdf/docx    ← Onboarding Dialogue Flows
+│   ├── tco_architecture_v2.0.pdf/docx  ← מסמך ארכיטקטורה
+│   ├── tco_project_book_v2.0.pdf       ← ספר הפרויקט האקדמי
+│   ├── tco_ux-flows_v1.0.pdf/docx      ← UX Flows + Personas
+│   ├── tco_design-system_v1.0.pdf/docx ← Brand Identity & Design System
+│   ├── tco_onboarding_v1.0.pdf/docx    ← Onboarding Dialogue Flows
 │   └── ticoprojectplanv1.xlsx          ← קובץ תכנון הפרויקט
 │
 └── README.md
@@ -61,7 +61,7 @@ tco-project/
 כל דף HTML מייבא את מערכת העיצוב:
 
 ```html
-<link rel="stylesheet" href="../assets/css/odysee-design.css">
+<link rel="stylesheet" href="../assets/css/tco-design.css">
 ```
 
 ### פלטת צבעים

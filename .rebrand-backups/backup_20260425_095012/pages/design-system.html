@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odysee — Design System</title>
+<title>t.Co. — Design System</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Noto+Sans+Hebrew:wght@300;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 /* ═══════════════════════════════════════════════
-   Odysee DESIGN SYSTEM — CSS CUSTOM PROPERTIES
+   t.Co. DESIGN SYSTEM — CSS CUSTOM PROPERTIES
    ═══════════════════════════════════════════════ */
 :root {
   /* Dark (default) */
@@ -650,7 +650,7 @@ body {
 
 <!-- Theme bar -->
 <div class="theme-bar">
-  <span class="brand">Odysee / Design System</span>
+  <span class="brand">t.Co. / Design System</span>
   <div class="theme-pills">
     <button id="btn-light" onclick="setTheme('light')">☀ Light</button>
     <button id="btn-system" onclick="setTheme('system')">⊙ System</button>
@@ -664,7 +664,7 @@ body {
   <!-- Side nav -->
   <nav class="sidenav">
     <div class="sidenav-logo">
-      <div class="wordmark">Odysee</div>
+      <div class="wordmark">t.Co.</div>
       <div class="sub">Design System · v1</div>
     </div>
     <span class="nav-section-label">Foundations</span>
@@ -690,10 +690,10 @@ body {
 
     <!-- HEADER -->
     <div style="margin-bottom: 60px;">
-      <div class="section-eyebrow">Odysee · M.Design Thesis · HIT 2026</div>
+      <div class="section-eyebrow">t.Co. · M.Design Thesis · HIT 2026</div>
       <h1 class="section-title">Design System</h1>
       <p class="section-desc">
-        The unified visual language for Odysee — Personal AI Travel Concierge.
+        The unified visual language for t.Co. — Personal AI Travel Concierge.
         Dark, refined, gold-accented. All components use CSS custom properties and scale between light, dark, and system themes.
       </p>
     </div>
@@ -824,7 +824,7 @@ body {
         </div>
 
         <div class="type-sample">
-          <div class="t-body">Body — Odysee analyzes your preferences, budget, and schedule to craft a personalized travel experience. Every recommendation is powered by 11 specialized AI agents working in concert.</div>
+          <div class="t-body">Body — t.Co. analyzes your preferences, budget, and schedule to craft a personalized travel experience. Every recommendation is powered by 11 specialized AI agents working in concert.</div>
           <div class="type-meta"><span>15px</span><span>Light 300</span><span>line-height: 1.7</span><span class="tag">Poppins</span></div>
         </div>
 
@@ -849,7 +849,7 @@ body {
         </div>
 
         <div class="type-sample" style="border-bottom:none;">
-          <div class="t-hebrew">גוף עברית — Odysee מציע חוויית נסיעה מותאמת אישית, מתוחכמת וחכמה.</div>
+          <div class="t-hebrew">גוף עברית — t.Co. מציע חוויית נסיעה מותאמת אישית, מתוחכמת וחכמה.</div>
           <div class="type-meta"><span>22px</span><span>Light 300</span><span>direction: rtl</span><span class="tag">Noto Sans Hebrew</span></div>
         </div>
       </div>
@@ -1253,11 +1253,11 @@ body {
     <section class="ds-section" id="tokens">
       <div class="section-eyebrow">13</div>
       <h2 class="section-title">CSS Tokens Reference</h2>
-      <p class="section-desc">Complete variable list — import <code style="font-family:var(--font-mono);color:var(--teal);font-size:13px">odysee-design.css</code> in every page.</p>
+      <p class="section-desc">Complete variable list — import <code style="font-family:var(--font-mono);color:var(--teal);font-size:13px">tco-design.css</code> in every page.</p>
       <div class="section-divider"></div>
 
       <div class="code-block">
-        <pre><span class="c-comment">/* ── odysee-design.css · :root (dark default) ── */</span>
+        <pre><span class="c-comment">/* ── tco-design.css · :root (dark default) ── */</span>
 <span class="c-gold">:root</span> {
   <span class="c-comment">/* Surfaces */</span>
   <span class="c-purple">--bg</span>:           <span class="c-teal">#0A0A0F</span>;
@@ -1289,7 +1289,7 @@ body {
 
     <!-- Footer -->
     <div style="border-top: 1px solid var(--border); padding-top: 32px; margin-top: 40px; display: flex; justify-content: space-between; align-items: center;">
-      <span style="font-size:11px; color:var(--text-muted);">Odysee Design System · v1 · HIT M.Design 2026</span>
+      <span style="font-size:11px; color:var(--text-muted);">t.Co. Design System · v1 · HIT M.Design 2026</span>
       <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted);">17 / ds-page</span>
     </div>
 
@@ -1303,7 +1303,7 @@ body {
 /* ── Theme ── */
 const root = document.documentElement;
 const mq = window.matchMedia('(prefers-color-scheme: dark)');
-let current = localStorage.getItem('odysee-theme') || 'dark';
+let current = localStorage.getItem('tco-theme') || 'dark';
 
 function applyTheme(t) {
   root.setAttribute('data-theme', t === 'system'
@@ -1313,7 +1313,7 @@ function applyTheme(t) {
   ['light','system','dark'].forEach(x =>
     document.getElementById('btn-'+x).classList.toggle('active', x === t));
   current = t;
-  localStorage.setItem('odysee-theme', t);
+  localStorage.setItem('tco-theme', t);
 }
 function setTheme(t) { applyTheme(t); }
 mq.addEventListener('change', () => { if (current === 'system') applyTheme('system'); });

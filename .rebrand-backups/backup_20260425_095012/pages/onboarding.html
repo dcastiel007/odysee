@@ -4,8 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="version" content="v1.0"/>
-<title>Odysee — Onboarding Dialogue Flows — v1.0</title>
-<link rel="stylesheet" href="../assets/css/odysee-design.css"/>
+<title>t.Co. — Onboarding Dialogue Flows — v1.0</title>
+<link rel="stylesheet" href="../assets/css/tco-design.css"/>
 <style>
 .ds-section { max-width:1100px; margin:0 auto; padding:64px 40px; border-bottom:1px solid var(--border); }
 .ds-section:last-of-type { border-bottom:none; }
@@ -208,7 +208,7 @@
 <!-- Header -->
 <header class="site-header">
   <div>
-    <div class="site-logo">Odysee</div>
+    <div class="site-logo">t.Co.</div>
     <div class="site-tagline" data-he="זרימות Onboarding ודיאלוגים" data-en="Onboarding Dialogue Flows">Onboarding Dialogue Flows</div>
   </div>
   <nav>
@@ -900,14 +900,14 @@
 <!-- Footer -->
 <footer class="site-footer">
   <div class="site-footer__left" id="footer-left">David Castiel · M.Design in Design for Technological Environments<br>HIT Holon Institute of Technology · Submission: August 4, 2026</div>
-  <div class="site-footer__right">Odysee · Onboarding Flows · v1.0 · 2026</div>
+  <div class="site-footer__right">t.Co. · Onboarding Flows · v1.0 · 2026</div>
 </footer>
 
 <script>
 /* ── Theme ── */
 const root=document.documentElement,mq=window.matchMedia('(prefers-color-scheme:dark)');
-let cur=localStorage.getItem('odysee-theme')||'dark';
-function applyTheme(t){root.setAttribute('data-theme',t==='system'?(mq.matches?'dark':'light'):t);['light','system','dark'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===t));cur=t;localStorage.setItem('odysee-theme',t);}
+let cur=localStorage.getItem('tco-theme')||'dark';
+function applyTheme(t){root.setAttribute('data-theme',t==='system'?(mq.matches?'dark':'light'):t);['light','system','dark'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===t));cur=t;localStorage.setItem('tco-theme',t);}
 function setTheme(t){applyTheme(t);}
 mq.addEventListener('change',()=>{if(cur==='system')applyTheme('system');});
 applyTheme(cur);

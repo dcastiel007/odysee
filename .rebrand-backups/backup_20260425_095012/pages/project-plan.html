@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Odysee — תכנית עבודה — v1.0</title>
-  <link rel="stylesheet" href="../assets/css/odysee-design.css" />
+  <title>t.Co. — תכנית עבודה — v1.0</title>
+  <link rel="stylesheet" href="../assets/css/tco-design.css" />
   <style>
     .page-hero { padding: 40px 32px 32px; border-bottom: 1px solid var(--border); }
     .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin: 32px 0; }
@@ -94,7 +94,7 @@
 
   <header class="site-header">
   <div>
-    <div class="site-logo">Odysee</div>
+    <div class="site-logo">t.Co.</div>
     <div class="site-tagline" data-he="קונסיירז׳ נסיעות AI אישי" data-en="Personal AI Travel Concierge">קונסיירז׳ נסיעות AI אישי</div>
   </div>
   <nav>
@@ -145,14 +145,14 @@
 
   <footer class="site-footer">
     <div class="site-footer__left" dir="rtl">דוד קסטיאל · תואר שני בעיצוב לסביבה טכנולוגית<br>מכון טכנולוגי חולון HIT · הגשה: 4 אוגוסט 2026</div>
-    <div class="site-footer__right">Odysee · v1.0 · 2026</div>
+    <div class="site-footer__right">t.Co. · v1.0 · 2026</div>
   </footer>
 
 <script>
 /* Theme */
 const root=document.documentElement,mq=window.matchMedia('(prefers-color-scheme: dark)');
-let cur=localStorage.getItem('odysee-theme')||'system';
-function applyTheme(t){root.setAttribute('data-theme',t);['light','system','dark'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===t));cur=t;localStorage.setItem('odysee-theme',t);}
+let cur=localStorage.getItem('tco-theme')||'system';
+function applyTheme(t){root.setAttribute('data-theme',t);['light','system','dark'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===t));cur=t;localStorage.setItem('tco-theme',t);}
 function setTheme(t){applyTheme(t);}
 mq.addEventListener('change',()=>{if(cur==='system')applyTheme('system');});
 applyTheme(cur);

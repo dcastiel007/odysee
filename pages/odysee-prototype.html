@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odysee — Personal AI Travel Concierge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Noto+Sans+Hebrew:wght@300;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════ TOKENS ═══════════════════════ */
+:root {
+  --bg:        #0A0A0F;
+  --surface:   #13131A;
+  --card:      #1C2230;
+  --border:    #2A3245;
+  --gold:      #C8A96E;
+  --gold-dim:  rgba(200,169,110,0.12);
+  --teal:      #4ECDC4;
+  --teal-dim:  rgba(78,205,196,0.10);
+  --purple:    #7C6FCD;
+  --red:       #E05A5F;
+  --amber:     #F8B743;
+  --text-1:    #F0EDE8;
+  --text-2:    #8A95AA;
+  --text-3:    #4A5568;
+  --font-l:    'Poppins','Assistant',system-ui,sans-serif;
+  --font-h:    'Noto Sans Hebrew','Assistant',system-ui,sans-serif;
+  --font-m:    'JetBrains Mono',monospace;
+  --tr:        0.22s ease;
+}
+[data-theme="light"] {
+  --bg:#FAFAF7; --surface:#FFFFFF; --card:#F4F1EB; --border:#E2DDD4;
+  --gold:#9A7A3E; --gold-dim:rgba(154,122,62,0.10);
+  --text-1:#1A1814; --text-2:#6B6560; --text-3:#A89F96;
+}
+
+/* ═══════════════════════ RESET ═══════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);color:var(--text-1);
+  font-family:var(--font-l);font-weight:300;font-size:14px;
+  transition:background var(--tr),color var(--tr);
+}
+
+/* ═══════════════════════ THEME BAR ═══════════════════ */
+.theme-bar{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:36px;
+  background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;
+}
+.tb-brand{
+  font-family:var(--font-l);font-weight:700;font-size:15px;
+  color:var(--gold);letter-spacing:-0.01em;
+  display:flex;align-items:center;gap:10px;
+}
+.tb-brand .tagline{
+  font-weight:300;font-size:10px;color:var(--text-3);
+  letter-spacing:0.08em;text-transform:uppercase;
+}
+.tb-right{display:flex;align-items:center;gap:16px;}
+.lang-pills,.theme-pills{display:flex;gap:4px;}
+.lang-pills button,.theme-pills button{
+  background:transparent;border:1px solid var(--border);
+  color:var(--text-3);font-family:var(--font-l);font-size:9px;
+  padding:2px 9px;border-radius:20px;cursor:pointer;
+  transition:all var(--tr);letter-spacing:0.06em;
+}
+.lang-pills button:hover,.theme-pills button:hover{border-color:var(--gold);color:var(--gold);}
+.lang-pills button.active,.theme-pills button.active{
+  background:var(--gold);border-color:var(--gold);color:#0A0A0F;font-weight:500;
+}
+.tb-sep{width:1px;height:16px;background:var(--border);}
+
+/* ═══════════════════════ STEP INDICATOR ══════════════ */
+.step-bar{
+  position:fixed;top:36px;left:0;right:0;z-index:190;
+  height:40px;
+  background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;gap:0;
+}
+.step-item{
+  display:flex;align-items:center;gap:8px;
+  padding:0 20px;height:100%;
+  font-size:10px;color:var(--text-3);letter-spacing:0.07em;text-transform:uppercase;
+  cursor:pointer;transition:all var(--tr);border-bottom:2px solid transparent;
+  font-family:var(--font-l);
+}
+.step-item:hover{color:var(--text-2);}
+.step-item.active{color:var(--gold);border-bottom-color:var(--gold);}
+.step-num{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:500;flex-shrink:0;transition:all var(--tr);
+}
+.step-item.active .step-num{background:var(--gold);border-color:var(--gold);color:#0A0A0F;}
+.step-item.done .step-num{background:var(--teal);border-color:var(--teal);color:#0A0A0F;}
+.step-item.done{color:var(--teal);}
+.step-connector{width:32px;height:1px;background:var(--border);}
+
+/* ═══════════════════════ MAIN LAYOUT ═════════════════ */
+.app{
+  display:grid;
+  grid-template-columns:1fr 380px;
+  height:100vh;
+  padding-top:76px; /* theme-bar + step-bar */
+}
+
+/* ═══════════════════════ LEFT PANEL ══════════════════ */
+.left-panel{
+  position:relative;overflow:hidden;
+  background:var(--bg);
+  border-right:1px solid var(--border);
+}
+
+/* Screen layers — fade in/out */
+.screen{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px;
+  opacity:0;transition:opacity 0.55s ease;pointer-events:none;
+}
+.screen.active{opacity:1;pointer-events:all;}
+
+/* ── Screen 0: Ambient ── */
+.ambient-ring{
+  position:relative;
+  width:220px;height:220px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:40px;
+}
+.ring{
+  position:absolute;border-radius:50%;border:1px solid;
+  opacity:0;animation:ringPulse 3.5s ease-in-out infinite;
+}
+.ring-1{inset:0;border-color:rgba(200,169,110,0.25);animation-delay:0s;}
+.ring-2{inset:16px;border-color:rgba(200,169,110,0.18);animation-delay:0.4s;}
+.ring-3{inset:32px;border-color:rgba(200,169,110,0.12);animation-delay:0.8s;}
+@keyframes ringPulse{
+  0%,100%{opacity:0;transform:scale(0.96);}
+  50%{opacity:1;transform:scale(1);}
+}
+.globe-icon{
+  width:80px;height:80px;
+  background:var(--gold-dim);border:1px solid rgba(200,169,110,0.25);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;
+}
+.globe-icon svg{width:36px;height:36px;color:var(--gold);opacity:0.8;}
+.ambient-title{
+  font-size:26px;font-weight:700;letter-spacing:-0.02em;
+  color:var(--text-1);text-align:center;margin-bottom:10px;
+}
+.ambient-sub{
+  font-size:13px;color:var(--text-3);text-align:center;max-width:320px;line-height:1.7;
+}
+
+/* ── Screen 1: Map + flights ── */
+.map-container{
+  width:100%;height:100%;
+  background:var(--card);
+  position:relative;overflow:hidden;
+}
+.map-bg{
+  width:100%;height:100%;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(78,205,196,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 60%, rgba(200,169,110,0.05) 0%, transparent 50%);
+  position:relative;
+}
+/* SVG world map lines */
+.map-lines{
+  position:absolute;inset:0;opacity:0.12;
+}
+.flight-arc{
+  position:absolute;
+  border-top:2px dashed var(--teal);
+  border-radius:50%;
+  animation:arcDraw 1.2s ease forwards;
+  transform-origin:left center;
+}
+@keyframes arcDraw{
+  from{clip-path:inset(0 100% 0 0);}
+  to{clip-path:inset(0 0% 0 0);}
+}
+.city-dot{
+  position:absolute;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--gold);border:2px solid var(--bg);
+  box-shadow:0 0 12px rgba(200,169,110,0.5);
+}
+.city-dot::after{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1px solid rgba(200,169,110,0.3);
+  animation:dotPing 2s ease infinite;
+}
+@keyframes dotPing{
+  0%{opacity:1;transform:scale(1);}
+  100%{opacity:0;transform:scale(2.2);}
+}
+.city-label{
+  position:absolute;
+  font-size:10px;font-weight:500;color:var(--gold);
+  letter-spacing:0.06em;text-transform:uppercase;
+  white-space:nowrap;
+}
+.flight-cards{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:16px;
+  display:flex;gap:10px;
+  background:linear-gradient(to top,var(--bg) 0%,transparent 100%);
+}
+.flight-card{
+  flex:1;background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:14px;cursor:pointer;
+  transition:all var(--tr);
+}
+.flight-card:hover,.flight-card.selected{
+  border-color:var(--gold);background:var(--gold-dim);
+}
+.fc-airline{font-size:9px;color:var(--text-3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;}
+.fc-route{font-size:14px;font-weight:500;color:var(--text-1);margin-bottom:6px;}
+.fc-details{display:flex;justify-content:space-between;align-items:flex-end;}
+.fc-time{font-family:var(--font-m);font-size:11px;color:var(--teal);}
+.fc-price{font-size:16px;font-weight:700;color:var(--gold);}
+.fc-price span{font-size:10px;font-weight:300;color:var(--text-3);}
+.fc-stops{font-size:9px;color:var(--text-3);margin-top:3px;}
+
+/* ── Screen 2: Flight confirmed + hotels ── */
+.confirmed-panel{
+  width:100%;height:100%;display:flex;flex-direction:column;padding:24px;gap:16px;overflow:auto;
+}
+.confirmed-ticket{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:20px;position:relative;overflow:hidden;
+}
+.confirmed-ticket::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(to right,var(--gold),var(--teal));
+}
+.ct-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;}
+.ct-label{font-size:9px;color:var(--gold);letter-spacing:0.10em;text-transform:uppercase;}
+.ct-status{
+  background:rgba(78,205,196,0.12);color:var(--teal);
+  font-size:9px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;
+}
+.ct-route{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ct-city{font-size:22px;font-weight:700;letter-spacing:-0.01em;}
+.ct-arrow{color:var(--text-3);font-size:18px;flex:1;text-align:center;}
+.ct-info{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.ct-info-item{display:flex;flex-direction:column;gap:2px;}
+.ct-info-key{font-size:9px;color:var(--text-3);letter-spacing:0.08em;text-transform:uppercase;}
+.ct-info-val{font-size:12px;color:var(--text-1);font-weight:400;}
+
+.hotels-grid{display:flex;flex-direction:column;gap:10px;flex:1;}
+.hotel-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:14px;display:flex;align-items:center;gap:14px;cursor:pointer;
+  transition:all var(--tr);
+}
+.hotel-card:hover,.hotel-card.selected{border-color:var(--gold);background:var(--gold-dim);}
+.hotel-thumb{
+  width:52px;height:52px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+}
+.hotel-info{flex:1;}
+.hotel-name{font-size:13px;font-weight:500;color:var(--text-1);margin-bottom:3px;}
+.hotel-meta{font-size:11px;color:var(--text-3);}
+.hotel-price{text-align:right;}
+.hotel-rate{font-size:15px;font-weight:700;color:var(--gold);}
+.hotel-nights{font-size:10px;color:var(--text-3);}
+.hotel-stars{font-size:11px;color:var(--amber);letter-spacing:-1px;}
+
+/* ── Screen 3: Full itinerary ── */
+.itinerary-panel{
+  width:100%;height:100%;overflow:auto;padding:24px;
+}
+.itin-header{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:20px;margin-bottom:16px;position:relative;overflow:hidden;
+}
+.itin-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--gold),var(--teal),var(--purple));
+}
+.itin-title{font-size:20px;font-weight:700;letter-spacing:-0.01em;color:var(--text-1);margin-bottom:4px;}
+.itin-sub{font-size:12px;color:var(--text-3);}
+.itin-stats{display:flex;gap:16px;margin-top:14px;}
+.istat{display:flex;flex-direction:column;gap:2px;}
+.istat-val{font-size:16px;font-weight:700;color:var(--gold);}
+.istat-key{font-size:9px;color:var(--text-3);letter-spacing:0.08em;text-transform:uppercase;}
+
+.itin-days{display:flex;flex-direction:column;gap:10px;}
+.day-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;
+}
+.day-header{
+  padding:10px 16px;background:var(--card);
+  display:flex;align-items:center;gap:10px;
+  border-bottom:1px solid var(--border);
+}
+.day-num{
+  width:28px;height:28px;border-radius:6px;
+  background:var(--gold-dim);border:1px solid rgba(200,169,110,0.25);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:var(--gold);
+}
+.day-title{font-size:12px;font-weight:500;color:var(--text-1);}
+.day-date{font-size:10px;color:var(--text-3);margin-inline-start:auto;}
+.day-events{padding:12px 16px;display:flex;flex-direction:column;gap:8px;}
+.event{display:flex;gap:10px;align-items:flex-start;}
+.event-time{font-family:var(--font-m);font-size:10px;color:var(--teal);flex-shrink:0;width:36px;}
+.event-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--border);flex-shrink:0;margin-top:5px;
+}
+.event-dot.gold{background:var(--gold);}
+.event-dot.teal{background:var(--teal);}
+.event-text{font-size:11px;color:var(--text-2);line-height:1.5;}
+
+/* ═══════════════════════ RIGHT PANEL ═════════════════ */
+.right-panel{
+  display:flex;flex-direction:column;
+  background:var(--surface);
+  overflow:hidden;
+}
+
+/* Voice interface — top half of step 0 */
+.voice-section{
+  padding:20px;border-bottom:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  transition:all var(--tr);
+}
+.voice-section.compact{padding:14px 20px;flex-direction:row;justify-content:space-between;}
+
+.mic-btn{
+  width:72px;height:72px;border-radius:50%;
+  background:var(--card);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.3s ease;position:relative;
+  flex-shrink:0;
+}
+.mic-btn.compact-mic{width:44px;height:44px;}
+.mic-btn:hover{border-color:var(--gold);background:var(--gold-dim);}
+.mic-btn.active{
+  border-color:var(--teal);background:rgba(78,205,196,0.12);
+  box-shadow:0 0 0 8px rgba(78,205,196,0.08),0 0 0 16px rgba(78,205,196,0.04);
+  animation:micPulse 1.5s ease infinite;
+}
+@keyframes micPulse{
+  0%,100%{box-shadow:0 0 0 6px rgba(78,205,196,0.08),0 0 0 14px rgba(78,205,196,0.04);}
+  50%{box-shadow:0 0 0 10px rgba(78,205,196,0.12),0 0 0 20px rgba(78,205,196,0.06);}
+}
+.mic-btn svg{width:24px;height:24px;color:var(--text-2);transition:color var(--tr);}
+.mic-btn.active svg,.mic-btn:hover svg{color:var(--teal);}
+.mic-btn.compact-mic svg{width:16px;height:16px;}
+
+.voice-label{font-size:11px;color:var(--text-3);text-align:center;letter-spacing:0.04em;}
+.voice-label.compact-label{font-size:10px;}
+
+/* Waveform */
+.waveform{
+  display:flex;align-items:center;gap:3px;height:24px;
+  opacity:0;transition:opacity var(--tr);
+}
+.waveform.active{opacity:1;}
+.wave-bar{
+  width:3px;border-radius:2px;background:var(--teal);
+  animation:wave 0.8s ease-in-out infinite;
+}
+.wave-bar:nth-child(1){height:6px;animation-delay:0s;}
+.wave-bar:nth-child(2){height:14px;animation-delay:0.1s;}
+.wave-bar:nth-child(3){height:20px;animation-delay:0.2s;}
+.wave-bar:nth-child(4){height:10px;animation-delay:0.3s;}
+.wave-bar:nth-child(5){height:18px;animation-delay:0.15s;}
+.wave-bar:nth-child(6){height:8px;animation-delay:0.25s;}
+.wave-bar:nth-child(7){height:16px;animation-delay:0.05s;}
+@keyframes wave{
+  0%,100%{transform:scaleY(0.4);}
+  50%{transform:scaleY(1);}
+}
+
+/* ── Chat ── */
+.chat-area{
+  flex:1;overflow-y:auto;padding:16px;
+  display:flex;flex-direction:column;gap:10px;
+  scroll-behavior:smooth;
+}
+.chat-area::-webkit-scrollbar{width:4px;}
+.chat-area::-webkit-scrollbar-track{background:transparent;}
+.chat-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+.msg{display:flex;flex-direction:column;gap:3px;max-width:88%;}
+.msg.user{align-self:flex-end;align-items:flex-end;}
+.msg.ai{align-self:flex-start;align-items:flex-start;}
+
+.msg-sender{
+  font-size:9px;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase;
+  padding:0 4px;
+}
+.msg-bubble{
+  padding:10px 14px;border-radius:12px;
+  font-size:13px;line-height:1.6;
+}
+.msg.user .msg-bubble{
+  background:var(--gold-dim);border:1px solid rgba(200,169,110,0.2);
+  color:var(--text-1);border-bottom-right-radius:3px;
+}
+.msg.ai .msg-bubble{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text-2);border-bottom-left-radius:3px;
+}
+.msg-bubble[dir="rtl"],.msg-bubble .rtl{font-family:var(--font-h);direction:rtl;text-align:right;}
+
+/* Typing indicator */
+.typing{display:flex;gap:5px;align-items:center;padding:12px 16px;}
+.typing-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--text-3);
+  animation:typingBounce 1.2s ease infinite;
+}
+.typing-dot:nth-child(2){animation-delay:0.2s;}
+.typing-dot:nth-child(3){animation-delay:0.4s;}
+@keyframes typingBounce{
+  0%,60%,100%{transform:translateY(0);}
+  30%{transform:translateY(-6px);}
+}
+
+/* Result cards in chat */
+.result-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:12px 14px;margin-top:4px;
+  font-size:12px;color:var(--text-2);line-height:1.6;
+}
+.result-card .rc-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.result-card .rc-label{font-size:9px;color:var(--gold);letter-spacing:0.10em;text-transform:uppercase;}
+.result-card .rc-val{font-size:13px;font-weight:500;color:var(--text-1);}
+
+/* Agent pill */
+.agent-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:9px;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;
+  background:rgba(78,205,196,0.10);color:var(--teal);
+  margin-bottom:4px;
+}
+.agent-pill::before{content:'◈ ';}
+
+/* Quick replies */
+.quick-replies{
+  display:flex;flex-wrap:wrap;gap:6px;
+  padding:8px 16px;border-top:1px solid var(--border);
+}
+.qr-btn{
+  background:transparent;border:1px solid var(--border);
+  color:var(--text-2);font-family:var(--font-l);font-size:11px;
+  padding:5px 12px;border-radius:20px;cursor:pointer;
+  transition:all var(--tr);white-space:nowrap;
+}
+.qr-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);}
+.qr-btn[dir="rtl"]{font-family:var(--font-h);}
+
+/* Chat input */
+.chat-input-row{
+  display:flex;gap:8px;padding:12px 16px;
+  border-top:1px solid var(--border);
+}
+.chat-input{
+  flex:1;background:var(--card);border:1px solid var(--border);
+  border-radius:8px;color:var(--text-1);font-family:var(--font-l);
+  font-size:13px;font-weight:300;padding:8px 12px;
+  outline:none;transition:border-color var(--tr);
+  resize:none;height:36px;
+}
+.chat-input:focus{border-color:var(--gold);}
+.chat-input::placeholder{color:var(--text-3);}
+.send-btn{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--gold);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all var(--tr);flex-shrink:0;
+}
+.send-btn:hover{background:color-mix(in srgb,var(--gold) 85%,white);}
+.send-btn svg{width:14px;height:14px;color:#0A0A0F;}
+
+/* ═══════════════════════ TOAST ════════════════════════ */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);
+  background:var(--teal);color:#0A0A0F;
+  font-size:12px;font-weight:500;padding:8px 18px;
+  border-radius:20px;opacity:0;transition:all 0.3s ease;pointer-events:none;z-index:999;
+  white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ═══════════════════════ SCROLLBAR HIDDEN ═════════════ */
+.confirmed-panel::-webkit-scrollbar,
+.itinerary-panel::-webkit-scrollbar{width:3px;}
+.confirmed-panel::-webkit-scrollbar-thumb,
+.itinerary-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ THEME BAR ═══════════════════ -->
+<div class="theme-bar">
+  <div class="tb-brand">
+    Odysee
+    <span class="tagline" id="tagline">Personal AI Travel Concierge</span>
+  </div>
+  <div class="tb-right">
+    <div class="lang-pills">
+      <button id="btn-he" onclick="setLang('he')" class="active">עב</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <div class="tb-sep"></div>
+    <div class="theme-pills">
+      <button id="btn-light" onclick="setTheme('light')">☀</button>
+      <button id="btn-system" onclick="setTheme('system')">⊙</button>
+      <button id="btn-dark" onclick="setTheme('dark')" class="active">●</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ STEP BAR ════════════════════ -->
+<div class="step-bar">
+  <div class="step-item active" id="step-0" onclick="goStep(0)">
+    <div class="step-num">1</div>
+    <span id="sl0">פתיחה</span>
+  </div>
+  <div class="step-connector"></div>
+  <div class="step-item" id="step-1" onclick="goStep(1)">
+    <div class="step-num">2</div>
+    <span id="sl1">חיפוש טיסות</span>
+  </div>
+  <div class="step-connector"></div>
+  <div class="step-item" id="step-2" onclick="goStep(2)">
+    <div class="step-num">3</div>
+    <span id="sl2">בחירת מלון</span>
+  </div>
+  <div class="step-connector"></div>
+  <div class="step-item" id="step-3" onclick="goStep(3)">
+    <div class="step-num">4</div>
+    <span id="sl3">מסלול סופי</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ APP ═════════════════════════ -->
+<div class="app">
+
+  <!-- ── LEFT PANEL ── -->
+  <div class="left-panel">
+
+    <!-- Screen 0: Ambient -->
+    <div class="screen active" id="screen-0">
+      <div class="ambient-ring">
+        <div class="ring ring-1"></div>
+        <div class="ring ring-2"></div>
+        <div class="ring ring-3"></div>
+        <div class="globe-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+          </svg>
+        </div>
+      </div>
+      <div class="ambient-title" id="s0-title">לאן תרצה לנסוע?</div>
+      <div class="ambient-sub" id="s0-sub">דבר אל Odysee בקול, או התחל בצ'אט. הסוכן שלך מוכן.</div>
+    </div>
+
+    <!-- Screen 1: Map + flights -->
+    <div class="screen" id="screen-1">
+      <div class="map-container">
+        <div class="map-bg">
+          <!-- SVG world outline (simplified) -->
+          <svg class="map-lines" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid slice">
+            <g fill="none" stroke="#8A95AA" stroke-width="0.5">
+              <!-- Simplified continent outlines -->
+              <path d="M80 160 Q120 140 160 150 Q200 130 230 155 Q260 140 280 160 Q300 150 320 165 Q340 155 360 170 Q370 160 380 170 Q390 165 400 175 Q410 165 420 180 Q430 170 450 185 Q460 170 480 190"/>
+              <path d="M120 180 Q140 170 160 175 Q180 165 200 178 Q220 168 240 183 Q260 172 280 187"/>
+              <path d="M200 220 Q220 200 250 215 Q280 200 310 220 Q340 205 370 225 Q400 210 430 230"/>
+              <path d="M400 180 Q420 165 450 180 Q480 165 510 185 Q540 170 570 190 Q590 175 620 195 Q640 180 670 200"/>
+              <path d="M500 220 Q520 205 550 220 Q580 205 610 225 Q640 210 670 230 Q700 215 730 235"/>
+              <path d="M250 260 Q270 240 300 255 Q330 240 360 260 Q390 245 420 265"/>
+              <path d="M580 140 Q600 130 620 145 Q640 130 660 148 Q680 135 700 155"/>
+              <path d="M620 270 Q640 255 660 270 Q680 255 700 275"/>
+              <!-- Grid lines -->
+              <line x1="0" y1="225" x2="800" y2="225" stroke-width="0.3" opacity="0.5"/>
+              <line x1="400" y1="0" x2="400" y2="450" stroke-width="0.3" opacity="0.5"/>
+              <ellipse cx="400" cy="225" rx="380" ry="200" stroke-width="0.3" opacity="0.3"/>
+              <ellipse cx="400" cy="225" rx="200" ry="200" stroke-width="0.3" opacity="0.3"/>
+            </g>
+          </svg>
+
+          <!-- TLV dot -->
+          <div class="city-dot" style="left:52%;top:44%;"></div>
+          <div class="city-label" style="left:53.5%;top:41%;">TLV</div>
+
+          <!-- NRT dot -->
+          <div class="city-dot" style="left:80%;top:34%;background:var(--teal);box-shadow:0 0 12px rgba(78,205,196,0.5);"></div>
+          <div class="city-label" style="left:81%;top:31%;color:var(--teal);">NRT</div>
+
+          <!-- Flight arc (CSS approximation) -->
+          <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 800 450">
+            <path d="M 418 198 Q 580 80 640 153" fill="none" stroke="#4ECDC4" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.7">
+              <animate attributeName="stroke-dashoffset" values="100;0" dur="2s" fill="freeze"/>
+            </path>
+            <!-- Plane icon along path -->
+            <text x="540" y="108" font-size="14" fill="#4ECDC4" opacity="0.8" transform="rotate(-30,540,108)">✈</text>
+          </svg>
+        </div>
+
+        <!-- Flight cards at bottom -->
+        <div class="flight-cards">
+          <div class="flight-card" id="fc1" onclick="selectFlight(1)">
+            <div class="fc-airline">EL AL · LY085</div>
+            <div class="fc-route">TLV → NRT</div>
+            <div class="fc-details">
+              <div>
+                <div class="fc-time">11:30 → 04:45+1</div>
+                <div class="fc-stops" id="fc1-stops">ישיר · 11:15 שעות</div>
+              </div>
+              <div class="fc-price">₪3,890 <span id="fc1-per">/נוסע</span></div>
+            </div>
+          </div>
+          <div class="flight-card" id="fc2" onclick="selectFlight(2)">
+            <div class="fc-airline">Turkish · TK787</div>
+            <div class="fc-route">TLV → IST → NRT</div>
+            <div class="fc-details">
+              <div>
+                <div class="fc-time">08:15 → 07:30+1</div>
+                <div class="fc-stops" id="fc2-stops">עצירה 1 · 23:15 שעות</div>
+              </div>
+              <div class="fc-price">₪2,640 <span id="fc2-per">/נוסע</span></div>
+            </div>
+          </div>
+          <div class="flight-card" id="fc3" onclick="selectFlight(3)">
+            <div class="fc-airline">Emirates · EK971</div>
+            <div class="fc-route">TLV → DXB → NRT</div>
+            <div class="fc-details">
+              <div>
+                <div class="fc-time">14:00 → 12:10+1</div>
+                <div class="fc-stops" id="fc3-stops">עצירה 1 · 22:10 שעות</div>
+              </div>
+              <div class="fc-price">₪3,120 <span id="fc3-per">/נוסע</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: Confirmed ticket + hotels -->
+    <div class="screen" id="screen-2">
+      <div class="confirmed-panel">
+        <div class="confirmed-ticket">
+          <div class="ct-header">
+            <div class="ct-label" id="ct-label">כרטיס מאושר</div>
+            <div class="ct-status" id="ct-status">CONFIRMED</div>
+          </div>
+          <div class="ct-route">
+            <div class="ct-city">TLV</div>
+            <div class="ct-arrow">——✈——</div>
+            <div class="ct-city">NRT</div>
+          </div>
+          <div class="ct-info">
+            <div class="ct-info-item">
+              <div class="ct-info-key" id="cti1-k">חברה</div>
+              <div class="ct-info-val" id="cti1-v">EL AL LY085</div>
+            </div>
+            <div class="ct-info-item">
+              <div class="ct-info-key" id="cti2-k">יציאה</div>
+              <div class="ct-info-val">12 אפר · 11:30</div>
+            </div>
+            <div class="ct-info-item">
+              <div class="ct-info-key" id="cti3-k">הגעה</div>
+              <div class="ct-info-val">13 אפר · 04:45</div>
+            </div>
+            <div class="ct-info-item">
+              <div class="ct-info-key" id="cti4-k">מחיר</div>
+              <div class="ct-info-val" style="color:var(--gold)">₪3,890</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hotels-grid">
+          <div style="font-size:9px;color:var(--text-3);letter-spacing:0.10em;text-transform:uppercase;" id="hotels-label">מלונות מומלצים — טוקיו</div>
+          <div class="hotel-card" id="hc1" onclick="selectHotel(1)">
+            <div class="hotel-thumb">🏯</div>
+            <div class="hotel-info">
+              <div class="hotel-name">Park Hyatt Tokyo</div>
+              <div class="hotel-meta" id="hc1-meta">שינג'וקו · 7 לילות</div>
+              <div class="hotel-stars">★★★★★</div>
+            </div>
+            <div class="hotel-price">
+              <div class="hotel-rate">₪1,240</div>
+              <div class="hotel-nights" id="hc1-nights">/לילה</div>
+            </div>
+          </div>
+          <div class="hotel-card" id="hc2" onclick="selectHotel(2)">
+            <div class="hotel-thumb">🌸</div>
+            <div class="hotel-info">
+              <div class="hotel-name">The Tokyo Station Hotel</div>
+              <div class="hotel-meta" id="hc2-meta">מארונאוצ'י · 7 לילות</div>
+              <div class="hotel-stars">★★★★★</div>
+            </div>
+            <div class="hotel-price">
+              <div class="hotel-rate">₪980</div>
+              <div class="hotel-nights" id="hc2-nights">/לילה</div>
+            </div>
+          </div>
+          <div class="hotel-card" id="hc3" onclick="selectHotel(3)">
+            <div class="hotel-thumb">🗼</div>
+            <div class="hotel-info">
+              <div class="hotel-name">Andaz Tokyo</div>
+              <div class="hotel-meta" id="hc3-meta">טורנומון · 7 לילות</div>
+              <div class="hotel-stars">★★★★★</div>
+            </div>
+            <div class="hotel-price">
+              <div class="hotel-rate">₪860</div>
+              <div class="hotel-nights" id="hc3-nights">/לילה</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Full itinerary -->
+    <div class="screen" id="screen-3">
+      <div class="itinerary-panel">
+        <div class="itin-header">
+          <div class="itin-title" id="itin-title">טוקיו, יפן · 7 ימים</div>
+          <div class="itin-sub" id="itin-sub">12–19 אפריל 2026 · Park Hyatt Tokyo</div>
+          <div class="itin-stats">
+            <div class="istat"><div class="istat-val">₪12,550</div><div class="istat-key" id="is1">סה"כ</div></div>
+            <div class="istat"><div class="istat-val">7</div><div class="istat-key" id="is2">לילות</div></div>
+            <div class="istat"><div class="istat-val">11</div><div class="istat-key" id="is3">אטרקציות</div></div>
+            <div class="istat"><div class="istat-val">3</div><div class="istat-key" id="is4">סוכנים</div></div>
+          </div>
+        </div>
+
+        <div class="itin-days">
+          <div class="day-card">
+            <div class="day-header">
+              <div class="day-num">1</div>
+              <div class="day-title" id="day1-t">הגעה לטוקיו</div>
+              <div class="day-date">יום א׳ · 13 אפר</div>
+            </div>
+            <div class="day-events">
+              <div class="event"><div class="event-time">04:45</div><div class="event-dot gold"></div><div class="event-text" id="e1">נחיתה בנמל תעופה נריטה · EL AL LY085</div></div>
+              <div class="event"><div class="event-time">07:30</div><div class="event-dot teal"></div><div class="event-text" id="e2">נסיעה למלון · Narita Express → Shinjuku</div></div>
+              <div class="event"><div class="event-time">15:00</div><div class="event-dot"></div><div class="event-text" id="e3">צ'ק-אין Park Hyatt · חדר מלא נוף</div></div>
+              <div class="event"><div class="event-time">19:00</div><div class="event-dot gold"></div><div class="event-text" id="e4">ארוחת ערב · New York Bar at Park Hyatt</div></div>
+            </div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header">
+              <div class="day-num">2</div>
+              <div class="day-title" id="day2-t">שינג'וקו וג'וקאגאיה</div>
+              <div class="day-date">יום ב׳ · 14 אפר</div>
+            </div>
+            <div class="day-events">
+              <div class="event"><div class="event-time">09:00</div><div class="event-dot gold"></div><div class="event-text" id="e5">מקדש Shinjuku Gyoen · בוקר שקט</div></div>
+              <div class="event"><div class="event-time">12:00</div><div class="event-dot teal"></div><div class="event-text" id="e6">צהריים · Omoide Yokocho — גלות הטעמים</div></div>
+              <div class="event"><div class="event-time">15:00</div><div class="event-dot"></div><div class="event-text" id="e7">חנויות Takashimaya · קניות</div></div>
+            </div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header">
+              <div class="day-num">3–7</div>
+              <div class="day-title" id="day3-t">מסלול מלא · 9 יעדים נוספים</div>
+              <div class="day-date">15–19 אפר</div>
+            </div>
+            <div class="day-events">
+              <div class="event"><div class="event-time">—</div><div class="event-dot teal"></div><div class="event-text" id="e8">Akihabara · Asakusa · TeamLab Planets · Shibuya · Harajuku · Mt. Fuji day trip · Tsukiji</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT PANEL ── -->
+  <div class="right-panel">
+
+    <!-- Voice section -->
+    <div class="voice-section" id="voice-section">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="mic-btn" id="mic-btn" onclick="toggleMic()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+            <path d="M19 10v2a7 7 0 01-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </div>
+        <div>
+          <div class="voice-label" id="mic-label">לחץ ודבר</div>
+          <div class="waveform" id="waveform">
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:var(--text-3);text-align:center;line-height:1.6;" id="voice-hint">
+        STT · Whisper · DeepL · TTS · ElevenLabs
+      </div>
+    </div>
+
+    <!-- Chat -->
+    <div class="chat-area" id="chat-area"></div>
+
+    <!-- Quick replies -->
+    <div class="quick-replies" id="quick-replies"></div>
+
+    <!-- Input -->
+    <div class="chat-input-row">
+      <input class="chat-input" id="chat-input" placeholder="כתוב הודעה..." dir="rtl" onkeydown="handleKey(event)">
+      <button class="send-btn" onclick="sendUserMessage()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════════════ */
+let lang = 'he';
+let currentStep = 0;
+let micActive = false;
+let selectedFlight = null;
+let selectedHotel = null;
+
+/* ══════════════════════════════════════════════════════
+   STRINGS
+══════════════════════════════════════════════════════ */
+const T = {
+  he: {
+    tagline: 'יועץ נסיעות AI אישי',
+    steps: ['פתיחה','חיפוש טיסות','בחירת מלון','מסלול סופי'],
+    s0title: 'לאן תרצה לנסוע?',
+    s0sub: 'דבר אל Odysee בקול, או התחל בצ\'אט. הסוכן שלך מוכן.',
+    micLabel: 'לחץ ודבר',
+    micActive: 'מקשיב...',
+    inputPh: 'כתוב הודעה...',
+    qr0: ['✈ רוצה לטוס לטוקיו','🌍 הפתע אותי','📅 תכנן טיול שבועי'],
+    qr1: ['בחר טיסה ישירה','הצג טיסה הזולה ביותר','סנן עפ"י זמן'],
+    qr2: ['Park Hyatt — בחר','הצג ביקורות','הוסף ארוחות בוקר'],
+    qr3: ['שמור מסלול','שלח למייל','הוסף יעד'],
+    msgs: {
+      0: [
+        { role:'ai', agent:'AGT-01 · Trip Planner', text:'שלום! אני Odysee, יועץ הנסיעות האישי שלך. לאן תרצה לנסוע?' }
+      ],
+      1_trigger: { role:'user', text:'רוצה לטוס לטוקיו, יפן. שבוע.' },
+      1_typing: 1200,
+      1_responses: [
+        { role:'ai', agent:'AGT-02 · Flight Scout', text:'נמצאו 3 טיסות מתאימות מת"א לטוקיו (NRT) ב-12 אפריל. בוחר עבורך את האפשרויות הטובות ביותר:' },
+        { role:'ai', card: true, label:'הטיסה המומלצת', val:'EL AL LY085 · ₪3,890' },
+      ],
+      sel_flight: { role:'user', text:'אני בוחר EL AL — הטיסה הישירה.' },
+      2_response: { role:'ai', agent:'AGT-03 · Hotel Scout', text:'מצוין! כרטיס אושר ✓\nכעת מחפש מלונות 5 כוכבים בטוקיו לתאריכים 13–19 אפריל:' },
+      sel_hotel: { role:'user', text:'Park Hyatt נשמע מושלם.' },
+      3_response: { role:'ai', agent:'AGT-01 · Trip Planner', text:'מסלול מלא נוצר! 7 ימים בטוקיו כולל טיסה ישירה, Park Hyatt ו-11 אטרקציות. סה"כ: ₪12,550 ✓' },
+    },
+    ctLabel: 'כרטיס מאושר',
+    hotelsLbl: 'מלונות מומלצים — טוקיו',
+    itinTitle: 'טוקיו, יפן · 7 ימים',
+    itinSub: '12–19 אפריל 2026 · Park Hyatt Tokyo',
+    is: ['סה"כ','לילות','אטרקציות','סוכנים'],
+    fc_stops: ['ישיר · 11:15 שעות','עצירה 1 · 23:15 שעות','עצירה 1 · 22:10 שעות'],
+    fc_per: '/נוסע',
+    hotel_nights: '/לילה',
+    hotel_meta: ['שינג\'וקו · 7 לילות','מארונאוצ\'י · 7 לילות','טורנומון · 7 לילות'],
+    days: ['הגעה לטוקיו','שינג\'וקו וג\'וקאגאיה','מסלול מלא · 9 יעדים נוספים'],
+    events: [
+      'נחיתה בנמל תעופה נריטה · EL AL LY085',
+      'נסיעה למלון · Narita Express → Shinjuku',
+      'צ\'ק-אין Park Hyatt · חדר מלא נוף',
+      'ארוחת ערב · New York Bar at Park Hyatt',
+      'מקדש Shinjuku Gyoen · בוקר שקט',
+      'צהריים · Omoide Yokocho — גלות הטעמים',
+      'חנויות Takashimaya · קניות',
+      'Akihabara · Asakusa · TeamLab Planets · Shibuya · Harajuku · Mt. Fuji · Tsukiji',
+    ],
+    cti_keys: ['חברה','יציאה','הגעה','מחיר'],
+    voiceHint: 'STT · Whisper · DeepL · TTS · ElevenLabs',
+  },
+  en: {
+    tagline: 'Personal AI Travel Concierge',
+    steps: ['Welcome','Flight Search','Hotel Selection','Full Itinerary'],
+    s0title: 'Where would you like to go?',
+    s0sub: 'Speak to Odysee or type in the chat. Your agent is ready.',
+    micLabel: 'Tap to speak',
+    micActive: 'Listening...',
+    inputPh: 'Type a message...',
+    qr0: ['✈ Fly me to Tokyo','🌍 Surprise me','📅 Plan a week trip'],
+    qr1: ['Select direct flight','Show cheapest','Filter by duration'],
+    qr2: ['Park Hyatt — select','Show reviews','Add breakfast'],
+    qr3: ['Save itinerary','Send by email','Add destination'],
+    msgs: {
+      0: [
+        { role:'ai', agent:'AGT-01 · Trip Planner', text:'Hi! I\'m Odysee, your personal travel concierge. Where would you like to travel?' }
+      ],
+      1_trigger: { role:'user', text:'I want to fly to Tokyo, Japan. One week.' },
+      1_typing: 1200,
+      1_responses: [
+        { role:'ai', agent:'AGT-02 · Flight Scout', text:'Found 3 flights from TLV to Tokyo (NRT) on April 12. Here are the best options:' },
+        { role:'ai', card: true, label:'Recommended', val:'EL AL LY085 · ₪3,890' },
+      ],
+      sel_flight: { role:'user', text:'I\'ll take EL AL — the direct flight.' },
+      2_response: { role:'ai', agent:'AGT-03 · Hotel Scout', text:'Great choice! Ticket confirmed ✓\nSearching 5-star hotels in Tokyo for Apr 13–19:' },
+      sel_hotel: { role:'user', text:'Park Hyatt sounds perfect.' },
+      3_response: { role:'ai', agent:'AGT-01 · Trip Planner', text:'Full itinerary ready! 7 days in Tokyo with direct flight, Park Hyatt & 11 attractions. Total: ₪12,550 ✓' },
+    },
+    ctLabel: 'Confirmed Ticket',
+    hotelsLbl: 'Recommended Hotels — Tokyo',
+    itinTitle: 'Tokyo, Japan · 7 Days',
+    itinSub: 'Apr 12–19, 2026 · Park Hyatt Tokyo',
+    is: ['Total','Nights','Attractions','Agents'],
+    fc_stops: ['Direct · 11h 15m','1 stop · 23h 15m','1 stop · 22h 10m'],
+    fc_per: '/person',
+    hotel_nights: '/night',
+    hotel_meta: ['Shinjuku · 7 nights','Marunouchi · 7 nights','Toranomon · 7 nights'],
+    days: ['Arrival in Tokyo','Shinjuku & Jiyugaoka','Full Plan · 9 more destinations'],
+    events: [
+      'Land at Narita Airport · EL AL LY085',
+      'Transfer to hotel · Narita Express → Shinjuku',
+      'Check-in Park Hyatt · Full city view room',
+      'Dinner · New York Bar at Park Hyatt',
+      'Shinjuku Gyoen Temple · quiet morning',
+      'Lunch · Omoide Yokocho — taste of Tokyo',
+      'Takashimaya Department Store · shopping',
+      'Akihabara · Asakusa · TeamLab Planets · Shibuya · Harajuku · Mt. Fuji · Tsukiji',
+    ],
+    cti_keys: ['Airline','Departure','Arrival','Price'],
+    voiceHint: 'STT · Whisper · DeepL · TTS · ElevenLabs',
+  }
+};
+
+/* ══════════════════════════════════════════════════════
+   LANG
+══════════════════════════════════════════════════════ */
+function setLang(l) {
+  lang = l;
+  ['he','en'].forEach(x => document.getElementById('btn-'+x).classList.toggle('active', x===l));
+  document.documentElement.lang = l;
+  const t = T[l];
+  document.getElementById('tagline').textContent = t.tagline;
+  // step labels
+  t.steps.forEach((s,i) => { const el = document.getElementById('sl'+i); if(el) el.textContent = s; });
+  // screen 0
+  document.getElementById('s0-title').textContent = t.s0title;
+  document.getElementById('s0-sub').textContent = t.s0sub;
+  // mic
+  document.getElementById('mic-label').textContent = micActive ? t.micActive : t.micLabel;
+  // input
+  document.getElementById('chat-input').placeholder = t.inputPh;
+  document.getElementById('chat-input').dir = l==='he'?'rtl':'ltr';
+  // voice hint
+  document.getElementById('voice-hint').textContent = t.voiceHint;
+  // flight stops & per
+  [1,2,3].forEach(i => {
+    const s = document.getElementById('fc'+i+'-stops');
+    const p = document.getElementById('fc'+i+'-per');
+    if(s) s.textContent = t.fc_stops[i-1];
+    if(p) p.textContent = t.fc_per;
+  });
+  // hotel
+  ['hc1-meta','hc2-meta','hc3-meta'].forEach((id,i) => {
+    const el = document.getElementById(id); if(el) el.textContent = t.hotel_meta[i];
+  });
+  ['hc1-nights','hc2-nights','hc3-nights'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.textContent = t.hotel_nights;
+  });
+  // ticket
+  const ctl = document.getElementById('ct-label'); if(ctl) ctl.textContent = t.ctLabel;
+  t.cti_keys.forEach((k,i) => {
+    const el = document.getElementById('cti'+(i+1)+'-k'); if(el) el.textContent = k;
+  });
+  document.getElementById('hotels-label').textContent = t.hotelsLbl;
+  // itinerary
+  document.getElementById('itin-title').textContent = t.itinTitle;
+  document.getElementById('itin-sub').textContent = t.itinSub;
+  ['is1','is2','is3','is4'].forEach((id,i) => {
+    const el = document.getElementById(id); if(el) el.textContent = t.is[i];
+  });
+  // days
+  ['day1-t','day2-t','day3-t'].forEach((id,i) => {
+    const el = document.getElementById(id); if(el) el.textContent = t.days[i];
+  });
+  ['e1','e2','e3','e4','e5','e6','e7','e8'].forEach((id,i) => {
+    const el = document.getElementById(id); if(el) el.textContent = t.events[i];
+  });
+  // quick replies
+  renderQR();
+}
+
+/* ══════════════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════════════ */
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+let currentTheme = 'dark';
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme',
+    t==='system' ? (mq.matches?'dark':'light') : t);
+  currentTheme = t;
+  ['light','system','dark'].forEach(x =>
+    document.getElementById('btn-'+x).classList.toggle('active',x===t));
+  localStorage.setItem('odysee-theme',t);
+}
+mq.addEventListener('change', ()=>{ if(currentTheme==='system') setTheme('system'); });
+
+/* ══════════════════════════════════════════════════════
+   STEP NAVIGATION
+══════════════════════════════════════════════════════ */
+function goStep(n) {
+  // Show screen
+  document.querySelectorAll('.screen').forEach((s,i) => s.classList.toggle('active', i===n));
+  // Update step bar
+  document.querySelectorAll('.step-item').forEach((el,i) => {
+    el.classList.remove('active','done');
+    if(i===n) el.classList.add('active');
+    else if(i<n) el.classList.add('done');
+  });
+  currentStep = n;
+}
+
+/* ══════════════════════════════════════════════════════
+   MIC
+══════════════════════════════════════════════════════ */
+function toggleMic() {
+  micActive = !micActive;
+  const btn = document.getElementById('mic-btn');
+  const lbl = document.getElementById('mic-label');
+  const wf = document.getElementById('waveform');
+  btn.classList.toggle('active', micActive);
+  wf.classList.toggle('active', micActive);
+  lbl.textContent = micActive ? T[lang].micActive : T[lang].micLabel;
+
+  if(micActive) {
+    setTimeout(()=>{
+      micActive = false;
+      btn.classList.remove('active');
+      wf.classList.remove('active');
+      lbl.textContent = T[lang].micLabel;
+      // Simulate voice input based on step
+      const voiceInputs = {
+        0: T[lang].msgs['1_trigger'].text,
+        1: T[lang].msgs['sel_flight'].text,
+        2: T[lang].msgs['sel_hotel'].text,
+      };
+      const input = voiceInputs[currentStep];
+      if(input) {
+        addMessage({role:'user', text:input});
+        handleStepAdvance(currentStep);
+      }
+    }, 2000);
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   CHAT
+══════════════════════════════════════════════════════ */
+function addMessage(msg) {
+  const chat = document.getElementById('chat-area');
+  const div = document.createElement('div');
+  div.className = 'msg ' + (msg.role==='user'?'user':'ai');
+
+  let html = '';
+  if(msg.agent) html += `<div class="agent-pill">${msg.agent}</div>`;
+  if(msg.role==='ai' && !msg.card) {
+    html += `<div class="msg-sender">${lang==='he'?'Odysee':'Odysee'}</div>`;
+  }
+  if(msg.card) {
+    html += `<div class="result-card">
+      <div class="rc-row"><span class="rc-label">${msg.label}</span></div>
+      <div class="rc-val">${msg.val}</div>
+    </div>`;
+  } else {
+    const isHe = /[\u0590-\u05FF]/.test(msg.text);
+    html += `<div class="msg-bubble" dir="${isHe?'rtl':'ltr'}">${msg.text.replace(/\n/g,'<br>')}</div>`;
+  }
+  div.innerHTML = html;
+  div.style.opacity = '0';
+  div.style.transform = 'translateY(6px)';
+  div.style.transition = 'all 0.3s ease';
+  chat.appendChild(div);
+  requestAnimationFrame(()=>{
+    div.style.opacity = '1';
+    div.style.transform = 'translateY(0)';
+  });
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addTyping() {
+  const chat = document.getElementById('chat-area');
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.id = 'typing-indicator';
+  div.innerHTML = `<div class="msg-bubble" style="padding:8px 14px;"><div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if(t) t.remove();
+}
+
+function renderQR() {
+  const qr = document.getElementById('quick-replies');
+  qr.innerHTML = '';
+  const replies = T[lang]['qr'+currentStep] || [];
+  replies.forEach(r => {
+    const btn = document.createElement('button');
+    btn.className = 'qr-btn';
+    btn.textContent = r;
+    const isHe = /[\u0590-\u05FF]/.test(r);
+    if(isHe) btn.dir = 'rtl';
+    btn.onclick = () => handleQR(r);
+    qr.appendChild(btn);
+  });
+}
+
+function handleQR(text) {
+  addMessage({role:'user', text});
+  setTimeout(()=>handleStepAdvance(currentStep), 400);
+}
+
+function handleKey(e) {
+  if(e.key==='Enter') sendUserMessage();
+}
+
+function sendUserMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if(!text) return;
+  input.value = '';
+  addMessage({role:'user', text});
+  setTimeout(()=>handleStepAdvance(currentStep), 400);
+}
+
+/* ══════════════════════════════════════════════════════
+   STEP LOGIC
+══════════════════════════════════════════════════════ */
+function handleStepAdvance(fromStep) {
+  if(fromStep === 0) {
+    addTyping();
+    setTimeout(()=>{
+      removeTyping();
+      T[lang].msgs['1_responses'].forEach(m => addMessage(m));
+      goStep(1);
+      renderQR();
+    }, T[lang].msgs['1_typing']);
+  } else if(fromStep === 1) {
+    addTyping();
+    setTimeout(()=>{
+      removeTyping();
+      addMessage(T[lang].msgs['2_response']);
+      goStep(2);
+      renderQR();
+    }, 1000);
+  } else if(fromStep === 2) {
+    addTyping();
+    setTimeout(()=>{
+      removeTyping();
+      addMessage(T[lang].msgs['3_response']);
+      goStep(3);
+      renderQR();
+      showToast(lang==='he'?'מסלול נשמר ✓':'Itinerary saved ✓');
+    }, 1200);
+  }
+}
+
+function selectFlight(n) {
+  document.querySelectorAll('.flight-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('fc'+n).classList.add('selected');
+  selectedFlight = n;
+  addMessage(T[lang].msgs['sel_flight']);
+  setTimeout(()=>handleStepAdvance(1), 500);
+}
+
+function selectHotel(n) {
+  document.querySelectorAll('.hotel-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('hc'+n).classList.add('selected');
+  selectedHotel = n;
+  addMessage(T[lang].msgs['sel_hotel']);
+  setTimeout(()=>handleStepAdvance(2), 500);
+}
+
+/* ══════════════════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════════════════ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+/* ══════════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════════ */
+(function init() {
+  const saved = localStorage.getItem('odysee-theme') || 'dark';
+  setTheme(saved);
+  setLang('he');
+  // Seed initial message
+  setTimeout(()=>{
+    T['he'].msgs[0].forEach(m => addMessage(m));
+    renderQR();
+  }, 400);
+})();
+</script>
+</body>
+</html>

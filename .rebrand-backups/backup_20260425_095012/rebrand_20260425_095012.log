@@ -1,0 +1,5 @@
+[09:50:12] [INFO] === APPLYING REBRAND ===
+[09:50:12] [WARN] You have uncommitted changes. Commit or stash them first.
+[09:50:12] [WARN] Continue anyway? (y/N)
+[09:50:18] [INFO] Current git branch: rebrand
+[09:50:18] [INFO] Creating backup at /Users/dcastiel/Desktop/tco-fresh/.rebrand-backups/backup_20260425_095012

@@ -1,0 +1,37 @@
+[09:49:49] [INFO] === DRY RUN — no files will be modified ===
+[09:49:49] [INFO] 
+[09:49:49] [DRY] /Users/dcastiel/Desktop/tco-fresh/index.html (36 lines would change)
+[09:49:49] [DRY] /Users/dcastiel/Desktop/tco-fresh/README.md (18 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/assets/css/tco-design.css (6 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/assets/icons/tco-mark.svg (2 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/pages/design-system.html (26 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/pages/ux-flows.html (32 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/pages/agents.html (14 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/pages/_template.html (12 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/pages/project-plan.html (12 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/pages/tco-prototype.html (20 lines would change)
+[09:49:50] [DRY] /Users/dcastiel/Desktop/tco-fresh/pages/onboarding.html (12 lines would change)
+[09:49:50] [INFO] 
+[09:49:50] [INFO] === Rename preview ===
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_architecture_v2.0.docx → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_architecture_v2.0.docx
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_architecture_v2.0.pdf → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_architecture_v2.0.pdf
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_design-system_v1.0.pdf → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_design-system_v1.0.pdf
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_project_book_v2.pdf → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_project_book_v2.pdf
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_ux-flows_v1.0.pdf → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_ux-flows_v1.0.pdf
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_project_book_v2.0.pdf → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_project_book_v2.0.pdf
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_onboarding_v1.0.pdf → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_onboarding_v1.0.pdf
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_design-system_v1.0.docx → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_design-system_v1.0.docx
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_onboarding_v1.0.docx → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_onboarding_v1.0.docx
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/docs/tco_ux-flows_v1.0.docx → /Users/dcastiel/Desktop/tco-fresh/docs/odysee_ux-flows_v1.0.docx
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/assets/css/tco-design.css → /Users/dcastiel/Desktop/tco-fresh/assets/css/odysee-design.css
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/assets/icons/tco-mark.svg → /Users/dcastiel/Desktop/tco-fresh/assets/icons/odysee-mark.svg
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/assets/icons/tco-wordmark.svg → /Users/dcastiel/Desktop/tco-fresh/assets/icons/odysee-wordmark.svg
+[09:49:50] [DRY] RENAME: /Users/dcastiel/Desktop/tco-fresh/pages/tco-prototype.html → /Users/dcastiel/Desktop/tco-fresh/pages/odysee-prototype.html
+[09:49:50] [INFO] Files renamed: 0
+[09:49:50] [INFO] 
+[09:49:50] [INFO] === Dry run summary ===
+[09:49:50] [INFO] Text files scanned: 13
+[09:49:50] [INFO] Text files affected: 11
+[09:49:50] [INFO] 
+[09:49:50] [INFO] To apply these changes:
+[09:49:50] [INFO]   bash rebrand_to_odysee.sh --apply

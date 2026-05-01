@@ -1,0 +1,51 @@
+[09:50:12] [INFO] === APPLYING REBRAND ===
+[09:50:12] [WARN] You have uncommitted changes. Commit or stash them first.
+[09:50:12] [WARN] Continue anyway? (y/N)
+[09:50:18] [INFO] Current git branch: rebrand
+[09:50:18] [INFO] Creating backup at /Users/dcastiel/Desktop/tco-fresh/.rebrand-backups/backup_20260425_095012
+[09:50:18] [OK] Backup created. Size: 916K
+[09:50:18] [OK] /Users/dcastiel/Desktop/tco-fresh/index.html (36 lines changed)
+[09:50:18] [OK] /Users/dcastiel/Desktop/tco-fresh/README.md (18 lines changed)
+[09:50:18] [OK] /Users/dcastiel/Desktop/tco-fresh/assets/css/tco-design.css (6 lines changed)
+[09:50:18] [OK] /Users/dcastiel/Desktop/tco-fresh/assets/icons/tco-mark.svg (2 lines changed)
+[09:50:18] [OK] /Users/dcastiel/Desktop/tco-fresh/pages/design-system.html (26 lines changed)
+[09:50:18] [OK] /Users/dcastiel/Desktop/tco-fresh/pages/ux-flows.html (32 lines changed)
+[09:50:18] [OK] /Users/dcastiel/Desktop/tco-fresh/pages/agents.html (14 lines changed)
+[09:50:18] [OK] /Users/dcastiel/Desktop/tco-fresh/pages/_template.html (12 lines changed)
+[09:50:19] [OK] /Users/dcastiel/Desktop/tco-fresh/pages/project-plan.html (12 lines changed)
+[09:50:19] [OK] /Users/dcastiel/Desktop/tco-fresh/pages/tco-prototype.html (20 lines changed)
+[09:50:19] [OK] /Users/dcastiel/Desktop/tco-fresh/pages/onboarding.html (12 lines changed)
+[09:50:19] [INFO] 
+[09:50:19] [INFO] === Renaming files ===
+[09:50:19] [OK] Renamed: tco_architecture_v2.0.docx → odysee_architecture_v2.0.docx
+[09:50:19] [OK] Renamed: tco_architecture_v2.0.pdf → odysee_architecture_v2.0.pdf
+[09:50:19] [OK] Renamed: tco_design-system_v1.0.pdf → odysee_design-system_v1.0.pdf
+[09:50:19] [OK] Renamed: tco_project_book_v2.pdf → odysee_project_book_v2.pdf
+[09:50:19] [OK] Renamed: tco_ux-flows_v1.0.pdf → odysee_ux-flows_v1.0.pdf
+[09:50:19] [OK] Renamed: tco_project_book_v2.0.pdf → odysee_project_book_v2.0.pdf
+[09:50:19] [OK] Renamed: tco_onboarding_v1.0.pdf → odysee_onboarding_v1.0.pdf
+[09:50:19] [OK] Renamed: tco_design-system_v1.0.docx → odysee_design-system_v1.0.docx
+[09:50:19] [OK] Renamed: tco_onboarding_v1.0.docx → odysee_onboarding_v1.0.docx
+[09:50:19] [OK] Renamed: tco_ux-flows_v1.0.docx → odysee_ux-flows_v1.0.docx
+[09:50:19] [OK] Renamed: tco-design.css → odysee-design.css
+[09:50:19] [OK] Renamed: tco-mark.svg → odysee-mark.svg
+[09:50:19] [OK] Renamed: tco-wordmark.svg → odysee-wordmark.svg
+[09:50:19] [OK] Renamed: tco-prototype.html → odysee-prototype.html
+[09:50:19] [INFO] Files renamed: 14
+[09:50:19] [INFO] 
+[09:50:19] [INFO] === Rebrand complete ===
+[09:50:19] [INFO] Text files scanned: 13
+[09:50:19] [INFO] Text files affected: 11
+[09:50:19] [INFO] Backup location: /Users/dcastiel/Desktop/tco-fresh/.rebrand-backups/backup_20260425_095012
+[09:50:19] [INFO] Log file: /Users/dcastiel/Desktop/tco-fresh/rebrand_20260425_095012.log
+[09:50:19] [INFO] 
+[09:50:19] [INFO] Next steps:
+[09:50:19] [INFO]   1. Review changes: git diff
+[09:50:19] [INFO]   2. Preview site locally: open index.html
+[09:50:19] [INFO]   3. Commit: git add -A && git commit -m 'rebrand: t.Co → Odysee'
+[09:50:19] [INFO]   4. If anything broke: bash rebrand_to_odysee.sh --rollback
+[09:50:19] [INFO] 
+[09:50:19] [INFO] NOT handled by this script (manual):
+[09:50:19] [INFO]   - PDFs/DOCXs in docs/ (regenerate separately)
+[09:50:19] [INFO]   - GitHub repo rename (dcastiel007/tco → dcastiel007/odysee)
+[09:50:19] [INFO]   - Domain DNS (odysee.me → GitHub Pages)

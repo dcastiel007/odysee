@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
+  <!-- Globe mark (left) -->
+  <g transform="translate(40,40)">
+    <circle cx="0" cy="0" r="28" fill="none" stroke="#C8A96E" stroke-width="1.2"/>
+    <ellipse cx="0" cy="0" rx="28" ry="9.5" fill="none" stroke="#C8A96E" stroke-width="0.9" opacity="0.5"/>
+    <ellipse cx="0" cy="-12" rx="23" ry="6" fill="none" stroke="#C8A96E" stroke-width="0.8" opacity="0.35"/>
+    <ellipse cx="0" cy="12" rx="23" ry="6" fill="none" stroke="#C8A96E" stroke-width="0.8" opacity="0.35"/>
+    <path d="M0,-28 Q9,0 0,28" fill="none" stroke="#C8A96E" stroke-width="0.9" opacity="0.5"/>
+    <path d="M0,-28 Q-9,0 0,28" fill="none" stroke="#C8A96E" stroke-width="0.9" opacity="0.5"/>
+    <circle cx="0" cy="0" r="4" fill="#C8A96E"/>
+    <circle cx="0" cy="0" r="2" fill="#0A0A0F"/>
+  </g>
+  <!-- Wordmark (right) -->
+  <text font-family="Poppins, sans-serif" font-size="32" font-weight="700" letter-spacing="-1.5" x="84" y="52">
+    <tspan fill="#F0EDE8">t</tspan><tspan fill="#C8A96E">.</tspan><tspan fill="#F0EDE8">Co</tspan><tspan fill="#C8A96E" opacity="0.65">.</tspan>
+  </text>
+  <!-- Tagline -->
+  <text font-family="Poppins, sans-serif" font-size="9" font-weight="400" letter-spacing="0.12em" fill="#8A95AA" x="86" y="67" text-transform="uppercase">PERSONAL AI TRAVEL CONCIERGE</text>
+</svg>

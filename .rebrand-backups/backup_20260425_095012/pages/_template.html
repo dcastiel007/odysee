@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Odysee — [PAGE TITLE] — v1.0</title>
-  <link rel="stylesheet" href="../assets/css/odysee-design.css" />
+  <title>t.Co. — [PAGE TITLE] — v1.0</title>
+  <link rel="stylesheet" href="../assets/css/tco-design.css" />
   <meta name="version" content="v1.0">
 </head>
 <body>
@@ -20,7 +20,7 @@
   <!-- Header -->
   <header class="site-header">
     <div>
-      <div class="site-logo">Odysee</div>
+      <div class="site-logo">t.Co.</div>
       <div class="site-tagline">Personal AI Travel Concierge</div>
     </div>
     <nav>
@@ -55,20 +55,20 @@
       דוד קסטיאל · תואר שני בעיצוב לסביבה טכנולוגית<br>
       מכון טכנולוגי חולון HIT · הגשה: 4 אוגוסט 2026
     </div>
-    <div class="site-footer__right">Odysee · v1.0 · 2026</div>
+    <div class="site-footer__right">t.Co. · v1.0 · 2026</div>
   </footer>
 
   <script>
     const root = document.documentElement;
     const mq   = window.matchMedia('(prefers-color-scheme: dark)');
-    let current = localStorage.getItem('odysee-theme') || 'system';
+    let current = localStorage.getItem('tco-theme') || 'system';
     function applyTheme(t) {
       root.setAttribute('data-theme', t);
       ['light','system','dark'].forEach(x =>
         document.getElementById('btn-' + x).classList.toggle('active', x === t)
       );
       current = t;
-      localStorage.setItem('odysee-theme', t);
+      localStorage.setItem('tco-theme', t);
     }
     function setTheme(t) { applyTheme(t); }
     mq.addEventListener('change', () => { if (current === 'system') applyTheme('system'); });

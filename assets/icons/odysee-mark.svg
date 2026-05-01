@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Odysee Globe Mark — Primary (dark bg version) -->
+  <!-- Outer ring -->
+  <circle cx="100" cy="100" r="60" fill="none" stroke="#C8A96E" stroke-width="1.5"/>
+  <!-- Latitude arcs -->
+  <ellipse cx="100" cy="100" rx="60" ry="20" fill="none" stroke="#C8A96E" stroke-width="1" opacity="0.5"/>
+  <ellipse cx="100" cy="74" rx="50" ry="13" fill="none" stroke="#C8A96E" stroke-width="0.8" opacity="0.35"/>
+  <ellipse cx="100" cy="126" rx="50" ry="13" fill="none" stroke="#C8A96E" stroke-width="0.8" opacity="0.35"/>
+  <!-- Meridian arcs -->
+  <path d="M100,40 Q120,100 100,160" fill="none" stroke="#C8A96E" stroke-width="1" opacity="0.5"/>
+  <path d="M100,40 Q80,100 100,160" fill="none" stroke="#C8A96E" stroke-width="1" opacity="0.5"/>
+  <!-- Center dot -->
+  <circle cx="100" cy="100" r="7" fill="#C8A96E"/>
+  <circle cx="100" cy="100" r="3.5" fill="#0A0A0F"/>
+</svg>
