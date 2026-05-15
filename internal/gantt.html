@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odysee — Gantt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Hebrew:wght@300;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0A0A0F; --surface:#0F1C2E; --card:#14253C; --card-hover:#1A2D47;
+  --border:#2A3245; --border-soft:rgba(255,255,255,0.06);
+  --gold:#C8A96E; --gold-dim:rgba(200,169,110,0.14); --gold-bright:rgba(200,169,110,0.30);
+  --teal:#4ECDC4; --teal-dim:rgba(78,205,196,0.14);
+  --purple:#7C6FCD; --purple-dim:rgba(124,111,205,0.14);
+  --amber:#F8B743; --amber-dim:rgba(248,183,67,0.14);
+  --red:#E05A5F; --red-dim:rgba(224,90,95,0.14);
+  --green:#5EBA7D; --green-dim:rgba(94,186,125,0.14);
+  --text-primary:#F0EDE8; --text-secondary:#8A95AA; --text-muted:#4A5568;
+  --font-latin:'Poppins',system-ui,sans-serif;
+  --font-hebrew:'Noto Sans Hebrew','Assistant',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --radius:8px; --radius-lg:12px;
+  --week-w:54px;
+  --task-col-w:300px;
+  --row-h:34px;
+  --phase-row-h:30px;
+}
+[data-theme="light"] {
+  --bg:#FAFAF7; --surface:#FFFFFF; --card:#F4F1EB; --card-hover:#EDE9DF;
+  --border:#E2DDD4; --border-soft:rgba(0,0,0,0.05);
+  --gold:#9A7A3E; --gold-dim:rgba(154,122,62,0.12); --gold-bright:rgba(154,122,62,0.24);
+  --text-primary:#1A1814; --text-secondary:#6B6560; --text-muted:#A89F96;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { background:var(--bg); color:var(--text-primary); font-family:var(--font-hebrew),var(--font-latin); font-weight:300; line-height:1.5; min-height:100vh; }
+button, input, select { font-family:inherit; color:inherit; background:none; border:none; outline:none; }
+button { cursor:pointer; }
+
+/* ===== Password gate ===== */
+.gate { position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center; z-index:100; padding:24px; }
+.gate-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:36px 40px; max-width:380px; width:100%; text-align:center; }
+.gate-brand { font-family:var(--font-latin); font-size:24px; font-weight:600; letter-spacing:-0.02em; margin-bottom:6px; direction:ltr; }
+.gate-brand .dot { color:var(--gold); }
+.gate-sub { font-family:var(--font-hebrew); font-size:12px; color:var(--text-muted); margin-bottom:28px; }
+.gate-input { width:100%; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:12px 16px; font-family:var(--font-mono); font-size:14px; text-align:center; letter-spacing:0.04em; transition:border-color 0.15s; }
+.gate-input:focus { border-color:var(--gold); }
+.gate-error { color:var(--red); font-family:var(--font-hebrew); font-size:11px; margin-top:10px; min-height:14px; }
+.gate-hint { font-family:var(--font-hebrew); font-size:10px; color:var(--text-muted); margin-top:14px; }
+
+/* ===== Header ===== */
+.header { position:sticky; top:0; z-index:10; background:rgba(10,10,15,0.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:14px 24px; }
+[data-theme="light"] .header { background:rgba(250,250,247,0.92); }
+.header-inner { max-width:1600px; margin:0 auto; display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
+.brand { display:flex; align-items:baseline; gap:10px; direction:ltr; }
+.brand-name { font-family:var(--font-latin); font-size:18px; font-weight:600; letter-spacing:-0.01em; }
+.brand-name .dot { color:var(--gold); }
+.brand-tag { font-family:var(--font-hebrew); font-size:12px; color:var(--gold); font-weight:500; direction:rtl; letter-spacing:0.02em; }
+
+.stats { display:flex; gap:18px; margin-inline-start:auto; flex-wrap:wrap; }
+.stat { display:flex; flex-direction:column; align-items:flex-end; min-width:74px; }
+.stat-value { font-family:var(--font-latin); font-size:18px; font-weight:500; line-height:1; color:var(--text-primary); direction:ltr; }
+.stat-value.warn { color:var(--amber); }
+.stat-value.danger { color:var(--red); }
+.stat-value.good { color:var(--green); }
+.stat-label { font-family:var(--font-hebrew); font-size:10px; color:var(--text-muted); margin-top:4px; letter-spacing:0.02em; }
+
+.theme-toggle { font-size:14px; padding:6px 10px; border:1px solid var(--border); border-radius:var(--radius); color:var(--text-secondary); transition:all 0.15s; }
+.theme-toggle:hover { color:var(--gold); border-color:var(--gold); }
+
+/* ===== Overall progress ===== */
+.overall { max-width:1600px; margin:24px auto 16px; padding:0 24px; display:flex; align-items:center; gap:16px; }
+.overall-bar { flex:1; height:6px; background:var(--surface); border-radius:3px; overflow:hidden; direction:ltr; }
+.overall-fill { height:100%; background:linear-gradient(90deg, var(--gold), var(--gold-bright)); transition:width 0.5s ease; }
+.overall-pct { font-family:var(--font-mono); font-size:12px; color:var(--gold); min-width:42px; text-align:end; direction:ltr; }
+.overall-label { font-family:var(--font-hebrew); font-size:11px; color:var(--text-muted); }
+
+/* ===== Filter / Legend bar ===== */
+.toolbar { max-width:1600px; margin:0 auto 16px; padding:0 24px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.toolbar select { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:6px 12px; font-family:var(--font-hebrew); font-size:12px; color:var(--text-primary); }
+.toolbar select:focus { border-color:var(--gold); }
+.toolbar-label { font-family:var(--font-hebrew); font-size:11px; color:var(--text-muted); margin-inline-end:-4px; }
+
+.legend { display:flex; gap:10px; flex-wrap:wrap; margin-inline-start:auto; align-items:center; }
+.legend-item { display:flex; align-items:center; gap:5px; font-family:var(--font-hebrew); font-size:10px; color:var(--text-secondary); }
+.legend-dot { width:10px; height:10px; border-radius:2px; }
+
+/* ===== Gantt ===== */
+.gantt-wrap { max-width:1600px; margin:0 auto; padding:0 24px 80px; }
+.gantt { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden; }
+.gantt-scroll { overflow-x:auto; overflow-y:visible; position:relative; }
+
+/* Header row: month + week labels */
+.gantt-header { display:grid; grid-template-columns:var(--task-col-w) 1fr; position:sticky; top:0; z-index:5; background:var(--card); border-bottom:1px solid var(--border); }
+.gantt-header-tasks { padding:10px 16px; font-family:var(--font-hebrew); font-size:11px; color:var(--text-muted); letter-spacing:0.06em; text-transform:uppercase; border-inline-end:1px solid var(--border); position:sticky; inset-inline-start:0; background:var(--card); z-index:2; }
+.gantt-header-timeline { display:flex; flex-direction:column; min-width:max-content; }
+.gantt-months { display:flex; height:24px; border-bottom:1px solid var(--border-soft); }
+.gantt-month { font-family:var(--font-latin); font-size:11px; color:var(--gold); font-weight:500; letter-spacing:0.04em; display:flex; align-items:center; justify-content:center; border-inline-end:1px solid var(--border); direction:ltr; }
+.gantt-weeks { display:flex; height:22px; }
+.gantt-week { width:var(--week-w); font-family:var(--font-mono); font-size:9px; color:var(--text-muted); display:flex; align-items:center; justify-content:center; flex-shrink:0; border-inline-end:1px solid var(--border-soft); direction:ltr; }
+
+/* Body */
+.gantt-body { position:relative; }
+.phase-group { border-bottom:1px solid var(--border); }
+.phase-group:last-child { border-bottom:none; }
+
+.phase-row { display:grid; grid-template-columns:var(--task-col-w) 1fr; height:var(--phase-row-h); background:var(--surface); cursor:pointer; transition:background 0.15s; }
+.phase-row:hover { background:var(--card-hover); }
+.phase-row-name { padding:0 16px; display:flex; align-items:center; gap:10px; font-family:var(--font-latin); font-size:12px; font-weight:500; color:var(--gold); border-inline-end:1px solid var(--border); position:sticky; inset-inline-start:0; background:var(--surface); z-index:1; direction:ltr; }
+.phase-row:hover .phase-row-name { background:var(--card-hover); }
+.phase-row-collapse { font-family:var(--font-mono); font-size:9px; color:var(--text-muted); transition:transform 0.2s; }
+.phase-row.collapsed .phase-row-collapse { transform:rotate(-90deg); }
+[dir="rtl"] .phase-row.collapsed .phase-row-collapse { transform:rotate(90deg); }
+.phase-row-meta { padding:0 14px; display:flex; align-items:center; gap:14px; font-family:var(--font-mono); font-size:10px; color:var(--text-secondary); direction:ltr; min-width:max-content; }
+.phase-row-pct { color:var(--gold); }
+
+.phase-tasks { transition:max-height 0.3s ease; }
+.phase-group.collapsed .phase-tasks { display:none; }
+
+.task-row { display:grid; grid-template-columns:var(--task-col-w) 1fr; height:var(--row-h); border-top:1px solid var(--border-soft); cursor:pointer; transition:background 0.12s; }
+.task-row:hover { background:rgba(255,255,255,0.02); }
+[data-theme="light"] .task-row:hover { background:rgba(0,0,0,0.02); }
+.task-row.selected { background:var(--gold-dim); }
+
+.task-name { padding:0 16px; display:flex; align-items:center; gap:8px; font-family:var(--font-hebrew); font-size:12px; color:var(--text-primary); border-inline-end:1px solid var(--border-soft); position:sticky; inset-inline-start:0; background:var(--card); z-index:1; }
+.task-row:hover .task-name { background:rgba(20,37,60,1); }
+[data-theme="light"] .task-row:hover .task-name { background:var(--card-hover); }
+.task-row.selected .task-name { background:rgba(28,42,68,1); }
+[data-theme="light"] .task-row.selected .task-name { background:var(--card-hover); }
+.task-name-text { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.task-status-pill { font-family:var(--font-mono); font-size:8px; padding:1px 5px; border-radius:3px; letter-spacing:0.04em; flex-shrink:0; direction:ltr; }
+
+.task-timeline { position:relative; min-width:max-content; }
+
+.task-bar { position:absolute; top:50%; transform:translateY(-50%); height:18px; border-radius:4px; display:flex; align-items:center; padding:0 6px; font-family:var(--font-mono); font-size:9px; color:var(--bg); white-space:nowrap; overflow:hidden; transition:all 0.15s; min-width:14px; }
+[data-theme="light"] .task-bar { color:var(--surface); }
+.task-bar.done { background:var(--green); border:1px solid var(--green); }
+.task-bar.in-progress { background:linear-gradient(90deg, var(--gold) var(--prog,0%), var(--gold-dim) var(--prog,0%)); border:1px solid var(--gold); color:var(--gold); }
+.task-bar.in-progress.has-fill { color:var(--bg); }
+.task-bar.not-started { background:transparent; border:1px dashed var(--text-muted); color:var(--text-muted); }
+.task-bar.milestone { width:18px; height:18px; transform:translateY(-50%) rotate(45deg); border-radius:2px; padding:0; }
+.task-bar.milestone.done { background:var(--green); }
+.task-bar.milestone.upcoming { background:var(--amber); }
+.task-bar.milestone.critical { background:var(--red); }
+
+.task-bar.status-KEY { border-color:var(--gold); }
+.task-bar.status-DESIGN { border-color:var(--purple); }
+.task-bar.status-DEV, .task-bar.status-IMPL { border-color:var(--teal); }
+.task-bar.status-QA { border-color:var(--amber); }
+.task-bar.status-FIX { border-color:var(--red); }
+.task-bar.status-DOCS, .task-bar.status-CONTENT { border-color:var(--purple); }
+.task-bar.status-HW, .task-bar.status-PRINT, .task-bar.status-SETUP, .task-bar.status-LIVE, .task-bar.status-SUBMIT, .task-bar.status-TEARDOWN { border-color:var(--gold); }
+
+.task-bar.not-started.status-KEY { color:var(--gold); border-color:var(--gold); }
+.task-bar.not-started.status-DESIGN { color:var(--purple); border-color:var(--purple); }
+.task-bar.not-started.status-DEV, .task-bar.not-started.status-IMPL { color:var(--teal); border-color:var(--teal); }
+.task-bar.not-started.status-QA { color:var(--amber); border-color:var(--amber); }
+.task-bar.not-started.status-FIX { color:var(--red); border-color:var(--red); }
+.task-bar.not-started.status-DOCS, .task-bar.not-started.status-CONTENT { color:var(--purple); border-color:var(--purple); }
+.task-bar.not-started.status-HW, .task-bar.not-started.status-PRINT, .task-bar.not-started.status-SETUP, .task-bar.not-started.status-LIVE, .task-bar.not-started.status-SUBMIT, .task-bar.not-started.status-TEARDOWN { color:var(--gold); border-color:var(--gold); }
+
+.pill-KEY { background:var(--gold-dim); color:var(--gold); }
+.pill-DESIGN { background:var(--purple-dim); color:var(--purple); }
+.pill-DEV, .pill-IMPL { background:var(--teal-dim); color:var(--teal); }
+.pill-QA { background:var(--amber-dim); color:var(--amber); }
+.pill-FIX { background:var(--red-dim); color:var(--red); }
+.pill-DOCS, .pill-CONTENT { background:var(--purple-dim); color:var(--purple); }
+.pill-HW, .pill-PRINT, .pill-SETUP, .pill-LIVE, .pill-SUBMIT, .pill-TEARDOWN { background:var(--gold-dim); color:var(--gold); }
+
+/* Week separators (subtle vertical lines through the timeline) */
+.gantt-grid-lines { position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; display:flex; }
+.grid-line { width:var(--week-w); border-inline-end:1px solid var(--border-soft); flex-shrink:0; }
+
+/* Today line */
+.today-line { position:absolute; top:0; bottom:0; width:2px; background:var(--gold); z-index:3; pointer-events:none; }
+.today-line::before { content:'היום'; position:absolute; top:4px; inset-inline-start:6px; background:var(--gold); color:var(--bg); font-family:var(--font-hebrew); font-size:9px; font-weight:500; padding:2px 6px; border-radius:3px; white-space:nowrap; }
+
+/* ===== Detail panel ===== */
+.details-panel { position:fixed; bottom:0; inset-inline-end:0; width:380px; max-width:90vw; background:var(--card); border:1px solid var(--border); border-bottom:none; border-radius:var(--radius-lg) var(--radius-lg) 0 0; transform:translateY(100%); transition:transform 0.3s ease; z-index:20; display:flex; flex-direction:column; max-height:60vh; }
+.details-panel.open { transform:translateY(0); }
+.details-head { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:flex-start; gap:12px; }
+.details-head-text { flex:1; }
+.details-id { font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-bottom:4px; direction:ltr; }
+.details-name { font-family:var(--font-hebrew); font-size:14px; font-weight:500; color:var(--text-primary); line-height:1.4; }
+.details-close { font-size:18px; color:var(--text-muted); padding:4px 8px; }
+.details-close:hover { color:var(--gold); }
+.details-body { padding:16px 20px; overflow-y:auto; flex:1; }
+.details-row { display:flex; gap:10px; margin-bottom:10px; font-size:12px; }
+.details-row .key { font-family:var(--font-hebrew); color:var(--text-muted); min-width:80px; }
+.details-row .val { font-family:var(--font-hebrew); color:var(--text-primary); flex:1; }
+.details-row .val.mono { font-family:var(--font-mono); direction:ltr; }
+.details-notes { margin-top:12px; padding-top:12px; border-top:1px solid var(--border-soft); font-family:var(--font-hebrew); font-size:12px; color:var(--text-secondary); line-height:1.6; }
+
+/* ===== Footer ===== */
+.footer { max-width:1600px; margin:24px auto 0; padding:16px 24px; text-align:center; font-family:var(--font-hebrew); font-size:10px; color:var(--text-muted); }
+
+/* ===== Hidden helper ===== */
+[hidden] { display:none !important; }
+
+/* ===== Mobile tweaks ===== */
+@media (max-width:720px) {
+  :root { --task-col-w:200px; --week-w:46px; }
+  .stats { gap:12px; }
+  .stat { min-width:60px; }
+  .stat-value { font-size:15px; }
+  .legend { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Password Gate ===== -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-brand">Odysee<span class="dot">.</span></div>
+    <div class="gate-sub">מעקב פרויקט · Gantt</div>
+    <input class="gate-input" id="gateInput" type="password" autocomplete="current-password" autofocus placeholder="סיסמה">
+    <div class="gate-error" id="gateError"></div>
+  </div>
+</div>
+
+<!-- ===== Main App ===== -->
+<div class="app" id="app" hidden>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-name">Odysee<span class="dot">.</span></span>
+        <span class="brand-tag">תזה M.Design · HIT</span>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-value" id="statDaysBook">—</div>
+          <div class="stat-label">ימים לספר</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="statDaysShow">—</div>
+          <div class="stat-label">ימים לתערוכה</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value good" id="statDone">—</div>
+          <div class="stat-label">בוצעו</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value warn" id="statActive">—</div>
+          <div class="stat-label">בעבודה</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="statTotal">—</div>
+          <div class="stat-label">סה״כ</div>
+        </div>
+      </div>
+      <button class="theme-toggle" id="themeBtn" title="החלפת ערכת נושא">◐</button>
+    </div>
+  </header>
+
+  <div class="overall">
+    <div class="overall-label">התקדמות כוללת</div>
+    <div class="overall-bar"><div class="overall-fill" id="overallFill"></div></div>
+    <div class="overall-pct" id="overallPct">0%</div>
+  </div>
+
+  <div class="toolbar">
+    <span class="toolbar-label">סינון:</span>
+    <select id="filterPhase">
+      <option value="">כל השלבים</option>
+    </select>
+    <select id="filterStatus">
+      <option value="">כל הסטטוסים</option>
+    </select>
+    <select id="filterProgress">
+      <option value="">כל ההתקדמות</option>
+      <option value="done">בוצע (100%)</option>
+      <option value="active">בעבודה (1-99%)</option>
+      <option value="todo">לא התחיל (0%)</option>
+    </select>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>בוצע</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--gold)"></span>בעבודה</span>
+      <span class="legend-item"><span class="legend-dot" style="border:1px dashed var(--text-muted)"></span>לא התחיל</span>
+      <span class="legend-item"><span class="legend-dot" style="background:var(--amber);transform:rotate(45deg)"></span>אבן דרך</span>
+    </div>
+  </div>
+
+  <div class="gantt-wrap">
+    <div class="gantt">
+      <div class="gantt-scroll" id="ganttScroll">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <div class="footer" id="footer">—</div>
+
+</div>
+
+<!-- ===== Details panel ===== -->
+<div class="details-panel" id="detailsPanel">
+  <div class="details-head">
+    <div class="details-head-text">
+      <div class="details-id" id="detailsId">—</div>
+      <div class="details-name" id="detailsName">—</div>
+    </div>
+    <button class="details-close" id="detailsClose">×</button>
+  </div>
+  <div class="details-body" id="detailsBody"></div>
+</div>
+
+<script>
+// ===== Password gate =====
+const PASSWORD_HASH = '328364624174277353490a6ab2258fc7f064d70b3dcb0773def698de0e70b908';
+const STORAGE_KEY = 'odysee-gantt-unlocked';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function tryUnlock(pwd) {
+  const hash = await sha256(pwd);
+  return hash === PASSWORD_HASH;
+}
+
+function showApp() {
+  document.getElementById('gate').hidden = true;
+  document.getElementById('app').hidden = false;
+  render();
+}
+
+(async () => {
+  if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
+    showApp();
+    return;
+  }
+  const input = document.getElementById('gateInput');
+  const err = document.getElementById('gateError');
+  input.addEventListener('keydown', async (e) => {
+    if (e.key === 'Enter') {
+      const ok = await tryUnlock(input.value);
+      if (ok) {
+        sessionStorage.setItem(STORAGE_KEY, 'true');
+        showApp();
+      } else {
+        err.textContent = 'סיסמה שגויה';
+        input.value = '';
+        input.focus();
+      }
+    }
+  });
+})();
+
+// ===== Data =====
+const PROJECT_START = '2026-04-01';
+const PROJECT_END = '2026-08-23';
+const TODAY = '2026-05-15'; // anchored for predictable rendering
+
+const PHASES = [
+  { id:'P1', label:'Foundation',     color:'gold' },
+  { id:'P2', label:'Design',         color:'purple' },
+  { id:'P3', label:'Development',    color:'teal' },
+  { id:'P4', label:'Testing & Deploy', color:'amber' },
+  { id:'P5', label:'Documentation',  color:'purple' },
+  { id:'P6', label:'Exhibition',     color:'gold' },
+  { id:'P7', label:'Teardown',       color:'red' },
+];
+
+const TASKS = [
+  // ===== Phase 1: Foundation =====
+  { id:1,  phase:'P1', name:'רעיון, ארכיטקטורה, עיצוב סוכנים',          start:'2026-04-01', end:'2026-04-15', status:'KEY',    progress:100, notes:'הגדרת 11 הסוכנים, 4 השלבים, ארכיטקטורת המערכת. הציר המארגן של כל הפרויקט.' },
+  { id:2,  phase:'P1', name:'זהות מותג (Odysee, פלטה, טיפוגרפיה)',        start:'2026-04-05', end:'2026-04-18', status:'DESIGN', progress:100, notes:'שם הפרויקט (Odysee — שגיאת כתיב מכוונת ל-Odyssey), פלטת צבעים, טיפוגרפיה, style guide בסיסי.' },
+  { id:3,  phase:'P1', name:'UX flows ראשוניים',                          start:'2026-04-08', end:'2026-04-25', status:'KEY',    progress:100, notes:'User journeys לארבעת שלבי הטיול, מעבר מהקונספט של dashboard ל-multi-agent.' },
+
+  // ===== Phase 2: Design =====
+  { id:4,  phase:'P2', name:'Design system + tokens (CSS)',               start:'2026-04-12', end:'2026-05-05', status:'DESIGN', progress:100, notes:'CSS variables, ערכת נושא dark/light, קומפוננטות, spacing, typography.' },
+  { id:5,  phase:'P2', name:'קונספט אווטאר Tico',                         start:'2026-04-14', end:'2026-05-01', status:'DESIGN', progress:70,  notes:'הדמות הויזואלית של טיקו על המסך — voice rings, ring + wave. עוד פתוח לחידוד.' },
+  { id:6,  phase:'P2', name:'✏️ סופי לוגו (לפני הדפסת הספר)',              start:'2026-07-10', end:'2026-07-25', status:'DESIGN', progress:0,   notes:'החלטה על פרופורציות ה-O, גופן ה-wordmark, מיקום הסלוגן. נדחה במכוון כדי לאסוף יותר רפרנסים.' },
+  { id:7,  phase:'P2', name:'קונספט מרחב התערוכה (מותנה במידע מ-HIT)',     start:'2026-05-01', end:'2026-06-15', status:'KEY',    progress:40,  notes:'Layout פיזי, מיקום ציוד, flow של מבקרים. ממתין להנחיות סופיות מ-HIT — שבוע ראשון של יוני.' },
+
+  // ===== Phase 3: Development =====
+  { id:8,  phase:'P3', name:'Core infrastructure + env',                  start:'2026-05-01', end:'2026-05-10', status:'DEV',    progress:100, notes:'FastAPI, WebSockets, repo setup, dev workflow.' },
+  { id:9,  phase:'P3', name:'API integrations (Claude, ElevenLabs, Places)', start:'2026-05-05', end:'2026-05-12', status:'DEV', progress:100, notes:'Claude API, ElevenLabs TTS, Google Places, mlx-whisper STT.' },
+  { id:10, phase:'P3', name:'Voice pipeline (mlx Whisper, TTS, VAD)',     start:'2026-05-08', end:'2026-05-15', status:'DEV',    progress:100, notes:'הקלטה → VAD → Whisper מקומי (475ms) → Claude → ElevenLabs → השמעה. ב-15.5 הועבר מ-OpenAI API ל-mlx (פי 19 מהיר).' },
+  { id:11, phase:'P3', name:'AGT-01 Profiling (פרופיל מטייל)',            start:'2026-05-10', end:'2026-05-13', status:'IMPL',   progress:100, notes:'update_traveler_profile tool + פאנל פרופיל ויזואלי. 7 שדות.' },
+  { id:12, phase:'P3', name:'AGT-02 Itinerary (מסלול)',                   start:'2026-05-11', end:'2026-05-14', status:'IMPL',   progress:100, notes:'start_itinerary + add_itinerary_point + מפת Leaflet.' },
+  { id:13, phase:'P3', name:'AGT-06 Language & Culture (תרגום)',          start:'2026-05-15', end:'2026-05-15', status:'IMPL',   progress:100, notes:'translate_phrase tool + כרטיס תרגום מעל מפה מעומעמת. בילינגוואלי. אומת end-to-end ב-15.5.', milestone:true },
+  { id:14, phase:'P3', name:'AGT-04 או AGT-07 (החלטה למחר)',              start:'2026-05-16', end:'2026-05-19', status:'IMPL',   progress:0,   notes:'מועמדים: AGT-04 Location (״מה מסביב״, פשוט, demo-friendly) או AGT-07 Memory (persistence אמיתי, יום-יומיים, פחות חזותי לתערוכה). דיון פתוח.' },
+  { id:15, phase:'P3', name:'Agent visualization (11-agent radial)',      start:'2026-05-08', end:'2026-05-13', status:'DEV',    progress:100, notes:'SVG ויזואליזציה של 11 הסוכנים, 4 השלבים, voice rings, arcs פעילים.' },
+  { id:16, phase:'P3', name:'NO_TTS dev mode flag',                        start:'2026-05-15', end:'2026-05-15', status:'DEV',    progress:100, notes:'משתנה סביבה לחסכון בקרדיטים של ElevenLabs בזמן פיתוח.', milestone:true },
+  { id:17, phase:'P3', name:'Display + Control views (iPad)',             start:'2026-05-08', end:'2026-05-14', status:'DEV',    progress:100, notes:'מסך תצוגה מלא + שליטה מ-iPad דרך WebSocket.' },
+  { id:18, phase:'P3', name:'🆕 Share מסלול (QR + PDF ממותג)',             start:'2026-06-15', end:'2026-07-10', status:'DEV',    progress:0,   notes:'הזדמנות שזוהתה ב-15.5. PDF פיפליין (ReportLab), טמפלט מעוצב, snapshot של המפה, QR-קוד. 2-3 ימי עבודה אם עושים נכון. רשום כפיצ׳ר עצמאי.' },
+  { id:19, phase:'P3', name:'Three-mode theme toggle (dark/light/system)', start:'2026-07-01', end:'2026-07-08', status:'DEV',    progress:0,   notes:'מתועד ב-style guide, עוד לא מומש בשרת.' },
+  { id:20, phase:'P3', name:'Conversation interrupt mechanism (״תעצור״)', start:'2026-07-08', end:'2026-07-15', status:'DEV',    progress:0,   notes:'משתמש יוכל לקטוע את טיקו באמצע משפט בקול. כיום צריך Ctrl-C בטרמינל.' },
+
+  // ===== Phase 4: Testing & Deploy =====
+  { id:21, phase:'P4', name:'תסריטי בדיקה end-to-end',                    start:'2026-05-20', end:'2026-05-30', status:'QA',     progress:0,   notes:'אחרי הסוכן הבא — תסריט לכל סוכן ולכל אינטגרציה. הכנה לבדיקות מסודרות.' },
+  { id:22, phase:'P4', name:'בדיקות אינטגרציה מערכתיות',                  start:'2026-06-15', end:'2026-07-05', status:'QA',     progress:0,   notes:'הרצת כל הסוכנים יחד, end-to-end, לזהות edge cases.' },
+  { id:23, phase:'P4', name:'Pilot testing עם משתמשים אמיתיים',           start:'2026-07-10', end:'2026-07-22', status:'KEY',    progress:0,   notes:'5-10 מבקרים אמיתיים — לגלות הפתעות. חיוני לפני התערוכה.' },
+  { id:24, phase:'P4', name:'Bug fixes + cosmetic polish',                start:'2026-07-15', end:'2026-07-30', status:'FIX',    progress:0,   notes:'תיקונים בהתאם ל-pilot, ליטוש UX, שינויים קוסמטיים סופיים.' },
+  { id:25, phase:'P4', name:'Mac mini deployment + setup',                start:'2026-07-15', end:'2026-07-25', status:'HW',     progress:0,   notes:'התקנה מלאה על מחשב התערוכה. Python ARM-native, dependencies, audio config, fonts, autostart. הסיכון הלא-ממומן הכי גדול.' },
+  { id:26, phase:'P4', name:'odysee.me domain → site',                    start:'2026-07-01', end:'2026-07-05', status:'DEV',    progress:0,   notes:'הפניית הדומיין שנרכש (אפריל) לאתר על GitHub Pages.' },
+
+  // ===== Phase 5: Documentation (ספר) =====
+  { id:27, phase:'P5', name:'ספר — פרקים עיקריים (~70% הסתיים)',          start:'2026-04-15', end:'2026-07-15', status:'DOCS',   progress:70,  notes:'רוב הפרקים נכתבו. ממשיך במקביל לפיתוח. ספר חצי-מוכן באוגוסט שווה ספר לא-מוגש.' },
+  { id:28, phase:'P5', name:'ספר — פרק תערוכה (תלוי במידע HIT)',          start:'2026-06-08', end:'2026-07-10', status:'DOCS',   progress:0,   notes:'מותנה בקבלת ההנחיות הסופיות מ-HIT (יוני). יעודכן אחרי שנדע מה בפועל מציגים.' },
+  { id:29, phase:'P5', name:'ספר — איורים והדמיות',                       start:'2026-06-15', end:'2026-07-25', status:'DOCS',   progress:0,   notes:'הוספת הדמיות חזותיות לפרקים הקיימים.' },
+  { id:30, phase:'P5', name:'ספר — הגהה סופית + עיצוב גרפי',              start:'2026-07-25', end:'2026-08-03', status:'DOCS',   progress:0,   notes:'באפר של ~3 ימים לפני הגשה.' },
+  { id:31, phase:'P5', name:'📌 הגשת הספר',                               start:'2026-08-04', end:'2026-08-04', status:'SUBMIT', progress:0,   notes:'דדליין קשיח — 4 באוגוסט 2026. הציון של התזה.', milestone:true, critical:true },
+
+  // ===== Phase 6: Exhibition prep & live =====
+  { id:32, phase:'P6', name:'רשימת הכנת תערוכה (תלוי HIT)',               start:'2026-06-08', end:'2026-07-30', status:'KEY',    progress:0,   notes:'משימות שצוללות אחרי שנקבל הנחיות מ-HIT בשבוע הראשון של יוני: סטנדים, שילוט, הדפסות, חוויית כניסה.' },
+  { id:33, phase:'P6', name:'פוסטרים והדפסות',                            start:'2026-07-25', end:'2026-08-03', status:'PRINT',  progress:0,   notes:'הדפסת פוסטרים, מיצגים, כרטיסי הסבר. הדפסה לוקחת זמן.' },
+  { id:34, phase:'P6', name:'הרכבת חומרה ובדיקות',                        start:'2026-08-01', end:'2026-08-04', status:'HW',     progress:0,   notes:'הרכבת מסכים, רמקולים, מיקרופונים, חיבורים על Mac mini.' },
+  { id:35, phase:'P6', name:'Dry run מלא',                                start:'2026-08-03', end:'2026-08-05', status:'KEY',    progress:0,   notes:'ריצה מלאה של הדמו כמו ביום התערוכה — תזמון, voice quality, edge cases.' },
+  { id:36, phase:'P6', name:'הקמת התערוכה במכון',                         start:'2026-08-05', end:'2026-08-06', status:'SETUP',  progress:0,   notes:'התקנה במקום הסופי, חיבורים, בדיקה סופית.' },
+  { id:37, phase:'P6', name:'📍 ימי תערוכה (6-19 באוגוסט)',                start:'2026-08-06', end:'2026-08-19', status:'LIVE',   progress:0,   notes:'14 ימי תערוכה, 100-200 מבקרים, הפעלה יומית, תמיכה.' },
+  { id:38, phase:'P6', name:'תיעוד וצילום בתערוכה',                       start:'2026-08-06', end:'2026-08-19', status:'DOCS',   progress:0,   notes:'צילום, סרטון, איסוף feedback ממבקרים — לסיכום ולתיק העבודות.' },
+
+  // ===== Phase 7: Teardown =====
+  { id:39, phase:'P7', name:'פירוק וסיכום',                               start:'2026-08-20', end:'2026-08-22', status:'TEARDOWN', progress:0, notes:'פירוק ציוד, ניקוי, תיעוד סופי, archival של החומרים.' },
+];
+
+// ===== Date helpers =====
+function dateToDays(dateStr, base = PROJECT_START) {
+  const d = new Date(dateStr);
+  const b = new Date(base);
+  return Math.floor((d - b) / (1000 * 60 * 60 * 24));
+}
+function dateToWeeks(dateStr, base = PROJECT_START) {
+  return dateToDays(dateStr, base) / 7;
+}
+function dateLabel(dateStr) {
+  const d = new Date(dateStr);
+  const monthNames = ['ינו','פבר','מרץ','אפר','מאי','יונ','יול','אוג','ספט','אוק','נוב','דצמ'];
+  return `${d.getDate()} ${monthNames[d.getMonth()]}`;
+}
+function dateMonth(dateStr) {
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+function totalProjectDays() { return dateToDays(PROJECT_END) + 1; }
+function totalProjectWeeks() { return Math.ceil(totalProjectDays() / 7); }
+
+// ===== Rendering =====
+let filters = { phase:'', status:'', progress:'' };
+let collapsedPhases = new Set();
+let selectedId = null;
+
+function filteredTasks() {
+  return TASKS.filter(t => {
+    if (filters.phase && t.phase !== filters.phase) return false;
+    if (filters.status && t.status !== filters.status) return false;
+    if (filters.progress === 'done' && t.progress < 100) return false;
+    if (filters.progress === 'active' && (t.progress === 0 || t.progress === 100)) return false;
+    if (filters.progress === 'todo' && t.progress > 0) return false;
+    return true;
+  });
+}
+
+function render() {
+  renderStats();
+  renderFilters();
+  renderGantt();
+  renderFooter();
+}
+
+function renderStats() {
+  const daysToBook = dateToDays('2026-08-04', TODAY);
+  const daysToShow = dateToDays('2026-08-06', TODAY);
+  const tasks = TASKS;
+  const done = tasks.filter(t => t.progress === 100).length;
+  const active = tasks.filter(t => t.progress > 0 && t.progress < 100).length;
+
+  document.getElementById('statDaysBook').textContent = daysToBook;
+  document.getElementById('statDaysBook').className = 'stat-value ' + (daysToBook < 14 ? 'danger' : daysToBook < 30 ? 'warn' : '');
+  document.getElementById('statDaysShow').textContent = daysToShow;
+  document.getElementById('statDaysShow').className = 'stat-value ' + (daysToShow < 14 ? 'danger' : daysToShow < 30 ? 'warn' : '');
+  document.getElementById('statDone').textContent = done;
+  document.getElementById('statActive').textContent = active;
+  document.getElementById('statTotal').textContent = tasks.length;
+
+  const overall = tasks.reduce((s,t) => s + t.progress, 0) / tasks.length;
+  document.getElementById('overallFill').style.width = overall.toFixed(0) + '%';
+  document.getElementById('overallPct').textContent = overall.toFixed(0) + '%';
+}
+
+function renderFilters() {
+  const phaseSel = document.getElementById('filterPhase');
+  if (phaseSel.options.length <= 1) {
+    PHASES.forEach(p => {
+      phaseSel.add(new Option(`${p.id} — ${p.label}`, p.id));
+    });
+  }
+  const statusSel = document.getElementById('filterStatus');
+  if (statusSel.options.length <= 1) {
+    const statuses = [...new Set(TASKS.map(t => t.status))];
+    statuses.forEach(s => statusSel.add(new Option(s, s)));
+  }
+
+  phaseSel.value = filters.phase;
+  statusSel.value = filters.status;
+  document.getElementById('filterProgress').value = filters.progress;
+
+  phaseSel.onchange = (e) => { filters.phase = e.target.value; renderGantt(); };
+  statusSel.onchange = (e) => { filters.status = e.target.value; renderGantt(); };
+  document.getElementById('filterProgress').onchange = (e) => { filters.progress = e.target.value; renderGantt(); };
+}
+
+function renderGantt() {
+  const container = document.getElementById('ganttScroll');
+  const totalDays = totalProjectDays();
+  const totalWeeks = totalProjectWeeks();
+  const weekW = 54; // matches --week-w
+
+  // Build month groups
+  const monthGroups = [];
+  let currentMonth = null;
+  let currentMonthStart = 0;
+  for (let w = 0; w < totalWeeks; w++) {
+    const weekStartDate = new Date(PROJECT_START);
+    weekStartDate.setDate(weekStartDate.getDate() + w * 7);
+    const monthKey = dateMonth(weekStartDate.toISOString().slice(0,10));
+    if (monthKey !== currentMonth) {
+      if (currentMonth !== null) {
+        monthGroups.push({ month: currentMonth, weeks: w - currentMonthStart });
+      }
+      currentMonth = monthKey;
+      currentMonthStart = w;
+    }
+  }
+  monthGroups.push({ month: currentMonth, weeks: totalWeeks - currentMonthStart });
+
+  // Today line position
+  const todayWeeks = dateToWeeks(TODAY);
+  const todayLeft = todayWeeks * weekW;
+
+  const tasks = filteredTasks();
+  const tasksByPhase = {};
+  PHASES.forEach(p => tasksByPhase[p.id] = []);
+  tasks.forEach(t => { if (tasksByPhase[t.phase]) tasksByPhase[t.phase].push(t); });
+
+  const monthLabels = {
+    '2026-04': 'April',
+    '2026-05': 'May',
+    '2026-06': 'June',
+    '2026-07': 'July',
+    '2026-08': 'August',
+  };
+
+  let html = '';
+
+  // Header
+  html += `<div class="gantt-header">
+    <div class="gantt-header-tasks">משימה</div>
+    <div class="gantt-header-timeline">
+      <div class="gantt-months">${monthGroups.map(g =>
+        `<div class="gantt-month" style="width:${g.weeks * weekW}px">${monthLabels[g.month] || g.month}</div>`
+      ).join('')}</div>
+      <div class="gantt-weeks">${Array.from({length: totalWeeks}, (_, w) => {
+        const wd = new Date(PROJECT_START);
+        wd.setDate(wd.getDate() + w * 7);
+        return `<div class="gantt-week">${wd.getDate()}/${wd.getMonth()+1}</div>`;
+      }).join('')}</div>
+    </div>
+  </div>`;
+
+  // Body
+  html += `<div class="gantt-body" style="position:relative">`;
+
+  // Grid lines (subtle vertical lines per week)
+  html += `<div class="gantt-grid-lines" style="inset-inline-start:var(--task-col-w); width:${totalWeeks * weekW}px">`;
+  for (let w = 0; w < totalWeeks; w++) {
+    html += `<div class="grid-line"></div>`;
+  }
+  html += `</div>`;
+
+  // Today line
+  html += `<div class="today-line" style="inset-inline-start:calc(var(--task-col-w) + ${todayLeft}px)"></div>`;
+
+  // Phase groups
+  PHASES.forEach(phase => {
+    const phaseTasks = tasksByPhase[phase.id];
+    if (phaseTasks.length === 0) return;
+
+    const phaseProgress = phaseTasks.reduce((s, t) => s + t.progress, 0) / phaseTasks.length;
+    const phaseDone = phaseTasks.filter(t => t.progress === 100).length;
+    const isCollapsed = collapsedPhases.has(phase.id);
+
+    html += `<div class="phase-group ${isCollapsed ? 'collapsed' : ''}" data-phase="${phase.id}">`;
+    html += `<div class="phase-row" onclick="togglePhase('${phase.id}')">
+      <div class="phase-row-name">
+        <span class="phase-row-collapse">▼</span>
+        <span>${phase.id} · ${phase.label}</span>
+      </div>
+      <div class="phase-row-meta" style="min-width:${totalWeeks * weekW}px">
+        <span>${phaseDone}/${phaseTasks.length} משימות</span>
+        <span class="phase-row-pct">${phaseProgress.toFixed(0)}%</span>
+      </div>
+    </div>`;
+
+    html += `<div class="phase-tasks">`;
+    phaseTasks.forEach(task => {
+      const startW = dateToWeeks(task.start);
+      const endW = dateToWeeks(task.end);
+      const left = startW * weekW;
+      const width = Math.max((endW - startW) * weekW, 16);
+
+      const isMilestone = task.milestone === true || task.start === task.end;
+      let barClass = 'task-bar';
+      if (isMilestone) {
+        barClass += ' milestone';
+        if (task.progress === 100) barClass += ' done';
+        else if (task.critical) barClass += ' critical';
+        else barClass += ' upcoming';
+      } else {
+        if (task.progress === 100) barClass += ' done';
+        else if (task.progress > 0) {
+          barClass += ' in-progress';
+          if (task.progress > 30) barClass += ' has-fill';
+        }
+        else barClass += ' not-started';
+        barClass += ' status-' + task.status;
+      }
+
+      const barStyle = isMilestone
+        ? `inset-inline-start:${left}px;`
+        : `inset-inline-start:${left}px; width:${width}px; --prog:${task.progress}%;`;
+
+      const barText = isMilestone ? '' :
+        (task.progress > 0 && task.progress < 100 ? task.progress + '%' :
+         task.progress === 100 ? '✓' : '');
+
+      html += `<div class="task-row ${selectedId === task.id ? 'selected' : ''}" onclick="selectTask(${task.id})" data-id="${task.id}">
+        <div class="task-name">
+          <span class="task-status-pill pill-${task.status}">${task.status}</span>
+          <span class="task-name-text">${task.name}</span>
+        </div>
+        <div class="task-timeline" style="min-width:${totalWeeks * weekW}px">
+          <div class="${barClass}" style="${barStyle}" title="${task.name}">${barText}</div>
+        </div>
+      </div>`;
+    });
+    html += `</div>`; // .phase-tasks
+    html += `</div>`; // .phase-group
+  });
+
+  html += `</div>`; // .gantt-body
+  container.innerHTML = html;
+}
+
+function renderFooter() {
+  const now = new Date();
+  document.getElementById('footer').textContent =
+    `Odysee · ${TASKS.length} משימות · עודכן ${now.toISOString().slice(0,10)} · המידע נשמר ב-session storage`;
+}
+
+function togglePhase(phaseId) {
+  if (collapsedPhases.has(phaseId)) collapsedPhases.delete(phaseId);
+  else collapsedPhases.add(phaseId);
+  renderGantt();
+}
+
+function selectTask(id) {
+  selectedId = id;
+  const task = TASKS.find(t => t.id === id);
+  if (!task) return;
+  const phase = PHASES.find(p => p.id === task.phase);
+
+  document.getElementById('detailsId').textContent = `#${task.id} · ${task.status}`;
+  document.getElementById('detailsName').textContent = task.name;
+  document.getElementById('detailsBody').innerHTML = `
+    <div class="details-row"><span class="key">שלב</span><span class="val">${phase.id} — ${phase.label}</span></div>
+    <div class="details-row"><span class="key">התחלה</span><span class="val mono">${task.start}</span></div>
+    <div class="details-row"><span class="key">סיום</span><span class="val mono">${task.end}</span></div>
+    <div class="details-row"><span class="key">משך</span><span class="val mono">${Math.max(1, dateToDays(task.end, task.start) + 1)} ימים</span></div>
+    <div class="details-row"><span class="key">התקדמות</span><span class="val mono">${task.progress}%</span></div>
+    <div class="details-notes">${task.notes}</div>
+  `;
+  document.getElementById('detailsPanel').classList.add('open');
+  renderGantt();
+}
+
+document.getElementById('detailsClose').onclick = () => {
+  document.getElementById('detailsPanel').classList.remove('open');
+  selectedId = null;
+  renderGantt();
+};
+
+// ===== Theme toggle =====
+document.getElementById('themeBtn').onclick = () => {
+  const cur = document.documentElement.dataset.theme;
+  document.documentElement.dataset.theme = cur === 'dark' ? 'light' : 'dark';
+};
+
+// Scroll to today on first load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const scroll = document.getElementById('ganttScroll');
+    if (!scroll) return;
+    const todayWeeks = dateToWeeks(TODAY);
+    const target = todayWeeks * 54 - 200; // offset to show some context before
+    // RTL: scrollLeft is negative
+    if (document.documentElement.dir === 'rtl') {
+      scroll.scrollLeft = -target;
+    } else {
+      scroll.scrollLeft = target;
+    }
+  }, 100);
+});
+</script>
+
+</body>
+</html>
