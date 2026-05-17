@@ -1,0 +1,116 @@
+/* odysee-tokens.css — Brand tokens for Odysee.
+   Drop into web, native (via codegen), or paste into Figma variables.
+   ---------------------------------------------------------------------
+   Two cascades: :root for light, [data-theme="dark"] for dark UI. */
+
+:root {
+  /* ─── Core palette ──────────────────────────────────────────────── */
+  --od-navy:       #0C1F3F;   /* Odysee Navy — primary ink           */
+  --od-navy-deep:  #08152C;   /* Pressed / shadow                     */
+  --od-red:        #B85A3E;   /* Terracotta — accent, CTAs        */
+  --od-red-deep:   #8E3D24;   /* Pressed terracotta                          */
+  --od-ivory:      #F6F4EF;   /* Page tone                            */
+  --od-paper:      #FFFFFF;   /* Pure white                           */
+
+  /* ─── Neutrals ──────────────────────────────────────────────────── */
+  --od-mist-50:    #F4F6FA;
+  --od-mist-100:   #E7EBF2;
+  --od-mist-200:   #CDD4E0;
+  --od-mist-300:   #A6AFC0;
+  --od-mist-500:   #6B7588;
+  --od-mist-700:   #3D475A;
+  --od-mist-900:   #0E1B33;
+
+  /* ─── Semantic (light) ──────────────────────────────────────────── */
+  --od-bg:         var(--od-paper);
+  --od-bg-alt:     var(--od-ivory);
+  --od-bg-sunken:  var(--od-mist-50);
+  --od-fg:         var(--od-navy);
+  --od-fg-muted:   var(--od-mist-700);
+  --od-fg-subtle:  var(--od-mist-500);
+  --od-border:     var(--od-mist-100);
+  --od-border-strong: var(--od-mist-200);
+
+  --od-accent:     var(--od-red);
+  --od-accent-fg:  var(--od-paper);
+  --od-link:       var(--od-red);
+
+  --od-success:    #1F8A5B;
+  --od-warning:    #C58A1A;
+  --od-danger:     var(--od-red);
+  --od-info:       #2A6FDB;
+
+  /* ─── Type ──────────────────────────────────────────────────────── */
+  --od-font-sans:  'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --od-font-mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+
+  --od-fw-regular: 400;
+  --od-fw-medium:  500;
+  --od-fw-semi:    600;
+  --od-fw-bold:    700;
+  --od-fw-heavy:   800;
+
+  /* Web type scale */
+  --od-text-display: 64px;
+  --od-text-title:   40px;
+  --od-text-h1:      32px;
+  --od-text-h2:      24px;
+  --od-text-h3:      20px;
+  --od-text-body:    16px;
+  --od-text-small:   14px;
+  --od-text-caption: 12px;
+
+  --od-leading-tight: 1.1;
+  --od-leading-snug:  1.25;
+  --od-leading-body:  1.55;
+  --od-leading-loose: 1.75;
+
+  --od-track-tight:  -0.035em;
+  --od-track-normal: -0.005em;
+  --od-track-caps:    0.30em;
+
+  /* ─── Spacing (8pt grid) ────────────────────────────────────────── */
+  --od-s-1: 4px;
+  --od-s-2: 8px;
+  --od-s-3: 12px;
+  --od-s-4: 16px;
+  --od-s-5: 24px;
+  --od-s-6: 32px;
+  --od-s-7: 48px;
+  --od-s-8: 64px;
+  --od-s-9: 96px;
+
+  /* ─── Radius ────────────────────────────────────────────────────── */
+  --od-r-sm:   6px;
+  --od-r-md:   10px;
+  --od-r-lg:   16px;
+  --od-r-xl:   24px;
+  --od-r-pill: 999px;
+  /* iOS app-icon squircle uses 22.37% of the icon edge */
+  --od-r-app:  22.37%;
+
+  /* ─── Elevation ─────────────────────────────────────────────────── */
+  --od-shadow-sm: 0 1px 2px rgba(12,31,63,0.06), 0 1px 1px rgba(12,31,63,0.04);
+  --od-shadow-md: 0 6px 16px -6px rgba(12,31,63,0.16), 0 2px 4px rgba(12,31,63,0.04);
+  --od-shadow-lg: 0 24px 48px -16px rgba(12,31,63,0.22), 0 6px 12px rgba(12,31,63,0.06);
+
+  /* ─── Motion ────────────────────────────────────────────────────── */
+  --od-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --od-ease-in:  cubic-bezier(0.7, 0, 0.84, 0);
+  --od-dur-fast: 140ms;
+  --od-dur-base: 240ms;
+  --od-dur-slow: 480ms;
+}
+
+/* ─── Dark theme ──────────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --od-bg:         var(--od-navy);
+  --od-bg-alt:     var(--od-navy-deep);
+  --od-bg-sunken:  #060F22;
+  --od-fg:         var(--od-paper);
+  --od-fg-muted:   #B5BCC9;
+  --od-fg-subtle:  #6B7588;
+  --od-border:     rgba(255,255,255,0.10);
+  --od-border-strong: rgba(255,255,255,0.18);
+  --od-link:       #FF6A5F;
+}

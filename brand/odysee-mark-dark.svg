@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Odysee">
+  <title>Odysee</title>
+  <desc>Odysee primary mark — white roundel for use on Odysee Navy or dark backgrounds. Dotted trail at -32 degrees with a terracotta destination dot.</desc>
+  <circle cx="50" cy="50" r="45.4" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="9.2"/>
+  <g transform="rotate(-32 50 50)">
+    <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+    <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+    <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+  </g>
+</svg>

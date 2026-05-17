@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Odysee — Lockup Examples</title>
+<link rel="stylesheet" href="odysee-tokens.css">
+<style>
+  body {
+    margin: 0;
+    padding: 48px;
+    font-family: var(--od-font-sans);
+    background: var(--od-paper);
+    color: var(--od-navy);
+  }
+  .section { margin-bottom: 64px; }
+  .section h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--od-mist-500);
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .stage {
+    padding: 48px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .stage--ivory { background: var(--od-ivory); }
+  .stage--navy  { background: var(--od-navy); }
+
+  /* ─── Wordmark ─────────────────────────────────────────────────── */
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0.9;
+  }
+  .wordmark__o {
+    width: 1.06em;
+    height: 1.06em;
+    display: block;
+  }
+  .wordmark__rest {
+    font-family: var(--od-font-sans);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    margin-left: -0.04em;
+  }
+  .wordmark--light .wordmark__rest { color: var(--od-navy); }
+  .wordmark--dark  .wordmark__rest { color: var(--od-paper); }
+
+  /* ─── Stacked ──────────────────────────────────────────────────── */
+  .stacked {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+  .stacked__mark { width: 160px; height: 160px; }
+  .stacked__word {
+    font-family: var(--od-font-sans);
+    font-weight: 800;
+    font-size: 56px;
+    letter-spacing: -0.035em;
+    line-height: 0.9;
+  }
+  .stacked__tagline {
+    font-family: var(--od-font-sans);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.30em;
+    text-transform: uppercase;
+  }
+  .stacked--light .stacked__word,
+  .stacked--light .stacked__tagline { color: var(--od-navy); }
+  .stacked--dark .stacked__word { color: var(--od-paper); }
+  .stacked--dark .stacked__tagline { color: var(--od-paper); opacity: 0.88; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     1) WORDMARK — roundel replaces the O of Odysee
+     The .wordmark__o SVG inlines the mark (so it inherits no remote files).
+     Size the whole lockup with font-size on .wordmark.
+     ════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2>Wordmark · light</h2>
+  <div class="stage stage--ivory">
+    <span class="wordmark wordmark--light" style="font-size:72px">
+      <svg class="wordmark__o" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="45.4" fill="#FFFFFF" stroke="#0C1F3F" stroke-width="9.2"/>
+        <g transform="rotate(-32 50 50)">
+          <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+          <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+          <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+        </g>
+      </svg>
+      <span class="wordmark__rest">dysee</span>
+    </span>
+  </div>
+
+  <h2 style="margin-top:32px">Wordmark · dark</h2>
+  <div class="stage stage--navy">
+    <span class="wordmark wordmark--dark" style="font-size:72px">
+      <svg class="wordmark__o" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="45.4" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="9.2"/>
+        <g transform="rotate(-32 50 50)">
+          <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+          <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+          <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+        </g>
+      </svg>
+      <span class="wordmark__rest">dysee</span>
+    </span>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════
+     2) STACKED — mark + full Odysee + tagline. Posters, covers, hero.
+     ════════════════════════════════════════════════════════════════ -->
+<section class="section">
+  <h2>Stacked · light</h2>
+  <div class="stage stage--ivory">
+    <div class="stacked stacked--light">
+      <svg class="stacked__mark" viewBox="0 0 100 100" aria-label="Odysee">
+        <circle cx="50" cy="50" r="45.4" fill="#FFFFFF" stroke="#0C1F3F" stroke-width="9.2"/>
+        <g transform="rotate(-32 50 50)">
+          <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+          <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+          <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+        </g>
+      </svg>
+      <span class="stacked__word">Odysee</span>
+      <span class="stacked__tagline">Your&nbsp;Personal&nbsp;Travel&nbsp;Companion</span>
+    </div>
+  </div>
+
+  <h2 style="margin-top:32px">Stacked · dark</h2>
+  <div class="stage stage--navy">
+    <div class="stacked stacked--dark">
+      <svg class="stacked__mark" viewBox="0 0 100 100" aria-label="Odysee">
+        <circle cx="50" cy="50" r="45.4" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="9.2"/>
+        <g transform="rotate(-32 50 50)">
+          <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+          <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+          <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+        </g>
+      </svg>
+      <span class="stacked__word">Odysee</span>
+      <span class="stacked__tagline">Your&nbsp;Personal&nbsp;Travel&nbsp;Companion</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
