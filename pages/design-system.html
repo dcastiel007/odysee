@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl" data-theme="dark">
+<html lang="he" dir="rtl" data-theme="system">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Odysee — מערכת עיצוב</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Noto+Sans+Hebrew:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../brand/odysee-tokens.css" />
   <link rel="stylesheet" href="../assets/css/site.css" />
 
@@ -507,6 +504,76 @@ body {
   .main { margin-left: 0; padding: 24px 20px; }
   .font-specimen, .card-showcase, .motion-demos { grid-template-columns: 1fr; }
 }
+/* ─── Brand mark (injected by phase2d) ─── */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 2px;
+  line-height: 0.9;
+}
+.brand-mark__o {
+  width: 2.4em;
+  height: 2.4em;
+  display: block;
+  flex-shrink: 0;
+}
+.brand-mark__text {
+  font-family: var(--od-font-sans);
+  font-weight: 800;
+  font-size: 42px;
+  letter-spacing: -0.035em;
+  color: var(--od-fg);
+}
+.site-header {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--od-border, var(--border));
+}
+.site-header__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.site-header__tagline {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--od-fg-subtle, var(--text-muted));
+  font-weight: 500;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+.site-nav {
+  list-style: none;
+  display: flex;
+  gap: 28px;
+  margin: 0; padding: 0;
+}
+.site-nav a {
+  text-decoration: none;
+  color: var(--od-fg, var(--text-primary));
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+.site-nav a:hover, .site-nav a.active { opacity: 1; color: var(--od-red, var(--gold)); }
+.brand-mark__o .ring        { stroke: var(--od-navy, var(--gold)); }
+.brand-mark__o .inner       { fill:   #FFFFFF; }
+.brand-mark__o .trail       { stroke: var(--od-navy, var(--gold)); }
+.brand-mark__o .cap-start   { fill:   var(--od-navy, var(--gold)); }
+.brand-mark__o .cap-end     { fill:   var(--od-red, var(--teal)); }
+[data-theme="dark"] .brand-mark__o .ring { stroke: var(--od-paper, var(--text-primary)); }
+
+/* Override existing fixed theme-bar so the new site-header fits above content */
+.theme-bar { position: static !important; padding: 6px 16px !important; justify-content: flex-end !important; }
+.theme-bar .brand { display: none !important; }
+.layout { padding-top: 0 !important; }
+.sidenav { top: 130px !important; }
+
 </style>
 </head>
 <body>
@@ -521,6 +588,35 @@ body {
   </div>
 </div>
 
+<!-- Top header (injected by phase2d — for cross-site nav consistency) -->
+<header class="site-header" dir="ltr">
+  <div class="site-header__brand">
+    <a href="../index.html" class="brand-mark" aria-label="Odysee — home">
+      <svg class="brand-mark__o" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="inner" cx="50" cy="50" r="45.4"/>
+        <circle class="ring"  cx="50" cy="50" r="45.4" fill="none" stroke-width="9.2"/>
+        <g transform="rotate(-32 50 50)">
+          <path class="trail" d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+          <circle class="cap-start" cx="26" cy="50" r="3.6"/>
+          <circle class="cap-end"   cx="74" cy="50" r="5.4"/>
+        </g>
+      </svg>
+      <span class="brand-mark__text">dysee</span>
+    </a>
+    <span class="site-header__tagline">Design System</span>
+  </div>
+  <nav>
+    <ul class="site-nav">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="agents.html">Architecture</a></li>
+      <li><a href="ux-flows.html">UX Flows</a></li>
+      <li><a href="onboarding.html">Onboarding</a></li>
+      <li><a href="design-system.html" class="active">Design System</a></li>
+      <li><a href="book.html">Book</a></li>
+      <li><a href="exhibition.html">Exhibition</a></li>
+    </ul>
+  </nav>
+</header>
 <div class="layout">
 
   <!-- Side nav -->
@@ -1048,8 +1144,8 @@ body {
       <div class="section-eyebrow">13</div>
       <h2 class="section-title">CSS Tokens Reference</h2>
       <div class="section-title-he">מדריך משתני CSS</div>
-      <p class="section-desc">Complete variable list — import <code style="font-family:var(--font-mono);color:var(--teal);font-size:13px">odysee-design.css</code> in every page.</p>
-      <p class="section-desc-he">רשימת המשתנים המלאה — ייבא את <code style="font-family:var(--font-mono);color:var(--teal);font-size:12px">odysee-design.css</code> בכל עמוד.</p>
+      <p class="section-desc">Complete variable list — import <code style="font-family:var(--font-mono);color:var(--teal);font-size:13px">brand/odysee-tokens.css</code> + <code style="font-family:var(--font-mono);color:var(--teal);font-size:13px">assets/css/site.css</code> in every page.</p>
+      <p class="section-desc-he">רשימת המשתנים המלאה — ייבא את <code style="font-family:var(--font-mono);color:var(--teal);font-size:12px">brand/odysee-tokens.css</code> + <code style="font-family:var(--font-mono);color:var(--teal);font-size:12px">assets/css/site.css</code> בכל עמוד.</p>
       <div class="section-divider"></div>
 
       <div class="code-block">

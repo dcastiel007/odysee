@@ -10,6 +10,32 @@
 <link rel="stylesheet" href="assets/css/site.css">
 
 <style>
+/* Footer secondary nav */
+.site-footer__secondary {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.site-footer__secondary a {
+  color: var(--od-fg);
+  opacity: 0.55;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s, color 0.2s;
+}
+.site-footer__secondary a:hover {
+  opacity: 1;
+  color: var(--od-red);
+}
+.site-footer__secondary span[aria-hidden] {
+  color: var(--od-fg);
+  opacity: 0.3;
+}
+
 /* ─── Page-specific styles (uses --od-* tokens) ─────────────────── */
 
 /* Wordmark in header — mark replaces the O of Odysee */
@@ -350,12 +376,12 @@
   <nav>
     <ul class="site-nav">
       <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="pages/project-plan.html">Project Plan</a></li>
       <li><a href="pages/agents.html">Architecture</a></li>
       <li><a href="pages/ux-flows.html">UX Flows</a></li>
+      <li><a href="pages/onboarding.html">Onboarding</a></li>
       <li><a href="pages/design-system.html">Design System</a></li>
+      <li><a href="pages/book.html">Book</a></li>
       <li><a href="pages/exhibition.html">Exhibition</a></li>
-      <li><a href="docs/odysee-thesis.pdf" target="_blank" class="btn btn-outline">Project Book ↗</a></li>
     </ul>
   </nav>
 </header>
@@ -374,7 +400,7 @@
       and the exhibition installation.
     </p>
     <div class="hero__ctas">
-      <a href="docs/odysee-thesis.pdf" target="_blank" class="btn btn-primary">Read the project book</a>
+      <a href="pages/book.html" class="btn btn-primary">Read the project book</a>
       <a href="pages/agents.html" class="btn btn-outline">View architecture</a>
     </div>
   </div>
@@ -460,45 +486,6 @@
     <p class="hero__visual-caption" id="agent-constellation-caption">
       <strong>11 agents</strong> &middot; 4 stages &middot; <strong>1 evolving companion</strong>
     </p>
-  </div>
-</section>
-
-<!-- ─── Timeline ──────────────────────────────────────────── -->
-<section class="section">
-  <div class="section__head">
-    <div class="section__label">Timeline</div>
-    <h2 class="section__title">From concept to exhibition</h2>
-    <p class="section__lead">
-      Five months of research, design, build, and test &mdash; submitted to HIT on
-      August 4, 2026, then exhibited August 6&ndash;19.
-    </p>
-  </div>
-
-  <div class="phase-grid">
-    <div class="phase-card" data-active="false">
-      <div class="phase-card__num">Phase 1</div>
-      <div class="phase-card__name">Foundation</div>
-      <div class="phase-card__dates">Apr 1 &mdash; Apr 20</div>
-      <div class="phase-card__bar"><div style="width:100%"></div></div>
-    </div>
-    <div class="phase-card" data-active="false">
-      <div class="phase-card__num">Phase 2</div>
-      <div class="phase-card__name">Design</div>
-      <div class="phase-card__dates">Apr 12 &mdash; May 25</div>
-      <div class="phase-card__bar"><div style="width:100%"></div></div>
-    </div>
-    <div class="phase-card" data-active="true">
-      <div class="phase-card__num">Phase 3</div>
-      <div class="phase-card__name">Development</div>
-      <div class="phase-card__dates">May 1 &mdash; Jul 5</div>
-      <div class="phase-card__bar"><div style="width:48%"></div></div>
-    </div>
-    <div class="phase-card">
-      <div class="phase-card__num">Phases 4&ndash;7</div>
-      <div class="phase-card__name">Testing &rarr; Exhibition</div>
-      <div class="phase-card__dates">Jul 1 &mdash; Aug 19</div>
-      <div class="phase-card__bar"><div style="width:0%"></div></div>
-    </div>
   </div>
 </section>
 
@@ -591,14 +578,54 @@
   </p>
 </section>
 
+<!-- ─── Timeline ──────────────────────────────────────────── -->
+<section class="section">
+  <div class="section__head">
+    <div class="section__label">Timeline</div>
+    <h2 class="section__title">From concept to exhibition</h2>
+    <p class="section__lead">
+      Five months of research, design, build, and test &mdash; submitted to HIT on
+      August 4, 2026, then exhibited August 6&ndash;19.
+    </p>
+  </div>
+
+  <div class="phase-grid">
+    <div class="phase-card" data-active="false">
+      <div class="phase-card__num">Phase 1</div>
+      <div class="phase-card__name">Foundation</div>
+      <div class="phase-card__dates">Apr 1 &mdash; Apr 20</div>
+      <div class="phase-card__bar"><div style="width:100%"></div></div>
+    </div>
+    <div class="phase-card" data-active="false">
+      <div class="phase-card__num">Phase 2</div>
+      <div class="phase-card__name">Design</div>
+      <div class="phase-card__dates">Apr 12 &mdash; May 25</div>
+      <div class="phase-card__bar"><div style="width:100%"></div></div>
+    </div>
+    <div class="phase-card" data-active="true">
+      <div class="phase-card__num">Phase 3</div>
+      <div class="phase-card__name">Development</div>
+      <div class="phase-card__dates">May 1 &mdash; Jul 5</div>
+      <div class="phase-card__bar"><div style="width:48%"></div></div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card__num">Phases 4&ndash;7</div>
+      <div class="phase-card__name">Testing &rarr; Exhibition</div>
+      <div class="phase-card__dates">Jul 1 &mdash; Aug 19</div>
+      <div class="phase-card__bar"><div style="width:0%"></div></div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── Footer ────────────────────────────────────────────── -->
 <footer class="site-footer">
   <div class="site-footer__left">
-    David Castiel &middot; M.Design Final Project &middot; HIT 2026
+    David Castiel · M.Design Final Project · HIT 2026
+    <div class="site-footer__secondary">
+      <a href="pages/project-plan.html">Project Plan</a><span aria-hidden="true">·</span><a href="pages/odysee-prototype.html">Prototype</a>
+    </div>
   </div>
-  <div class="site-footer__right">
-    Brand v1.0 &middot; odysee.me
-  </div>
+  <div class="site-footer__right">Brand v1.0 · odysee.me</div>
 </footer>
 
 <!-- ─── Theme toggle ──────────────────────────────────────── -->

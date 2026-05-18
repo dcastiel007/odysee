@@ -7,6 +7,74 @@
 <link rel="stylesheet" href="../brand/odysee-tokens.css" />
   <link rel="stylesheet" href="../assets/css/site.css" />
 <style>
+/* ─── Brand mark in header (injected by phase2b) ─── */
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 2px;
+  line-height: 0.9;
+}
+.brand-mark__o {
+  width: 2.4em;
+  height: 2.4em;
+  display: block;
+  flex-shrink: 0;
+}
+.brand-mark__text {
+  font-family: var(--od-font-sans);
+  font-weight: 800;
+  font-size: 42px;
+  letter-spacing: -0.035em;
+  color: var(--od-fg);
+}
+.site-header { gap: 32px; align-items: center; }
+.site-header__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.site-header__tagline {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--od-fg-subtle);
+  font-weight: 500;
+  margin-top: 2px;
+  margin-left: 2px;
+}
+.brand-mark__o .ring        { stroke: var(--od-navy); }
+.brand-mark__o .inner       { fill:   #FFFFFF; }
+.brand-mark__o .trail       { stroke: var(--od-navy); }
+.brand-mark__o .cap-start   { fill:   var(--od-navy); }
+.brand-mark__o .cap-end     { fill:   var(--od-red); }
+[data-theme="dark"] .brand-mark__o .ring { stroke: var(--od-paper); }
+/* Footer secondary nav */
+.site-footer__secondary {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.site-footer__secondary a {
+  color: var(--od-fg);
+  opacity: 0.55;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s, color 0.2s;
+}
+.site-footer__secondary a:hover {
+  opacity: 1;
+  color: var(--od-red);
+}
+.site-footer__secondary span[aria-hidden] {
+  color: var(--od-fg);
+  opacity: 0.3;
+}
+
   .cover { min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:100px 40px 80px;background:var(--bg);border-bottom:1px solid var(--border);position:relative;overflow:hidden; }
   .cover::before { content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(200,169,110,0.05) 0%,transparent 65%);top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none; }
   .cover-tag   { font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;font-family:var(--font-latin); }
@@ -103,23 +171,6 @@
     .cover { padding:80px 24px 60px; }
   }
 
-  /* ── Language toggle ─────────────────────────────────────────────────── */
-  .lang-toggle {
-    display: flex; gap: 2px;
-    margin-right: 8px;
-    border-right: 1px solid var(--border);
-    padding-right: 10px;
-  }
-  .lang-btn {
-    padding: 4px 11px; border-radius: 20px;
-    border: 1px solid var(--border); background: transparent;
-    color: var(--text-secondary); font-family: var(--font-latin);
-    font-size: 11px; font-weight: 500; cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .lang-btn:hover { border-color: var(--gold); color: var(--gold); }
-  .lang-btn.active { background: var(--gold); border-color: var(--gold); color: #0A0A0F; }
-
   /* Mobile scroll for all tables */
   .ph-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   /* Prevent horizontal overflow on small screens */
@@ -130,30 +181,37 @@
 <body>
 
   <div class="theme-bar">
-    <span class="theme-bar__label"><span data-he="ערכת נושא" data-en="Theme">ערכת נושא</span></span>
-    <button class="theme-btn" onclick="setTheme('light')"  id="btn-light">☀ <span data-he="בהיר" data-en="Light">בהיר</span></button>
-    <button class="theme-btn" onclick="setTheme('system')" id="btn-system">⊙ <span data-he="מערכת" data-en="System">מערכת</span></button>
-    <button class="theme-btn" onclick="setTheme('dark')"   id="btn-dark">● <span data-he="כהה" data-en="Dark">כהה</span></button>
-    <div class="lang-toggle">
-      <button class="lang-btn" id="btn-he" onclick="setLang('he')">עב</button>
-      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
-    </div>
+    <span class="theme-bar__label"><span data-he="ערכת נושא" data-en="Theme">Theme</span></span>
+    <button class="theme-btn" onclick="setTheme('light')"  id="btn-light">☀ <span data-he="בהיר" data-en="Light">Light</span></button>
+    <button class="theme-btn" onclick="setTheme('system')" id="btn-system">⊙ <span data-he="מערכת" data-en="System">System</span></button>
+    <button class="theme-btn" onclick="setTheme('dark')"   id="btn-dark">● <span data-he="כהה" data-en="Dark">Dark</span></button>
   </div>
 
 <header class="site-header">
-  <div>
-    <div class="site-logo">Odysee</div>
-    <div class="site-tagline" data-he="קונסיירז׳ נסיעות AI אישי" data-en="Personal AI Travel Concierge">Personal AI Travel Concierge</div>
+  <div class="site-header__brand">
+    <a href="../index.html" class="brand-mark" aria-label="Odysee — home">
+      <svg class="brand-mark__o" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="inner" cx="50" cy="50" r="45.4"/>
+        <circle class="ring"  cx="50" cy="50" r="45.4" fill="none" stroke-width="9.2"/>
+        <g transform="rotate(-32 50 50)">
+          <path class="trail" d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+          <circle class="cap-start" cx="26" cy="50" r="3.6"/>
+          <circle class="cap-end"   cx="74" cy="50" r="5.4"/>
+        </g>
+      </svg>
+      <span class="brand-mark__text">dysee</span>
+    </a>
+    <span class="site-header__tagline">System Architecture</span>
   </div>
   <nav>
     <ul class="site-nav">
-      <li><a href="../index.html"      data-he="בית"            data-en="Home">Home</a></li>
-      <li><a href="project-plan.html"  data-he="תכנית הפרויקט" data-en="Project Plan">Project Plan</a></li>
-      <li><a href="agents.html" class="active" data-he="ארכיטקטורה" data-en="Architecture">Architecture</a></li>
-      <li><a href="ux-flows.html"      data-he="UX Flows"      data-en="UX Flows">UX Flows</a></li>
-      <li><a href="onboarding.html"      data-he="Onboarding"  data-en="Onboarding">Onboarding</a></li>
-      <li><a href="design-system.html" data-he="Design System"  data-en="Design System">Design System</a></li>
-      <li><a href="exhibition.html"    data-he="תערוכה"         data-en="Exhibition">Exhibition</a></li>
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="agents.html" class="active">Architecture</a></li>
+      <li><a href="ux-flows.html">UX Flows</a></li>
+      <li><a href="onboarding.html">Onboarding</a></li>
+      <li><a href="design-system.html">Design System</a></li>
+      <li><a href="book.html">Book</a></li>
+      <li><a href="exhibition.html">Exhibition</a></li>
     </ul>
   </nav>
 </header>
@@ -161,7 +219,7 @@
 <!-- Cover -->
 <div class="cover">
   <div class="cover-tag"  >Architecture Document · v2.0 · 2026</div>
-  <div class="cover-title">t<span>.</span>Co<span>.</span></div>
+  <div class="cover-title">Odysee</div>
   <div class="cover-sub"  >Multi-Agent Architecture for Hyper-Personalized Travel</div>
   <div class="cover-rule"></div>
   <svg width="540" height="320" viewBox="0 0 540 320" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -560,8 +618,13 @@
 </div>
 
 <footer class="site-footer">
-  <div class="site-footer__left">David Castiel · M.Design in Design for Technological Environments<br>HIT Holon Institute of Technology · Submission: August 4, 2026</div>
-  <div class="site-footer__right">Odysee · v2.0 · 2026</div>
+  <div class="site-footer__left">
+    David Castiel · M.Design Final Project · HIT 2026
+    <div class="site-footer__secondary">
+      <a href="project-plan.html">Project Plan</a><span aria-hidden="true">·</span><a href="odysee-prototype.html">Prototype</a>
+    </div>
+  </div>
+  <div class="site-footer__right">Odysee · Architecture · v2.0 · 2026</div>
 </footer>
 
 <script>
