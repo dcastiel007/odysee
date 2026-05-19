@@ -450,7 +450,11 @@ pre {
   .theme-btn { padding: 4px 10px; font-size: 10px; }
   .lang-btn  { padding: 3px 9px;  font-size: 10px; }
 
-  .site-header {
+  /* Bumped to header.site-header to defeat the page-level inline
+     `.site-header { align-items: center }` overrides in agents.html
+     and other pages. Equal specificity rules lose to inline styles
+     that come later in document order. */
+  header.site-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
