@@ -1,510 +1,22 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl" data-theme="system">
+<html lang="en" dir="ltr" data-theme="system">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odysee — מערכת עיצוב</title>
+<title>Odysee — Design System — v1.0</title>
 <link rel="stylesheet" href="../brand/odysee-tokens.css" />
-  <link rel="stylesheet" href="../assets/css/site.css" />
-
+<link rel="stylesheet" href="../assets/css/site.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&family=Heebo:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* ── Design System page — layout & page-specific styles only ── */
+/* =================================================================
+   Odysee Design System — Brand v1.0
+   Part I: Philosophy (marketing) · Part II: Storybook (technical)
+   Structure follows pages/agents.html (cover + TOC + doc-section)
+   ================================================================= */
 
-body {
-  direction: ltr; /* DS page is LTR */
-  font-size: 15px;
-}
-
-/* Theme bar fixed */
-.theme-bar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 8px 32px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 11px;
-  letter-spacing: 0.05em;
-}
-.theme-bar .brand {
-  font-family: var(--font-latin);
-  font-weight: 500;
-  color: var(--gold);
-  direction: ltr;
-}
-.theme-pills { display: flex; gap: 4px; }
-
-/* Layout */
-.layout {
-  display: flex;
-  padding-top: 40px;
-  min-height: 100vh;
-}
-
-/* Side nav */
-.sidenav {
-  position: fixed;
-  top: 40px; left: 0; bottom: 0;
-  width: 220px;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  overflow-y: auto;
-  padding: 32px 0;
-  display: flex;
-  flex-direction: column;
-}
-.sidenav-logo {
-  padding: 0 24px 24px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 16px;
-}
-.sidenav-logo .wordmark {
-  font-family: var(--font-latin);
-  font-weight: 700;
-  font-size: 20px;
-  color: var(--gold);
-  letter-spacing: -0.02em;
-}
-.sidenav-logo .sub {
-  font-size: 10px;
-  color: var(--text-muted);
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  margin-top: 3px;
-  font-family: var(--font-latin);
-}
-.nav-section-label {
-  font-size: 9px;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 16px 24px 6px;
-  font-family: var(--font-latin);
-}
-.nav-link {
-  display: block;
-  padding: 7px 24px;
-  font-size: 13px;
-  font-family: var(--font-latin);
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  border-left: 2px solid transparent;
-  direction: ltr;
-}
-.nav-link:hover { color: var(--text-primary); background: var(--gold-dim); }
-.nav-link.active { color: var(--gold); border-left-color: var(--gold); background: var(--gold-dim); }
-
-/* Main content */
-.main {
-  margin-left: 220px;
-  flex: 1;
-  padding: 48px 56px;
-  max-width: 1000px;
-}
-
-/* Section structure */
-.ds-section {
-  margin-bottom: 80px;
-  scroll-margin-top: 60px;
-}
-.section-eyebrow {
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--gold);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-  font-family: var(--font-latin);
-}
-.section-title {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin-bottom: 4px;
-  font-family: var(--font-latin);
-  direction: ltr;
-}
-.section-title-he {
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--gold);
-  font-family: var(--font-hebrew);
-  direction: rtl;
-  text-align: right;
-  margin-bottom: 10px;
-  opacity: 0.85;
-}
-.section-desc {
-  font-size: 14px;
-  color: var(--text-secondary);
-  max-width: 560px;
-  line-height: 1.7;
-  font-family: var(--font-latin);
-  direction: ltr;
-}
-.section-desc-he {
-  font-size: 13px;
-  color: var(--text-muted);
-  font-family: var(--font-hebrew);
-  direction: rtl;
-  text-align: right;
-  margin-top: 6px;
-  margin-bottom: 28px;
-  line-height: 1.7;
-}
-.section-divider {
-  height: 1px;
-  background: var(--border);
-  margin: 24px 0 36px;
-}
-
-/* Preview card */
-.preview-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 32px;
-  margin-bottom: 24px;
-  position: relative;
-}
-.preview-label {
-  position: absolute;
-  top: 12px; right: 16px;
-  font-size: 9px;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  font-family: var(--font-latin);
-}
-
-/* ── 01 COLORS ── */
-.color-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
-}
-.color-swatch {
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-.color-swatch:hover { transform: translateY(-2px); }
-.swatch-block { height: 72px; }
-.swatch-info {
-  background: var(--surface);
-  padding: 10px 12px;
-}
-.swatch-name {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-primary);
-  margin-bottom: 2px;
-  font-family: var(--font-latin);
-}
-.swatch-hex {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-muted);
-  cursor: pointer;
-}
-.swatch-hex:hover { color: var(--gold); }
-.color-group-label {
-  font-size: 10px;
-  font-weight: 500;
-  color: var(--text-muted);
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  margin: 24px 0 12px;
-  font-family: var(--font-latin);
-}
-.copy-toast {
-  position: fixed;
-  bottom: 32px; right: 32px;
-  background: var(--gold);
-  color: #0A0A0F;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 20px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: all 0.3s ease;
-  pointer-events: none;
-  z-index: 999;
-  font-family: var(--font-latin);
-}
-.copy-toast.show { opacity: 1; transform: translateY(0); }
-
-/* ── 02 TYPOGRAPHY ── */
-.type-sample {
-  margin-bottom: 28px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--border);
-  direction: ltr;
-}
-.type-sample:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-.type-meta {
-  display: flex;
-  gap: 16px;
-  margin-top: 8px;
-  flex-wrap: wrap;
-}
-.type-meta span {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-muted);
-}
-.type-meta .tag {
-  background: var(--gold-dim);
-  color: var(--gold);
-  padding: 1px 8px;
-  border-radius: 20px;
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-family: var(--font-latin);
-}
-.t-display { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; color: var(--text-primary); font-family: var(--font-latin); }
-.t-h1      { font-size: 32px; font-weight: 600; color: var(--text-primary); font-family: var(--font-latin); }
-.t-h2      { font-size: 22px; font-weight: 500; color: var(--text-primary); font-family: var(--font-latin); }
-.t-h3      { font-size: 15px; font-weight: 500; color: var(--gold); font-family: var(--font-latin); }
-.t-body    { font-size: 15px; font-weight: 300; color: var(--text-secondary); line-height: 1.7; font-family: var(--font-latin); }
-.t-caption { font-size: 10px; font-weight: 300; color: var(--text-muted); font-family: var(--font-latin); }
-.t-label   { font-size: 10px; font-weight: 500; letter-spacing: 0.10em; text-transform: uppercase; color: var(--gold); font-family: var(--font-latin); }
-.t-mono    { font-family: var(--font-mono); font-size: 13px; color: var(--teal); }
-.t-hebrew  { font-family: var(--font-hebrew); font-weight: 300; font-size: 22px; direction: rtl; color: var(--text-primary); text-align: right; display: block; }
-.t-hebrew-heading { font-family: var(--font-hebrew); font-weight: 600; font-size: 28px; direction: rtl; color: var(--text-primary); text-align: right; display: block; }
-
-.font-specimen {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 24px;
-}
-.specimen-block {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px;
-  direction: ltr;
-}
-.specimen-block .meta { font-size: 9px; color: var(--text-muted); letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 12px; font-family: var(--font-latin); }
-.specimen-weights { display: flex; flex-direction: column; gap: 6px; }
-
-/* ── 03 SPACING ── */
-.spacing-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 12px;
-  direction: ltr;
-}
-.spacing-block {
-  background: var(--gold);
-  border-radius: 3px;
-  flex-shrink: 0;
-  opacity: 0.7;
-  height: 8px;
-}
-.spacing-info { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.spacing-info .token { font-family: var(--font-mono); font-size: 11px; color: var(--teal); }
-.spacing-info .px { font-size: 12px; color: var(--text-secondary); }
-.spacing-info .use { font-size: 11px; color: var(--text-muted); }
-
-/* ── 04 MOTION ── */
-.motion-demos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.motion-box {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-  direction: ltr;
-}
-.motion-box .demo-target {
-  width: 40px; height: 40px;
-  background: var(--gold);
-  border-radius: 8px;
-  margin: 12px auto;
-  transition: all 0.2s ease;
-}
-.motion-box:hover .demo-target { transform: translateY(-6px); }
-.motion-box.fade-demo:hover .demo-target { opacity: 0.3; transform: none; }
-.motion-box.scale-demo:hover .demo-target { transform: scale(1.2); }
-.motion-box.rotate-demo:hover .demo-target { transform: rotate(45deg); }
-.motion-box.pulse-demo .demo-target { animation: pulse 2s infinite; }
-.motion-box .motion-label { font-size: 11px; color: var(--text-muted); margin-top: 8px; font-family: var(--font-latin); }
-.motion-box .motion-val { font-family: var(--font-mono); font-size: 10px; color: var(--teal); margin-top: 3px; }
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.94); }
-}
-
-/* ── 05 BUTTONS ── */
-.btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; direction: ltr; }
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--font-latin); font-weight: 500; font-size: 13px;
-  padding: 9px 20px; border-radius: 8px; border: none;
-  cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.02em;
-  text-decoration: none;
-}
-.btn-primary { background: var(--gold); color: #0A0A0F; }
-.btn-primary:hover { filter: brightness(1.1); }
-.btn-secondary { background: transparent; color: var(--gold); border: 1px solid var(--gold); }
-.btn-secondary:hover { background: var(--gold-dim); }
-.btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
-.btn-ghost:hover { color: var(--text-primary); border-color: var(--text-secondary); }
-.btn-danger { background: transparent; color: #E05A5F; border: 1px solid #E05A5F; }
-.btn-danger:hover { background: rgba(224,90,95,0.12); }
-.btn-sm { font-size: 11px; padding: 5px 12px; }
-.btn-lg { font-size: 15px; padding: 12px 28px; border-radius: 10px; }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-/* ── 06 BADGES ── */
-.pill-grid { display: flex; flex-wrap: wrap; gap: 8px; direction: ltr; }
-.pill {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 10px; font-weight: 500; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 3px 10px; border-radius: 20px;
-  font-family: var(--font-latin);
-}
-.pill-key     { background: rgba(193,113,79,0.15); color: #C1714F; }
-.pill-design  { background: rgba(124,111,205,0.12); color: #7C6FCD; }
-.pill-dev     { background: rgba(78,205,196,0.12);  color: #4ECDC4; }
-.pill-impl    { background: rgba(78,205,196,0.08);  color: #4ECDC4; }
-.pill-qa      { background: rgba(248,183,67,0.12);  color: #F8B743; }
-.pill-docs    { background: rgba(124,111,205,0.12); color: #7C6FCD; }
-.pill-fix     { background: rgba(224,90,95,0.12);   color: #E05A5F; }
-.pill-submit  { background: rgba(193,113,79,0.20);  color: #C1714F; }
-.pill-live    { background: rgba(193,113,79,0.18);  color: #C1714F; }
-.pill-content { background: rgba(193,113,79,0.10);  color: #C1714F; }
-
-/* ── 07 CARDS ── */
-.card-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.ds-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  transition: border-color 0.2s ease;
-  direction: ltr;
-}
-.ds-card:hover { border-color: rgba(193,113,79,0.3); }
-.ds-card .card-eyebrow { font-size: 9px; color: var(--text-muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; font-family: var(--font-latin); }
-.ds-card .card-title { font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; font-family: var(--font-latin); }
-.ds-card .card-body { font-size: 13px; color: var(--text-secondary); line-height: 1.6; font-family: var(--font-latin); }
-.ds-card .card-footer { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-
-/* ── 08 INPUTS ── */
-.input-row { display: flex; flex-direction: column; gap: 12px; direction: ltr; }
-.ds-input-wrap { display: flex; flex-direction: column; gap: 5px; }
-.ds-label { font-size: 10px; font-weight: 500; color: var(--gold); letter-spacing: 0.10em; text-transform: uppercase; font-family: var(--font-latin); }
-.ds-input {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text-primary);
-  font-family: var(--font-latin);
-  font-size: 14px; font-weight: 300;
-  padding: 10px 14px; outline: none;
-  transition: border-color 0.2s ease;
-  width: 100%; max-width: 400px;
-}
-.ds-input:focus { border-color: var(--gold); }
-.ds-input::placeholder { color: var(--text-muted); }
-.ds-input.input-error { border-color: #E05A5F; }
-.input-hint { font-size: 11px; color: var(--text-muted); font-family: var(--font-latin); }
-.input-hint.error { color: #E05A5F; }
-
-/* ── 09 TABLES ── */
-.ds-table { width: 100%; border-collapse: collapse; font-size: 13px; direction: ltr; }
-.ds-table thead tr { background: var(--card); }
-.ds-table th {
-  font-size: 9px; font-weight: 500; color: var(--gold);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border);
-  font-family: var(--font-latin);
-}
-.ds-table td { padding: 12px 16px; color: var(--text-secondary); border-bottom: 1px solid rgba(42,50,69,0.5); font-family: var(--font-latin); }
-.ds-table tr:last-child td { border-bottom: none; }
-.ds-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
-.ds-table .td-mono { font-family: var(--font-mono); font-size: 11px; color: var(--teal); }
-.ds-table .td-primary { color: var(--text-primary); font-weight: 400; }
-
-/* ── 10 NOTIFICATIONS ── */
-.notif-stack { display: flex; flex-direction: column; gap: 10px; direction: ltr; }
-.ds-notif {
-  display: flex; align-items: flex-start; gap: 12px;
-  padding: 14px 16px; border-radius: 10px; border-left: 3px solid;
-  font-size: 13px; direction: ltr;
-}
-.ds-notif .notif-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
-.ds-notif .notif-body { flex: 1; }
-.ds-notif .notif-title { font-weight: 500; margin-bottom: 2px; font-family: var(--font-latin); }
-.ds-notif .notif-msg { font-size: 12px; opacity: 0.8; font-family: var(--font-latin); }
-.notif-info  { background: rgba(78,205,196,0.08); border-color: #4ECDC4; color: #4ECDC4; }
-.notif-warn  { background: rgba(248,183,67,0.08); border-color: #F8B743; color: #F8B743; }
-.notif-error { background: rgba(224,90,95,0.08);  border-color: #E05A5F; color: #E05A5F; }
-.notif-gold  { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
-
-/* ── 11 STATUS ── */
-.status-row { display: flex; align-items: center; gap: 16px; padding: 10px 0; border-bottom: 1px solid rgba(42,50,69,0.4); direction: ltr; }
-.status-row:last-child { border-bottom: none; }
-.status-pill-col { width: 90px; }
-.status-color-col { display: flex; gap: 8px; align-items: center; }
-.mini-swatch { width: 18px; height: 18px; border-radius: 4px; flex-shrink: 0; }
-.status-hex { font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); }
-.status-use { font-size: 12px; color: var(--text-secondary); flex: 1; font-family: var(--font-latin); }
-
-/* ── 12 ICONS ── */
-.icon-grid { display: flex; flex-wrap: wrap; gap: 8px; direction: ltr; }
-.icon-item {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  padding: 14px 16px; background: var(--card);
-  border: 1px solid var(--border); border-radius: 10px;
-  min-width: 72px; cursor: pointer; transition: all 0.2s ease;
-}
-.icon-item:hover { border-color: var(--gold); background: var(--gold-dim); }
-.icon-item svg { width: 20px; height: 20px; color: var(--gold); }
-.icon-item span { font-size: 9px; color: var(--text-muted); letter-spacing: 0.05em; font-family: var(--font-latin); }
-
-/* ── 13 CODE BLOCK ── */
-.code-block {
-  background: #0D0D14;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px 24px;
-  overflow-x: auto;
-  margin-top: 16px;
-  direction: ltr;
-}
-.code-block pre {
-  font-family: var(--font-mono); font-size: 12px;
-  color: #8A95AA; line-height: 1.7; margin: 0;
-}
-.code-block .c-gold    { color: #C1714F; }
-.code-block .c-teal    { color: #4ECDC4; }
-.code-block .c-purple  { color: #7C6FCD; }
-.code-block .c-comment { color: #4A5568; }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .sidenav { display: none; }
-  .main { margin-left: 0; padding: 24px 20px; }
-  .font-specimen, .card-showcase, .motion-demos { grid-template-columns: 1fr; }
-}
-/* ─── Brand mark (injected by phase2d) ─── */
+/* ─── Brand mark in header (Brand v1.0 — dotted trail) ─── */
 .brand-mark {
   display: inline-flex;
   align-items: center;
@@ -513,31 +25,18 @@ body {
   line-height: 0.9;
 }
 .brand-mark__o {
-  width: 2.4em;
-  height: 2.4em;
-  display: block;
-  flex-shrink: 0;
+  width: 2.4em; height: 2.4em;
+  display: block; flex-shrink: 0;
 }
 .brand-mark__text {
-  font-family: var(--od-font-sans);
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
   font-weight: 800;
   font-size: 42px;
   letter-spacing: -0.035em;
-  color: var(--od-fg);
+  color: var(--od-fg, var(--text-primary));
 }
-.site-header {
-  display: flex;
-  gap: 32px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 32px;
-  border-bottom: 1px solid var(--od-border, var(--border));
-}
-.site-header__brand {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+.site-header { gap: 32px; align-items: center; }
+.site-header__brand { display: flex; flex-direction: column; gap: 4px; }
 .site-header__tagline {
   font-size: 11px;
   letter-spacing: 0.22em;
@@ -547,49 +46,1025 @@ body {
   margin-top: 2px;
   margin-left: 2px;
 }
-.site-nav {
-  list-style: none;
-  display: flex;
-  gap: 28px;
-  margin: 0; padding: 0;
-}
-.site-nav a {
-  text-decoration: none;
-  color: var(--od-fg, var(--text-primary));
-  font-size: 14px;
-  font-weight: 500;
-  opacity: 0.8;
-}
-.site-nav a:hover, .site-nav a.active { opacity: 1; color: var(--od-red, var(--gold)); }
-.brand-mark__o .ring        { stroke: var(--od-navy, var(--gold)); }
-.brand-mark__o .inner       { fill:   #FFFFFF; }
-.brand-mark__o .trail       { stroke: var(--od-navy, var(--gold)); }
-.brand-mark__o .cap-start   { fill:   var(--od-navy, var(--gold)); }
-.brand-mark__o .cap-end     { fill:   var(--od-red, var(--teal)); }
+.brand-mark__o .ring      { stroke: var(--od-navy, var(--text-primary)); }
+.brand-mark__o .inner     { fill:   #FFFFFF; }
+.brand-mark__o .trail     { stroke: var(--od-navy, var(--text-primary)); }
+.brand-mark__o .cap-start { fill:   var(--od-navy, var(--text-primary)); }
+.brand-mark__o .cap-end   { fill:   var(--od-red,  var(--gold)); }
 [data-theme="dark"] .brand-mark__o .ring { stroke: var(--od-paper, var(--text-primary)); }
 
-/* Override existing fixed theme-bar so the new site-header fits above content */
-.theme-bar { position: static !important; padding: 6px 16px !important; justify-content: flex-end !important; }
-.theme-bar .brand { display: none !important; }
-.layout { padding-top: 0 !important; }
-.sidenav { top: 130px !important; }
+/* Footer secondary nav */
+.site-footer__secondary {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.site-footer__secondary a {
+  color: var(--od-fg, var(--text-primary));
+  opacity: 0.55;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s, color 0.2s;
+}
+.site-footer__secondary a:hover { opacity: 1; color: var(--od-red, var(--gold)); }
+.site-footer__secondary span[aria-hidden] { color: var(--od-fg, var(--text-primary)); opacity: 0.3; }
 
+/* ─── Cover ─── */
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 88px 40px 64px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(184,90,62,0.06) 0%, transparent 65%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.cover-tag {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--od-red, var(--gold));
+  margin-bottom: 40px;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  position: relative; z-index: 2;
+}
+
+/* The hero brand mark — the entire reason this page exists */
+.hero-mark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  position: relative; z-index: 2;
+}
+.hero-mark__o {
+  width: clamp(80px, 12vw, 140px);
+  height: clamp(80px, 12vw, 140px);
+}
+.hero-mark__text {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: clamp(72px, 11vw, 128px);
+  letter-spacing: -0.045em;
+  color: var(--od-fg, var(--text-primary));
+  line-height: 0.9;
+}
+.hero-mark__o .ring      { stroke: var(--od-navy, var(--text-primary)); }
+.hero-mark__o .inner     { fill:   #FFFFFF; }
+.hero-mark__o .trail     { stroke: var(--od-navy, var(--text-primary)); }
+.hero-mark__o .cap-start { fill:   var(--od-navy, var(--text-primary)); }
+.hero-mark__o .cap-end   { fill:   var(--od-red,  var(--gold)); }
+[data-theme="dark"] .hero-mark__o .ring   { stroke: var(--od-paper, var(--text-primary)); }
+[data-theme="dark"] .hero-mark__o .trail  { stroke: var(--od-paper, var(--text-primary)); }
+[data-theme="dark"] .hero-mark__o .cap-start { fill: var(--od-paper, var(--text-primary)); }
+
+.cover-sub {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  max-width: 600px;
+  position: relative; z-index: 2;
+}
+.cover-sub-he {
+  font-family: 'Heebo', 'Noto Sans Hebrew', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+  direction: rtl;
+  position: relative; z-index: 2;
+}
+.cover-rule {
+  width: 64px; height: 1px;
+  background: var(--od-red, var(--gold));
+  margin: 0 auto 32px;
+  opacity: 0.7;
+  position: relative; z-index: 2;
+}
+.cover-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  position: relative; z-index: 2;
+}
+
+/* ─── Document sections ─── */
+.doc-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 72px 40px;
+  border-bottom: 1px solid var(--border);
+}
+/* First doc-section after cover (TOC) — tighter top padding */
+.cover + .doc-section { padding-top: 48px; }
+.doc-section:last-of-type { border-bottom: none; }
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--od-red, var(--gold));
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  margin-bottom: 16px;
+}
+.section-label span {
+  color: var(--text-muted);
+  margin-left: 4px;
+  letter-spacing: 0.14em;
+}
+.doc-section h2 {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.15;
+  margin-bottom: 6px;
+}
+.doc-section h2 + .h2-he {
+  font-family: 'Heebo', 'Noto Sans Hebrew', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-muted);
+  direction: rtl;
+  text-align: right;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 18px;
+}
+.doc-section h3 {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+.doc-section p {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--text-secondary);
+  max-width: 680px;
+  margin-bottom: 14px;
+}
+.doc-section p.lead {
+  font-size: 16px;
+  color: var(--text-primary);
+  font-weight: 400;
+  max-width: 720px;
+}
+.doc-section p .em {
+  color: var(--od-red, var(--gold));
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* TOC */
+.toc-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 12px);
+  padding: 32px 36px;
+}
+.toc-title {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--od-red, var(--gold));
+  margin-bottom: 22px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+}
+.toc-list { list-style: none; counter-reset: toc; padding: 0; margin: 0; }
+.toc-list li {
+  counter-increment: toc;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(127,120,103,0.10);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+}
+.toc-list li:last-child { border-bottom: none; }
+.toc-list li::before {
+  content: counter(toc, decimal-leading-zero);
+  font-size: 10px;
+  color: var(--od-red, var(--gold));
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  opacity: 0.7;
+  min-width: 24px;
+}
+.toc-list a {
+  color: var(--text-secondary);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.toc-list a:hover { color: var(--od-red, var(--gold)); }
+.toc-divider-row {
+  padding: 14px 0 6px !important;
+  border-bottom: 1px solid var(--border) !important;
+  font-size: 9px !important;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+}
+.toc-divider-row::before { content: '' !important; }
+
+/* ─── Part divider ─── */
+.part-divider {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 40px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.part-divider .label {
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  margin-bottom: 14px;
+}
+.part-divider .title {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.part-divider .sub {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ─── Philosophy: name/etymology block ─── */
+.name-card {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 36px;
+}
+.name-visual {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 48px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+.name-visual .strike {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 36px; font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: -0.03em;
+  position: relative;
+  opacity: 0.7;
+}
+.name-visual .strike::after {
+  content: '';
+  position: absolute; left: -6px; right: -6px; top: 50%;
+  border-top: 1.5px solid var(--text-muted);
+  opacity: 0.6;
+}
+.name-visual .arrow {
+  color: var(--text-muted);
+  font-size: 18px;
+}
+.name-visual .final {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 48px; font-weight: 800;
+  color: var(--od-red, var(--gold));
+  letter-spacing: -0.045em;
+}
+.name-visual .caption {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+}
+@media (max-width: 700px) {
+  .name-card { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ─── Philosophy: mark anatomy ─── */
+.mark-anatomy {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 48px;
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.mark-anatomy svg { display: block; margin: 0 auto; max-width: 100%; }
+.mark-anatomy .anatomy-notes { font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif); }
+.mark-anatomy .anatomy-notes dt {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--od-red, var(--gold));
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.mark-anatomy .anatomy-notes dd {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 18px;
+  margin-left: 0;
+}
+@media (max-width: 700px) {
+  .mark-anatomy { grid-template-columns: 1fr; padding: 32px 24px; gap: 28px; }
+}
+
+/* ─── Philosophy: palette story ─── */
+.palette-story {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 36px;
+}
+.palette-card {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+.palette-card .swatch { height: 140px; }
+.palette-card .label-block { padding: 18px 20px 22px; }
+.palette-card .name {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.palette-card .hex {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+}
+.palette-card .meaning {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+@media (max-width: 700px) {
+  .palette-story { grid-template-columns: 1fr; }
+  .palette-card .swatch { height: 100px; }
+}
+
+/* ─── Philosophy: voice principles ─── */
+.voice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+}
+.voice-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+.voice-card .principle {
+  font-family: 'Heebo', 'Noto Sans Hebrew', system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--od-red, var(--gold));
+  direction: rtl;
+  text-align: right;
+  margin-bottom: 6px;
+}
+.voice-card .principle-en {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+.voice-card .example {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+.voice-card .example.yes {
+  background: rgba(78,205,196,0.08);
+  border-left: 2px solid #4ECDC4;
+  color: var(--text-primary);
+}
+.voice-card .example.no {
+  background: rgba(224,90,95,0.06);
+  border-left: 2px solid #E05A5F;
+  color: var(--text-muted);
+  opacity: 0.85;
+}
+.voice-card .example b {
+  font-weight: 500;
+  font-size: 10px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+.voice-card .example.yes b { color: #4ECDC4; }
+.voice-card .example.no b { color: #E05A5F; }
+
+/* ─── Philosophy: principles list ─── */
+.principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 36px;
+}
+.principle-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  position: relative;
+}
+.principle-card .num {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--od-red, var(--gold));
+  opacity: 0.18;
+  margin-bottom: 12px;
+}
+.principle-card .title {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.principle-card .body {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* =================================================================
+   STORYBOOK STYLES (Part II)
+   ================================================================= */
+
+/* Color swatches */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+.color-swatch {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  background: var(--card);
+}
+.color-swatch:hover { transform: translateY(-2px); border-color: var(--od-red, var(--gold)); }
+.swatch-block { height: 72px; }
+.swatch-info { padding: 10px 12px; }
+.swatch-name {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.swatch-hex {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+.color-group-label {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 32px 0 12px;
+}
+.color-group-label:first-of-type { margin-top: 16px; }
+
+/* Mist scale uses a smaller swatch */
+.mist-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin-top: 24px;
+}
+.mist-cell {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.mist-cell:hover { transform: translateY(-2px); }
+.mist-cell .block { height: 48px; }
+.mist-cell .meta {
+  padding: 6px 8px;
+  background: var(--card);
+}
+.mist-cell .step {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+}
+.mist-cell .hex {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 9px;
+  color: var(--text-muted);
+}
+@media (max-width: 700px) { .mist-grid { grid-template-columns: repeat(5, 1fr); } }
+
+.copy-toast {
+  position: fixed;
+  bottom: 32px; right: 32px;
+  background: var(--od-red, var(--gold));
+  color: var(--od-paper, #FFFFFF);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: 20px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  z-index: 999;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+}
+.copy-toast.show { opacity: 1; transform: translateY(0); }
+
+/* Typography specimens */
+.type-stack { margin-top: 24px; }
+.type-row {
+  padding: 22px 0;
+  border-bottom: 1px solid var(--border);
+}
+.type-row:last-child { border-bottom: none; }
+.type-row .specimen {
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.type-row .specimen.hebrew { direction: rtl; text-align: right; }
+.type-row .meta {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+.type-row .meta .tag {
+  background: rgba(184,90,62,0.12);
+  color: var(--od-red, var(--gold));
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 9px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+}
+.t-display {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 44px; font-weight: 800;
+  letter-spacing: -0.035em; line-height: 1;
+}
+.t-h1   { font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif); font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
+.t-h2   { font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif); font-size: 22px; font-weight: 500; }
+.t-h3   { font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif); font-size: 16px; font-weight: 500; color: var(--od-red, var(--gold)); }
+.t-body { font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif); font-size: 15px; font-weight: 400; line-height: 1.7; color: var(--text-secondary); }
+.t-label { font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif); font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--od-red, var(--gold)); }
+.t-caption { font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif); font-size: 11px; color: var(--text-muted); }
+.t-mono { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 13px; color: #4ECDC4; }
+.t-heb-disp { font-family: 'Heebo', 'Noto Sans Hebrew', system-ui, sans-serif; font-size: 38px; font-weight: 800; }
+.t-heb-h1   { font-family: 'Heebo', 'Noto Sans Hebrew', system-ui, sans-serif; font-size: 28px; font-weight: 700; }
+.t-heb-body { font-family: 'Heebo', 'Noto Sans Hebrew', system-ui, sans-serif; font-size: 15px; font-weight: 400; line-height: 1.7; color: var(--text-secondary); }
+
+/* Spacing */
+.spacing-row {
+  display: flex; align-items: center; gap: 18px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(127,120,103,0.08);
+}
+.spacing-row:last-child { border-bottom: none; }
+.spacing-block {
+  background: var(--od-red, var(--gold));
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.spacing-token {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  color: #4ECDC4;
+  min-width: 100px;
+}
+.spacing-px {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  color: var(--text-secondary);
+  min-width: 50px;
+}
+.spacing-use {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Motion demos */
+.motion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+.motion-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+.motion-box .target {
+  width: 44px; height: 44px;
+  background: var(--od-red, var(--gold));
+  border-radius: 8px;
+  margin: 8px auto 16px;
+  transition: all 0.2s ease;
+}
+.motion-box:hover .target { transform: translateY(-6px); }
+.motion-box.fade:hover .target { opacity: 0.3; transform: none; }
+.motion-box.scale:hover .target { transform: scale(1.18); }
+.motion-box.pulse .target { animation: od-pulse 2s ease-in-out infinite; }
+.motion-box .name {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 12px;
+  color: var(--text-primary);
+}
+.motion-box .val {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+@keyframes od-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.92); }
+}
+
+/* Components — Buttons */
+.btn-row {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  align-items: center;
+  margin-top: 24px;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-weight: 500; font-size: 13px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+.btn-primary { background: var(--od-red, var(--gold)); color: var(--od-paper, #FFFFFF); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-secondary { background: transparent; color: var(--od-red, var(--gold)); border-color: var(--od-red, var(--gold)); }
+.btn-secondary:hover { background: rgba(184,90,62,0.10); }
+.btn-ghost { background: transparent; color: var(--text-secondary); border-color: var(--border); }
+.btn-ghost:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+.btn-danger { background: transparent; color: #E05A5F; border-color: #E05A5F; }
+.btn-danger:hover { background: rgba(224,90,95,0.10); }
+.btn-sm { font-size: 11px; padding: 6px 13px; }
+.btn-lg { font-size: 15px; padding: 13px 28px; border-radius: 10px; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Components — Pills */
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.pill {
+  display: inline-flex; align-items: center;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 11px;
+  border-radius: 20px;
+}
+.pill-key     { background: rgba(184,90,62,0.18); color: #B85A3E; }
+.pill-design  { background: rgba(124,111,205,0.14); color: #7C6FCD; }
+.pill-dev     { background: rgba(78,205,196,0.14);  color: #4ECDC4; }
+.pill-impl    { background: rgba(78,205,196,0.08);  color: #4ECDC4; }
+.pill-qa      { background: rgba(248,183,67,0.14);  color: #F8B743; }
+.pill-content { background: rgba(184,90,62,0.10);   color: #B85A3E; }
+.pill-docs    { background: rgba(124,111,205,0.14); color: #7C6FCD; }
+.pill-fix     { background: rgba(224,90,95,0.14);   color: #E05A5F; }
+.pill-submit  { background: rgba(184,90,62,0.24);   color: #B85A3E; }
+.pill-live    { background: rgba(184,90,62,0.22);   color: #B85A3E; }
+
+/* Components — Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+.ds-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color 0.2s ease;
+}
+.ds-card:hover { border-color: rgba(184,90,62,0.4); }
+.ds-card .eyebrow {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.ds-card .title {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.ds-card .body {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+.ds-card .foot {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+@media (max-width: 700px) { .card-grid { grid-template-columns: 1fr; } }
+
+/* Components — Inputs */
+.input-stack { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; max-width: 460px; }
+.ds-input-wrap { display: flex; flex-direction: column; gap: 6px; }
+.ds-label {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--od-red, var(--gold));
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.ds-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 14px;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.ds-input:focus { border-color: var(--od-red, var(--gold)); }
+.ds-input::placeholder { color: var(--text-muted); }
+.ds-input.error { border-color: #E05A5F; }
+.input-hint {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.input-hint.error { color: #E05A5F; }
+
+/* Components — Tables */
+.ds-table-wrap { overflow-x: auto; margin-top: 24px; }
+.ds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 13px;
+}
+.ds-table thead tr { background: var(--card); }
+.ds-table th {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--od-red, var(--gold));
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.ds-table td {
+  padding: 12px 16px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid rgba(127,120,103,0.10);
+}
+.ds-table tr:last-child td { border-bottom: none; }
+.ds-table tr:nth-child(even) td { background: rgba(127,120,103,0.04); }
+.ds-table .td-mono {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  color: #4ECDC4;
+}
+.ds-table .td-primary { color: var(--text-primary); font-weight: 500; }
+
+/* Notifications */
+.notif-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+.ds-notif {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border-left: 3px solid;
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 13px;
+}
+.ds-notif .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.ds-notif .body { flex: 1; }
+.ds-notif .title { font-weight: 500; margin-bottom: 2px; }
+.ds-notif .msg { font-size: 12px; opacity: 0.85; }
+.notif-info   { background: rgba(78,205,196,0.08); border-color: #4ECDC4; color: #4ECDC4; }
+.notif-warn   { background: rgba(248,183,67,0.08); border-color: #F8B743; color: #F8B743; }
+.notif-error  { background: rgba(224,90,95,0.08);  border-color: #E05A5F; color: #E05A5F; }
+.notif-brand  { background: rgba(184,90,62,0.10);  border-color: #B85A3E; color: #B85A3E; }
+
+/* Status table */
+.status-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 2fr;
+  gap: 18px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(127,120,103,0.08);
+}
+.status-row:last-child { border-bottom: none; }
+.status-col-color { display: flex; align-items: center; gap: 10px; }
+.mini-swatch { width: 20px; height: 20px; border-radius: 5px; flex-shrink: 0; }
+.status-hex {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.status-use {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Icons */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+  margin-top: 24px;
+}
+.icon-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.icon-cell:hover { border-color: var(--od-red, var(--gold)); background: rgba(184,90,62,0.06); }
+.icon-cell svg { width: 22px; height: 22px; color: var(--od-red, var(--gold)); }
+.icon-cell span {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Code block */
+.code-block {
+  background: #0B1A33;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  overflow-x: auto;
+  margin-top: 24px;
+}
+[data-theme="light"] .code-block { background: #1A1814; }
+.code-block pre {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 12px;
+  color: #8A95AA;
+  line-height: 1.75;
+  margin: 0;
+}
+.c-key    { color: #B85A3E; }
+.c-val    { color: #4ECDC4; }
+.c-prop   { color: #7C6FCD; }
+.c-cmt    { color: #4A5568; }
+
+/* doc-foot reused from agents.html */
+.doc-foot { text-align: center; padding: 48px 40px; }
+.doc-foot p {
+  font-family: var(--od-font-sans, 'Sora', system-ui, sans-serif);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.10em;
+}
+.foot-rule {
+  width: 56px; height: 1px;
+  background: var(--od-red, var(--gold));
+  margin: 0 auto 20px;
+  opacity: 0.5;
+}
+
+@media (max-width: 700px) {
+  .doc-section { padding: 56px 20px; }
+  .cover { padding: 80px 24px 60px; }
+  .status-row { grid-template-columns: 90px 1fr; }
+  .status-use { grid-column: 1 / -1; padding-left: 108px; }
+}
+
+body { overflow-x: hidden; }
 </style>
+<meta name="version" content="v1.0">
 </head>
 <body>
 
-<!-- Theme bar -->
 <div class="theme-bar">
-  <span class="brand">Odysee / מערכת עיצוב</span>
-  <div class="theme-pills">
-    <button class="theme-btn" id="btn-light"  onclick="setTheme('light')">☀ Light</button>
-    <button class="theme-btn" id="btn-system" onclick="setTheme('system')">⊙ System</button>
-    <button class="theme-btn active" id="btn-dark" onclick="setTheme('dark')">● Dark</button>
-  </div>
+  <span class="theme-bar__label"><span>Theme</span></span>
+  <button class="theme-btn" onclick="setTheme('light')" id="btn-light">☀ Light</button>
+  <button class="theme-btn" onclick="setTheme('system')" id="btn-system">⊙ System</button>
+  <button class="theme-btn" onclick="setTheme('dark')" id="btn-dark">● Dark</button>
 </div>
 
-<!-- Top header (injected by phase2d — for cross-site nav consistency) -->
-<header class="site-header" dir="ltr">
+<header class="site-header">
   <div class="site-header__brand">
     <a href="../index.html" class="brand-mark" aria-label="Odysee — home">
       <svg class="brand-mark__o" viewBox="0 0 100 100" aria-hidden="true">
@@ -617,581 +1092,927 @@ body {
     </ul>
   </nav>
 </header>
-<div class="layout">
 
-  <!-- Side nav -->
-  <nav class="sidenav">
-    <div class="sidenav-logo">
-      <div class="wordmark">Odysee</div>
-      <div class="sub">Design System · v2</div>
-    </div>
-    <span class="nav-section-label">Foundations</span>
-    <a class="nav-link active" href="#colors">01 Colors</a>
-    <a class="nav-link" href="#typography">02 Typography</a>
-    <a class="nav-link" href="#spacing">03 Spacing</a>
-    <a class="nav-link" href="#motion">04 Motion</a>
-    <span class="nav-section-label">Components</span>
-    <a class="nav-link" href="#buttons">05 Buttons</a>
-    <a class="nav-link" href="#badges">06 Badges</a>
-    <a class="nav-link" href="#cards">07 Cards</a>
-    <a class="nav-link" href="#inputs">08 Inputs</a>
-    <a class="nav-link" href="#tables">09 Tables</a>
-    <a class="nav-link" href="#notifications">10 Notifications</a>
-    <span class="nav-section-label">Patterns</span>
-    <a class="nav-link" href="#status">11 Status System</a>
-    <a class="nav-link" href="#icons">12 Icons</a>
-    <a class="nav-link" href="#tokens">13 CSS Tokens</a>
-  </nav>
+<!-- ─── COVER ─── -->
+<div class="cover">
+  <div class="cover-tag">Brand System · v1.0 · 2026</div>
 
-  <!-- Main -->
-  <main class="main">
+  <div class="hero-mark">
+    <svg class="hero-mark__o" viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="inner" cx="50" cy="50" r="45.4"/>
+      <circle class="ring"  cx="50" cy="50" r="45.4" fill="none" stroke-width="9.2"/>
+      <g transform="rotate(-32 50 50)">
+        <path class="trail" d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+        <circle class="cap-start" cx="26" cy="50" r="3.6"/>
+        <circle class="cap-end"   cx="74" cy="50" r="5.4"/>
+      </g>
+    </svg>
+    <span class="hero-mark__text">dysee</span>
+  </div>
 
-    <!-- HEADER -->
-    <div style="margin-bottom: 60px; direction: ltr;">
-      <div class="section-eyebrow">Odysee · M.Design Thesis · HIT 2026</div>
-      <h1 class="section-title">Design System</h1>
-      <div style="font-family:var(--font-hebrew); font-size:18px; color:var(--gold); direction:rtl; text-align:right; margin-bottom:12px;">מערכת עיצוב</div>
-      <p class="section-desc">
-        The unified visual language for Odysee — Personal AI Travel Concierge.
-        Dark, refined, terracotta-accented. All components use CSS custom properties and scale between light, dark, and system themes.
-      </p>
-      <p style="font-family:var(--font-hebrew); font-size:13px; color:var(--text-muted); direction:rtl; text-align:right; margin-top:8px; line-height:1.7;">
-        שפת העיצוב האחידה של Odysee — יועץ הנסיעות האישי המבוסס AI.
-        כהה, מעודן, עם הדגשת טרה-קוטה. כל הרכיבים משתמשים ב-CSS custom properties ומתאימים את עצמם לערכות Light, Dark ו-System.
-      </p>
-    </div>
+  <div class="cover-sub">The visual language of a personal travel companion.</div>
+  <div class="cover-sub-he">שפת העיצוב של יועץ נסיעות אישי.</div>
 
-    <!-- ── 01 COLORS ── -->
-    <section class="ds-section" id="colors">
-      <div class="section-eyebrow">01</div>
-      <h2 class="section-title">Colors</h2>
-      <div class="section-title-he">פלטת הצבעים</div>
-      <p class="section-desc">Three-tier system: background surfaces, semantic accents, and text hierarchy. Click any swatch to copy the hex value.</p>
-      <p class="section-desc-he">מערכת שלוש שכבות: משטחי רקע, הדגשים סמנטיים, והיררכיית טקסט. לחץ על כל צבע להעתקת ערך ה-Hex.</p>
-      <div class="section-divider"></div>
-
-      <div class="color-group-label">Surfaces — Dark Mode · מצב כהה</div>
-      <div class="color-grid">
-        <div class="color-swatch" onclick="copyColor('#0A0A0F')">
-          <div class="swatch-block" style="background:#0A0A0F; border-bottom:1px solid #2A3245;"></div>
-          <div class="swatch-info"><div class="swatch-name">Background</div><div class="swatch-hex">#0A0A0F</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#13131A')">
-          <div class="swatch-block" style="background:#13131A;"></div>
-          <div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-hex">#13131A</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#1C2230')">
-          <div class="swatch-block" style="background:#1C2230;"></div>
-          <div class="swatch-info"><div class="swatch-name">Card</div><div class="swatch-hex">#1C2230</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#2A3245')">
-          <div class="swatch-block" style="background:#2A3245;"></div>
-          <div class="swatch-info"><div class="swatch-name">Border</div><div class="swatch-hex">#2A3245</div></div>
-        </div>
-      </div>
-
-      <div class="color-group-label">Surfaces — Light Mode · מצב בהיר</div>
-      <div class="color-grid">
-        <div class="color-swatch" onclick="copyColor('#FAFAF7')">
-          <div class="swatch-block" style="background:#FAFAF7; border-bottom:1px solid #E2DDD4;"></div>
-          <div class="swatch-info"><div class="swatch-name">Background</div><div class="swatch-hex" style="color:#6B6560">#FAFAF7</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#FFFFFF')">
-          <div class="swatch-block" style="background:#FFFFFF; border-bottom:1px solid #E2DDD4;"></div>
-          <div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-hex" style="color:#6B6560">#FFFFFF</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#F4F1EB')">
-          <div class="swatch-block" style="background:#F4F1EB;"></div>
-          <div class="swatch-info"><div class="swatch-name">Card</div><div class="swatch-hex" style="color:#6B6560">#F4F1EB</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#E2DDD4')">
-          <div class="swatch-block" style="background:#E2DDD4;"></div>
-          <div class="swatch-info"><div class="swatch-name">Border</div><div class="swatch-hex" style="color:#6B6560">#E2DDD4</div></div>
-        </div>
-      </div>
-
-      <div class="color-group-label">Accent · הדגשים</div>
-      <div class="color-grid">
-        <div class="color-swatch" onclick="copyColor('#C1714F')">
-          <div class="swatch-block" style="background:#C1714F;"></div>
-          <div class="swatch-info"><div class="swatch-name">Terracotta</div><div class="swatch-hex">#C1714F</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#8B4A2E')">
-          <div class="swatch-block" style="background:#8B4A2E;"></div>
-          <div class="swatch-info"><div class="swatch-name">Terracotta (Light)</div><div class="swatch-hex">#8B4A2E</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#4ECDC4')">
-          <div class="swatch-block" style="background:#4ECDC4;"></div>
-          <div class="swatch-info"><div class="swatch-name">Teal</div><div class="swatch-hex">#4ECDC4</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#7C6FCD')">
-          <div class="swatch-block" style="background:#7C6FCD;"></div>
-          <div class="swatch-info"><div class="swatch-name">Purple</div><div class="swatch-hex">#7C6FCD</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#F8B743')">
-          <div class="swatch-block" style="background:#F8B743;"></div>
-          <div class="swatch-info"><div class="swatch-name">Amber</div><div class="swatch-hex">#F8B743</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#E05A5F')">
-          <div class="swatch-block" style="background:#E05A5F;"></div>
-          <div class="swatch-info"><div class="swatch-name">Red</div><div class="swatch-hex">#E05A5F</div></div>
-        </div>
-      </div>
-
-      <div class="color-group-label">Text · טקסט</div>
-      <div class="color-grid">
-        <div class="color-swatch" onclick="copyColor('#F0EDE8')">
-          <div class="swatch-block" style="background:#F0EDE8;"></div>
-          <div class="swatch-info"><div class="swatch-name">Primary</div><div class="swatch-hex">#F0EDE8</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#8A95AA')">
-          <div class="swatch-block" style="background:#8A95AA;"></div>
-          <div class="swatch-info"><div class="swatch-name">Secondary</div><div class="swatch-hex">#8A95AA</div></div>
-        </div>
-        <div class="color-swatch" onclick="copyColor('#4A5568')">
-          <div class="swatch-block" style="background:#4A5568;"></div>
-          <div class="swatch-info"><div class="swatch-name">Muted</div><div class="swatch-hex">#4A5568</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 02 TYPOGRAPHY ── -->
-    <section class="ds-section" id="typography">
-      <div class="section-eyebrow">02</div>
-      <h2 class="section-title">Typography</h2>
-      <div class="section-title-he">טיפוגרפיה</div>
-      <p class="section-desc">Poppins for Latin/UI, Noto Sans Hebrew for RTL content, JetBrains Mono for code and data.</p>
-      <p class="section-desc-he">Poppins לתוכן לטיני וממשק משתמש, Noto Sans Hebrew לתוכן עברי, JetBrains Mono לקוד ונתונים.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <span class="preview-label">LIVE SCALE</span>
-        <div class="type-sample">
-          <div class="t-display">Display — AI Travel Concierge</div>
-          <div class="type-meta"><span>38px</span><span>Bold 700</span><span>letter-spacing: -0.02em</span><span class="tag">Poppins</span></div>
-        </div>
-        <div class="type-sample">
-          <div class="t-h1">H1 — Your Journey Begins Here</div>
-          <div class="type-meta"><span>32px</span><span>SemiBold 600</span><span class="tag">Poppins</span></div>
-        </div>
-        <div class="type-sample">
-          <div class="t-h2">H2 — Intelligent Itinerary Planning</div>
-          <div class="type-meta"><span>22px</span><span>Medium 500</span><span class="tag">Poppins</span></div>
-        </div>
-        <div class="type-sample">
-          <div class="t-h3">H3 — Section Label / Terracotta Accent</div>
-          <div class="type-meta"><span>15px</span><span>Medium 500</span><span>color: Terracotta</span><span class="tag">Poppins</span></div>
-        </div>
-        <div class="type-sample">
-          <div class="t-body">Body — Odysee analyzes your preferences, budget, and schedule to craft a personalized travel experience. Every recommendation is powered by 11 specialized AI agents working in concert.</div>
-          <div class="type-meta"><span>15px</span><span>Light 300</span><span>line-height: 1.7</span><span class="tag">Poppins</span></div>
-        </div>
-        <div class="type-sample">
-          <div class="t-label">Label — Section Title / Key Info</div>
-          <div class="type-meta"><span>10px</span><span>Medium 500</span><span>UPPERCASE · 0.10em spacing</span><span class="tag">Poppins</span></div>
-        </div>
-        <div class="type-sample">
-          <div class="t-caption">Caption — Last updated April 2026 · Version 2.0 · HIT M.Design</div>
-          <div class="type-meta"><span>10px</span><span>Light 300</span><span>color: Muted</span><span class="tag">Poppins</span></div>
-        </div>
-        <div class="type-sample">
-          <div class="t-mono">const agent = new TravelConcierge({ lang: 'he', mode: 'dark' })</div>
-          <div class="type-meta"><span>13px</span><span>Regular 400</span><span>color: Teal</span><span class="tag">JetBrains Mono</span></div>
-        </div>
-        <div class="type-sample">
-          <div class="t-hebrew-heading">כותרת בעברית — יועץ נסיעות AI</div>
-          <div class="type-meta"><span>28px</span><span>SemiBold 600</span><span>direction: rtl</span><span class="tag">Noto Sans Hebrew</span></div>
-        </div>
-        <div class="type-sample" style="border-bottom:none;">
-          <div class="t-hebrew">גוף עברית — Odysee מציע חוויית נסיעה מותאמת אישית, מתוחכמת וחכמה.</div>
-          <div class="type-meta"><span>22px</span><span>Light 300</span><span>direction: rtl</span><span class="tag">Noto Sans Hebrew</span></div>
-        </div>
-      </div>
-
-      <div class="font-specimen">
-        <div class="specimen-block">
-          <div class="meta">Poppins — Latin / UI / Numbers</div>
-          <div class="specimen-weights">
-            <span style="font-family:'Poppins',sans-serif; font-weight:300; font-size:15px; color:var(--text-secondary)">Light 300 — Travel Intelligence</span>
-            <span style="font-family:'Poppins',sans-serif; font-weight:400; font-size:15px; color:var(--text-secondary)">Regular 400 — Travel Intelligence</span>
-            <span style="font-family:'Poppins',sans-serif; font-weight:500; font-size:15px; color:var(--text-primary)">Medium 500 — Travel Intelligence</span>
-            <span style="font-family:'Poppins',sans-serif; font-weight:700; font-size:15px; color:var(--text-primary)">Bold 700 — Travel Intelligence</span>
-          </div>
-        </div>
-        <div class="specimen-block">
-          <div class="meta">Noto Sans Hebrew — RTL / עברית</div>
-          <div class="specimen-weights">
-            <span style="font-family:'Noto Sans Hebrew',sans-serif; font-weight:300; font-size:15px; color:var(--text-secondary); direction:rtl; display:block; text-align:right;">Light 300 — יועץ נסיעות</span>
-            <span style="font-family:'Noto Sans Hebrew',sans-serif; font-weight:600; font-size:15px; color:var(--text-primary); direction:rtl; display:block; text-align:right;">SemiBold 600 — יועץ נסיעות</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 03 SPACING ── -->
-    <section class="ds-section" id="spacing">
-      <div class="section-eyebrow">03</div>
-      <h2 class="section-title">Spacing</h2>
-      <div class="section-title-he">ריווח</div>
-      <p class="section-desc">8px base grid. All layout values are multiples of 8.</p>
-      <p class="section-desc-he">גריד בסיס של 8px. כל ערכי הפריסה הם כפולות של 8.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <span class="preview-label">SCALE</span>
-        <div class="spacing-row"><div class="spacing-block" style="width:4px;"></div><div class="spacing-info"><span class="token">--sp-half</span><span class="px">4px</span><span class="use">Icon gaps, tight pairs</span></div></div>
-        <div class="spacing-row"><div class="spacing-block" style="width:8px;"></div><div class="spacing-info"><span class="token">--sp-1</span><span class="px">8px</span><span class="use">Base unit · button padding-y, badge gap</span></div></div>
-        <div class="spacing-row"><div class="spacing-block" style="width:16px;"></div><div class="spacing-info"><span class="token">--sp-2</span><span class="px">16px</span><span class="use">Card inner gap, list item spacing</span></div></div>
-        <div class="spacing-row"><div class="spacing-block" style="width:24px;"></div><div class="spacing-info"><span class="token">--sp-3</span><span class="px">24px</span><span class="use">Card padding, section sub-groups</span></div></div>
-        <div class="spacing-row"><div class="spacing-block" style="width:32px;"></div><div class="spacing-info"><span class="token">--sp-4</span><span class="px">32px</span><span class="use">Section horizontal padding</span></div></div>
-        <div class="spacing-row"><div class="spacing-block" style="width:48px;"></div><div class="spacing-info"><span class="token">--sp-6</span><span class="px">48px</span><span class="use">Section vertical padding</span></div></div>
-        <div class="spacing-row"><div class="spacing-block" style="width:64px;"></div><div class="spacing-info"><span class="token">--sp-8</span><span class="px">64px</span><span class="use">Major section breaks</span></div></div>
-        <div class="spacing-row" style="margin-bottom:0"><div class="spacing-block" style="width:80px;"></div><div class="spacing-info"><span class="token">--sp-10</span><span class="px">80px</span><span class="use">Between DS sections (this page)</span></div></div>
-      </div>
-
-      <div class="preview-card" style="margin-top:16px;">
-        <span class="preview-label">RADIUS</span>
-        <div class="spacing-row"><div style="width:32px;height:32px;background:var(--gold);opacity:0.6;border-radius:6px;flex-shrink:0;"></div><div class="spacing-info"><span class="token">--radius-btn</span><span class="px">8px</span><span class="use">Buttons, inputs</span></div></div>
-        <div class="spacing-row"><div style="width:32px;height:32px;background:var(--gold);opacity:0.6;border-radius:12px;flex-shrink:0;"></div><div class="spacing-info"><span class="token">--radius-card</span><span class="px">12px</span><span class="use">Cards, panels</span></div></div>
-        <div class="spacing-row" style="margin-bottom:0"><div style="width:32px;height:32px;background:var(--gold);opacity:0.6;border-radius:20px;flex-shrink:0;"></div><div class="spacing-info"><span class="token">--radius-pill</span><span class="px">20px</span><span class="use">Badges, theme pills</span></div></div>
-      </div>
-    </section>
-
-    <!-- ── 04 MOTION ── -->
-    <section class="ds-section" id="motion">
-      <div class="section-eyebrow">04</div>
-      <h2 class="section-title">Motion</h2>
-      <div class="section-title-he">תנועה ואנימציה</div>
-      <p class="section-desc">Subtle and purposeful. Hover the cards to preview each easing.</p>
-      <p class="section-desc-he">עדין ומכוון. רחף עם העכבר על הכרטיסים לתצוגה מקדימה.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <div class="motion-demos">
-          <div class="motion-box"><div class="demo-target"></div><div class="motion-label">Lift / Hover</div><div class="motion-val">0.2s ease</div></div>
-          <div class="motion-box scale-demo"><div class="demo-target"></div><div class="motion-label">Scale / Expand</div><div class="motion-val">0.25s spring</div></div>
-          <div class="motion-box fade-demo"><div class="demo-target"></div><div class="motion-label">Fade</div><div class="motion-val">0.2s ease</div></div>
-          <div class="motion-box rotate-demo"><div class="demo-target"></div><div class="motion-label">Rotate</div><div class="motion-val">0.3s ease</div></div>
-          <div class="motion-box pulse-demo"><div class="demo-target"></div><div class="motion-label">Pulse (AI active)</div><div class="motion-val">2s infinite</div></div>
-          <div class="motion-box" style="cursor:default;"><div class="demo-target" style="transition:background 0.2s ease;"></div><div class="motion-label">Color shift</div><div class="motion-val">0.2s transition</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 05 BUTTONS ── -->
-    <section class="ds-section" id="buttons">
-      <div class="section-eyebrow">05</div>
-      <h2 class="section-title">Buttons</h2>
-      <div class="section-title-he">כפתורים</div>
-      <p class="section-desc">Four semantic variants, three sizes. Terracotta is the primary action color.</p>
-      <p class="section-desc-he">ארבעה וריאנטים סמנטיים, שלושה גדלים. טרה-קוטה הוא צבע הפעולה הראשי.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <span class="preview-label">VARIANTS</span>
-        <div class="btn-row" style="margin-bottom:20px;">
-          <button class="btn btn-primary">Primary Action</button>
-          <button class="btn btn-secondary">Secondary</button>
-          <button class="btn btn-ghost">Ghost</button>
-          <button class="btn btn-danger">Danger</button>
-          <button class="btn btn-primary" disabled>Disabled</button>
-        </div>
-        <div style="font-size:10px;color:var(--text-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px;font-family:var(--font-latin);">Sizes</div>
-        <div class="btn-row">
-          <button class="btn btn-primary btn-sm">Small</button>
-          <button class="btn btn-primary">Default</button>
-          <button class="btn btn-primary btn-lg">Large</button>
-        </div>
-      </div>
-
-      <div class="code-block">
-        <pre><span class="c-comment">/* Primary button */</span>
-<span class="c-gold">.btn-primary</span> {
-  <span class="c-purple">background</span>: <span class="c-teal">var(--gold)</span>;   <span class="c-comment">/* #C1714F terracotta */</span>
-  <span class="c-purple">color</span>: <span class="c-teal">#0A0A0F</span>;
-  <span class="c-purple">border-radius</span>: <span class="c-teal">var(--radius-btn)</span>;  <span class="c-comment">/* 8px */</span>
-  <span class="c-purple">font-weight</span>: <span class="c-teal">500</span>;
-}</pre>
-      </div>
-    </section>
-
-    <!-- ── 06 BADGES ── -->
-    <section class="ds-section" id="badges">
-      <div class="section-eyebrow">06</div>
-      <h2 class="section-title">Badges & Status Pills</h2>
-      <div class="section-title-he">תגיות וסטטוס</div>
-      <p class="section-desc">Used for task types, agent states, and system status. Labels always in English.</p>
-      <p class="section-desc-he">משמשות לסוגי משימות, מצבי סוכן וסטטוס מערכת. תוויות תמיד באנגלית.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <span class="preview-label">ALL VARIANTS</span>
-        <div class="pill-grid">
-          <span class="pill pill-key">KEY</span>
-          <span class="pill pill-design">DESIGN</span>
-          <span class="pill pill-dev">DEV</span>
-          <span class="pill pill-impl">IMPL</span>
-          <span class="pill pill-qa">QA</span>
-          <span class="pill pill-docs">DOCS</span>
-          <span class="pill pill-fix">FIX</span>
-          <span class="pill pill-submit">SUBMIT</span>
-          <span class="pill pill-live">LIVE</span>
-          <span class="pill pill-content">CONTENT</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 07 CARDS ── -->
-    <section class="ds-section" id="cards">
-      <div class="section-eyebrow">07</div>
-      <h2 class="section-title">Cards</h2>
-      <div class="section-title-he">כרטיסים</div>
-      <p class="section-desc">Elevated surfaces. No shadows — depth via background contrast and border only.</p>
-      <p class="section-desc-he">משטחים מורמים. ללא צללים — עומק דרך ניגודיות רקע ומסגרת בלבד.</p>
-      <div class="section-divider"></div>
-
-      <div class="card-showcase">
-        <div class="ds-card">
-          <div class="card-eyebrow">Agent · AGT-01</div>
-          <div class="card-title">Preference Profiling</div>
-          <div class="card-body">Builds a rich model of the traveler's style, budget, and constraints through natural conversation.</div>
-          <div class="card-footer">
-            <span class="pill pill-impl">IMPL</span>
-            <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted)">LangGraph</span>
-          </div>
-        </div>
-        <div class="ds-card">
-          <div class="card-eyebrow">Agent · AGT-06</div>
-          <div class="card-title">Language & Culture</div>
-          <div class="card-body">Real-time spoken translation and culturally nuanced guidance for any destination.</div>
-          <div class="card-footer">
-            <span class="pill pill-impl">IMPL</span>
-            <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted)">DeepL · ElevenLabs</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 08 INPUTS ── -->
-    <section class="ds-section" id="inputs">
-      <div class="section-eyebrow">08</div>
-      <h2 class="section-title">Inputs</h2>
-      <div class="section-title-he">שדות קלט</div>
-      <p class="section-desc">Minimal form fields with terracotta focus ring. Error state uses red.</p>
-      <p class="section-desc-he">שדות טופס מינימליים עם טבעת פוקוס בצבע טרה-קוטה. מצב שגיאה משתמש באדום.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <div class="input-row">
-          <div class="ds-input-wrap">
-            <label class="ds-label">Destination</label>
-            <input class="ds-input" type="text" placeholder="e.g. Tokyo, Japan">
-          </div>
-          <div class="ds-input-wrap">
-            <label class="ds-label">Travel Dates</label>
-            <input class="ds-input" type="text" placeholder="Apr 12 → Apr 28, 2026">
-            <span class="input-hint">Format: MMM DD → MMM DD, YYYY</span>
-          </div>
-          <div class="ds-input-wrap">
-            <label class="ds-label">Passport Number</label>
-            <input class="ds-input input-error" type="text" value="AB-123">
-            <span class="input-hint error">Invalid format — use XX-XXXXXXX</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 09 TABLES ── -->
-    <section class="ds-section" id="tables">
-      <div class="section-eyebrow">09</div>
-      <h2 class="section-title">Tables</h2>
-      <div class="section-title-he">טבלאות</div>
-      <p class="section-desc">Dark header row, alternating rows, monospace for data values.</p>
-      <p class="section-desc-he">שורת כותרת כהה, שורות מתחלפות, מונוספייס לערכי נתונים.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card" style="padding:0; overflow:hidden;">
-        <table class="ds-table">
-          <thead>
-            <tr>
-              <th>#</th><th>Agent</th><th>Status</th><th>API</th><th>Phase</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="td-mono">AGT-01</td>
-              <td class="td-primary">Preference Profiling</td>
-              <td><span class="pill pill-impl">IMPL</span></td>
-              <td class="td-mono">LangGraph</td>
-              <td>P1</td>
-            </tr>
-            <tr>
-              <td class="td-mono">AGT-02</td>
-              <td class="td-primary">Itinerary Creation</td>
-              <td><span class="pill pill-impl">IMPL</span></td>
-              <td class="td-mono">Google Places</td>
-              <td>P1</td>
-            </tr>
-            <tr>
-              <td class="td-mono">AGT-06</td>
-              <td class="td-primary">Language & Culture</td>
-              <td><span class="pill pill-impl">IMPL</span></td>
-              <td class="td-mono">DeepL</td>
-              <td>P2</td>
-            </tr>
-            <tr>
-              <td class="td-mono">AGT-03</td>
-              <td class="td-primary">Booking & Management</td>
-              <td><span class="pill pill-design">DESIGN</span></td>
-              <td class="td-mono">Amadeus</td>
-              <td>P3</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- ── 10 NOTIFICATIONS ── -->
-    <section class="ds-section" id="notifications">
-      <div class="section-eyebrow">10</div>
-      <h2 class="section-title">Notifications</h2>
-      <div class="section-title-he">התראות</div>
-      <p class="section-desc">Left-border accent style. Four semantic levels mapped to accent palette.</p>
-      <p class="section-desc-he">סגנון מסגרת שמאלית. ארבעה רמות סמנטיות ממופות לפלטת ההדגשים.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <div class="notif-stack">
-          <div class="ds-notif notif-gold">
-            <div class="notif-icon">✦</div>
-            <div class="notif-body">
-              <div class="notif-title">Itinerary Ready</div>
-              <div class="notif-msg">Your 7-day Tokyo journey has been confirmed and is ready to review.</div>
-            </div>
-          </div>
-          <div class="ds-notif notif-info">
-            <div class="notif-icon">◈</div>
-            <div class="notif-body">
-              <div class="notif-title">AI Processing</div>
-              <div class="notif-msg">Flight Monitor is scanning 14 alternative routes for your connection.</div>
-            </div>
-          </div>
-          <div class="ds-notif notif-warn">
-            <div class="notif-icon">⚠</div>
-            <div class="notif-body">
-              <div class="notif-title">Flight Delay Detected</div>
-              <div class="notif-msg">TLV → NRT delayed 45 min. Budget impact: +₪120. Approve rerouting?</div>
-            </div>
-          </div>
-          <div class="ds-notif notif-error">
-            <div class="notif-icon">✕</div>
-            <div class="notif-body">
-              <div class="notif-title">API Unavailable</div>
-              <div class="notif-msg">Amadeus connection lost. Retrying in 30s with fallback provider.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 11 STATUS ── -->
-    <section class="ds-section" id="status">
-      <div class="section-eyebrow">11</div>
-      <h2 class="section-title">Status System</h2>
-      <div class="section-title-he">מערכת סטטוס</div>
-      <p class="section-desc">Consistent across project plan, agent dashboard, and UX spec pages.</p>
-      <p class="section-desc-he">עקבי בפריסת לוח זמנים, לוח הסוכנים ודפי מפרט UX.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <div class="status-row"><div class="status-pill-col"><span class="pill pill-key">KEY</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#C1714F;"></div><span class="status-hex">#C1714F</span></div><div class="status-use">Critical milestones, must-ship features</div></div>
-        <div class="status-row"><div class="status-pill-col"><span class="pill pill-design">DESIGN</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#7C6FCD;"></div><span class="status-hex">#7C6FCD</span></div><div class="status-use">Visual design, UX flows, prototyping</div></div>
-        <div class="status-row"><div class="status-pill-col"><span class="pill pill-dev">DEV</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#4ECDC4;"></div><span class="status-hex">#4ECDC4</span></div><div class="status-use">Frontend / backend development</div></div>
-        <div class="status-row"><div class="status-pill-col"><span class="pill pill-impl">IMPL</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#4ECDC4;"></div><span class="status-hex">#4ECDC4</span></div><div class="status-use">Implementation, integration work</div></div>
-        <div class="status-row"><div class="status-pill-col"><span class="pill pill-qa">QA</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#F8B743;"></div><span class="status-hex">#F8B743</span></div><div class="status-use">Testing, quality assurance</div></div>
-        <div class="status-row"><div class="status-pill-col"><span class="pill pill-docs">DOCS</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#7C6FCD;"></div><span class="status-hex">#7C6FCD</span></div><div class="status-use">Documentation, academic writing</div></div>
-        <div class="status-row"><div class="status-pill-col"><span class="pill pill-fix">FIX</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#E05A5F;"></div><span class="status-hex">#E05A5F</span></div><div class="status-use">Bug fixes, corrections, patches</div></div>
-        <div class="status-row"><div class="status-pill-col"><span class="pill pill-submit">SUBMIT</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#C1714F;"></div><span class="status-hex">#C1714F</span></div><div class="status-use">Submission deadline markers</div></div>
-        <div class="status-row" style="border-bottom:none;"><div class="status-pill-col"><span class="pill pill-live">LIVE</span></div><div class="status-color-col"><div class="mini-swatch" style="background:#C1714F;"></div><span class="status-hex">#C1714F</span></div><div class="status-use">Exhibition days, live deployment</div></div>
-      </div>
-    </section>
-
-    <!-- ── 12 ICONS ── -->
-    <section class="ds-section" id="icons">
-      <div class="section-eyebrow">12</div>
-      <h2 class="section-title">Icons</h2>
-      <div class="section-title-he">אייקונים</div>
-      <p class="section-desc">Inline SVG only. 20×20 default, 16×16 small. Color via currentColor.</p>
-      <p class="section-desc-he">SVG מוטבע בלבד. 20×20 כברירת מחדל, 16×16 קטן. צבע דרך currentColor.</p>
-      <div class="section-divider"></div>
-
-      <div class="preview-card">
-        <div class="icon-grid">
-          <div class="icon-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21a9 9 0 100-18 9 9 0 000 18z"/><path d="M12 7v5l3 3"/></svg><span>clock</span></div>
-          <div class="icon-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg><span>location</span></div>
-          <div class="icon-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>hotel</span></div>
-          <div class="icon-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg><span>flight</span></div>
-          <div class="icon-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>calendar</span></div>
-          <div class="icon-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>budget</span></div>
-          <div class="icon-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span>chat</span></div>
-          <div class="icon-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg><span>ai</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── 13 CSS TOKENS ── -->
-    <section class="ds-section" id="tokens">
-      <div class="section-eyebrow">13</div>
-      <h2 class="section-title">CSS Tokens Reference</h2>
-      <div class="section-title-he">מדריך משתני CSS</div>
-      <p class="section-desc">Complete variable list — import <code style="font-family:var(--font-mono);color:var(--teal);font-size:13px">brand/odysee-tokens.css</code> + <code style="font-family:var(--font-mono);color:var(--teal);font-size:13px">assets/css/site.css</code> in every page.</p>
-      <p class="section-desc-he">רשימת המשתנים המלאה — ייבא את <code style="font-family:var(--font-mono);color:var(--teal);font-size:12px">brand/odysee-tokens.css</code> + <code style="font-family:var(--font-mono);color:var(--teal);font-size:12px">assets/css/site.css</code> בכל עמוד.</p>
-      <div class="section-divider"></div>
-
-      <div class="code-block">
-        <pre><span class="c-comment">/* ── odysee-design.css · :root (dark default) ── */</span>
-<span class="c-gold">:root</span> {
-  <span class="c-comment">/* Surfaces */</span>
-  <span class="c-purple">--bg</span>:           <span class="c-teal">#0A0A0F</span>;
-  <span class="c-purple">--surface</span>:      <span class="c-teal">#13131A</span>;
-  <span class="c-purple">--card</span>:         <span class="c-teal">#1C2230</span>;
-  <span class="c-purple">--border</span>:       <span class="c-teal">#2A3245</span>;
-
-  <span class="c-comment">/* Accents */</span>
-  <span class="c-purple">--gold</span>:         <span class="c-teal">#C1714F</span>;  <span class="c-comment">/* terracotta */</span>
-  <span class="c-purple">--gold-dim</span>:     <span class="c-teal">rgba(193,113,79,0.12)</span>;
-  <span class="c-purple">--teal</span>:         <span class="c-teal">#4ECDC4</span>;
-  <span class="c-purple">--purple</span>:       <span class="c-teal">#7C6FCD</span>;
-  <span class="c-purple">--amber</span>:        <span class="c-teal">#F8B743</span>;
-  <span class="c-purple">--red</span>:          <span class="c-teal">#E05A5F</span>;
-
-  <span class="c-comment">/* Text */</span>
-  <span class="c-purple">--text-primary</span>:   <span class="c-teal">#F0EDE8</span>;
-  <span class="c-purple">--text-secondary</span>: <span class="c-teal">#8A95AA</span>;
-  <span class="c-purple">--text-muted</span>:     <span class="c-teal">#4A5568</span>;
-
-  <span class="c-comment">/* Shape */</span>
-  <span class="c-purple">--radius-card</span>:  <span class="c-teal">12px</span>;
-  <span class="c-purple">--radius-pill</span>:  <span class="c-teal">20px</span>;
-  <span class="c-purple">--radius-btn</span>:   <span class="c-teal">8px</span>;
-  <span class="c-purple">--transition</span>:   <span class="c-teal">0.2s ease</span>;
-}</pre>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <div style="border-top:1px solid var(--border);padding-top:32px;margin-top:40px;display:flex;justify-content:space-between;align-items:center;direction:ltr;">
-      <span style="font-size:11px;color:var(--text-muted);font-family:var(--font-latin);">Odysee Design System · v2 · HIT M.Design 2026</span>
-      <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted);">design-system · odysee.me</span>
-    </div>
-
-  </main>
+  <div class="cover-rule"></div>
+  <div class="cover-meta">Logo · Color · Typography · Spacing · Components · Voice</div>
 </div>
+
+<!-- ─── TOC ─── -->
+<div class="doc-section">
+  <div class="toc-box">
+    <div class="toc-title">Table of Contents</div>
+    <ol class="toc-list">
+      <li class="toc-divider-row">Part I — Philosophy</li>
+      <li><a href="#name">The Name</a></li>
+      <li><a href="#mark">The Mark</a></li>
+      <li><a href="#palette">The Palette</a></li>
+      <li><a href="#voice">The Voice — Tico</a></li>
+      <li><a href="#principles">Design Principles</a></li>
+      <li class="toc-divider-row">Part II — Storybook</li>
+      <li><a href="#logo">Logo &amp; Brand Mark</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#spacing">Spacing</a></li>
+      <li><a href="#motion">Motion</a></li>
+      <li><a href="#components">UI Components</a></li>
+      <li><a href="#status">Status System</a></li>
+      <li><a href="#icons">Icons</a></li>
+      <li><a href="#tokens">CSS Tokens Reference</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- =========================================
+     PART I — PHILOSOPHY
+     ========================================= -->
+
+<!-- 01 — THE NAME -->
+<div class="doc-section" id="name">
+  <p class="section-label">01 — <span>Philosophy</span></p>
+  <h2>The Name</h2>
+  <span class="h2-he">השם</span>
+  <p class="lead">
+    <em class="em">Odysee</em> is a respelling of <em>Odyssey</em> — the long journey home.
+    The original is Homer's. The respelling is ours.
+  </p>
+  <p>
+    Removing the second 'y' separates the product from the literary reference and grants the name
+    its own visual identity. It reads quietly — not a brand demanding attention, but a word that
+    suggests motion and patience. The kind of name that earns its meaning over time, the way a
+    well-worn passport does.
+  </p>
+
+  <div class="name-card">
+    <div class="name-visual">
+      <span class="strike">Odyssey</span>
+      <span class="arrow">↓</span>
+      <span class="final">Odysee</span>
+      <span class="caption">Lose a 'y'. Find a brand.</span>
+    </div>
+    <div>
+      <p>
+        The mark sits where the 'O' should be — a roundel containing a dotted trail.
+        The brand and the word are the same thing: <em class="em">[roundel]dysee</em>.
+        Travel is built from discrete steps, not from a single unbroken line, and the name
+        carries that idea before you've read a word of copy.
+      </p>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">
+        Always written in Latin script — even within Hebrew text. Never transliterated.
+        Capital O, lowercase rest. <em class="em">Tico</em> follows the same rule.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 — THE MARK -->
+<div class="doc-section" id="mark">
+  <p class="section-label">02 — <span>Philosophy</span></p>
+  <h2>The Mark</h2>
+  <span class="h2-he">הסמל</span>
+  <p class="lead">
+    A circle, a trail, two points. The roundel is the world. The trail is the journey across it.
+  </p>
+  <p>
+    Twenty-four short dashes arc through 48 degrees of the lower hemisphere, rotated −32° so the
+    path reads as motion — not a smile. The start point is navy, small and certain: where you are.
+    The end point is terracotta, larger and warmer: where you're going. The arc is dotted because
+    travel is built from intervals — a flight, a city, a meal, a morning — not a continuous line.
+  </p>
+
+  <div class="mark-anatomy">
+    <div>
+      <svg viewBox="0 0 300 300" width="300" height="300" aria-hidden="true">
+        <!-- Construction guides -->
+        <circle cx="150" cy="150" r="136" fill="none" stroke="rgba(184,90,62,0.18)" stroke-width="0.5" stroke-dasharray="2 4"/>
+        <line x1="14" y1="150" x2="286" y2="150" stroke="rgba(184,90,62,0.15)" stroke-width="0.5" stroke-dasharray="2 4"/>
+        <line x1="150" y1="14" x2="150" y2="286" stroke="rgba(184,90,62,0.15)" stroke-width="0.5" stroke-dasharray="2 4"/>
+
+        <!-- The mark itself, scaled 3x -->
+        <circle cx="150" cy="150" r="136.2" fill="#FFFFFF" stroke="var(--od-navy, #0C1F3F)" stroke-width="27.6"/>
+        <g transform="rotate(-32 150 150)">
+          <path d="M 78 150 A 72 72 0 0 0 222 150" fill="none" stroke="var(--od-navy, #0C1F3F)" stroke-width="19.5" stroke-linecap="round" stroke-dasharray="0.3 36"/>
+          <circle cx="78" cy="150" r="10.8" fill="var(--od-navy, #0C1F3F)"/>
+          <circle cx="222" cy="150" r="16.2" fill="var(--od-red, #B85A3E)"/>
+        </g>
+
+        <!-- Annotations -->
+        <text x="148" y="58" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#B85A3E" letter-spacing="1">r = 45.4 · sw = 9.2</text>
+        <text x="148" y="295" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="8" fill="#B85A3E" letter-spacing="1">rotate(-32°)</text>
+      </svg>
+    </div>
+    <dl class="anatomy-notes">
+      <dt>Roundel</dt>
+      <dd>r = 45.4, stroke 9.2. White interior so the trail reads against any surface — page, video, sticker.</dd>
+      <dt>Trail Arc</dt>
+      <dd>M 26 50 A 24 24 0 0 0 74 50. Dasharray <code style="font-family:var(--font-mono);font-size:11px;color:#4ECDC4">0.1 12</code> = round caps with wide gaps. Rotated −32° so it reads as motion, not a smile.</dd>
+      <dt>Start · Navy</dt>
+      <dd>r = 3.6. Small, certain. The pinpoint of <em>here</em>.</dd>
+      <dt>Destination · Terracotta</dt>
+      <dd>r = 5.4. Larger, warmer. The gravity of <em>there</em> — the place pulling the journey forward.</dd>
+    </dl>
+  </div>
+
+  <p style="margin-top:32px;">
+    The wordmark replaces the 'O' of Odysee with the roundel itself. The brand mark and the word
+    are not separate elements that sit beside each other — they share a glyph. There is no version
+    of the name without the mark.
+  </p>
+</div>
+
+<!-- 03 — THE PALETTE -->
+<div class="doc-section" id="palette">
+  <p class="section-label">03 — <span>Philosophy</span></p>
+  <h2>The Palette</h2>
+  <span class="h2-he">הפלטה</span>
+  <p class="lead">
+    Navy. Terracotta. Ivory. Night sky over warm earth, with the paper that holds them.
+  </p>
+  <p>
+    The combination is older than design — it's how almost every culture has rendered the
+    contrast between the technological and the human. <em class="em">Navy</em> is the system:
+    precise, dark, cool. <em class="em">Terracotta</em> is the traveler: warm, human, slightly
+    imperfect. <em class="em">Ivory</em> is the page that lets both speak.
+  </p>
+
+  <div class="palette-story">
+    <div class="palette-card">
+      <div class="swatch" style="background:#0C1F3F;"></div>
+      <div class="label-block">
+        <div class="name">Navy</div>
+        <div class="hex">#0C1F3F</div>
+        <div class="meaning">The system. Precise, dark, cool. Carries the logo at rest, anchors dark surfaces, frames the work.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="swatch" style="background:#B85A3E;"></div>
+      <div class="label-block">
+        <div class="name">Terracotta</div>
+        <div class="hex">#B85A3E</div>
+        <div class="meaning">The traveler. Warm, human, slightly imperfect. Used for action, accent, the destination cap — never for body text.</div>
+      </div>
+    </div>
+    <div class="palette-card">
+      <div class="swatch" style="background:#F6F4EF; border-bottom:1px solid var(--border);"></div>
+      <div class="label-block">
+        <div class="name">Ivory</div>
+        <div class="hex">#F6F4EF</div>
+        <div class="meaning">The page. Light, warm, restful. Not white — paper. Default surface in light mode, text on dark surfaces.</div>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top:32px;">
+    Around these three sit a quiet family of mist neutrals (50→900) for surfaces and text, and
+    four signal accents — <em class="em">teal</em> for interaction and AI, <em class="em">purple</em>
+    for design states, <em class="em">amber</em> for warnings, <em class="em">red</em> for errors.
+    The signals appear sparingly. The brand is the three.
+  </p>
+</div>
+
+<!-- 04 — THE VOICE -->
+<div class="doc-section" id="voice">
+  <p class="section-label">04 — <span>Philosophy</span></p>
+  <h2>The Voice — Tico</h2>
+  <span class="h2-he">הקול של Tico</span>
+  <p class="lead">
+    <em class="em">Tico</em> — the persona of Odysee — speaks like a friend who has traveled a lot.
+    Not like a search engine. Not like a call center.
+  </p>
+  <p>
+    Five attributes define the tone. Each is a constraint, not a flavor. If a sentence violates
+    any of them, it's not Tico — even if it's technically correct.
+  </p>
+
+  <div class="voice-grid">
+    <div class="voice-card">
+      <div class="principle">חכם</div>
+      <div class="principle-en">Smart — Offers depth without being asked</div>
+      <div class="example yes"><b>Yes</b>"טוקיו עובד הכי טוב בסוף אוקטובר — הקהל דועך והעלווה בשיא."</div>
+      <div class="example no"><b>No</b>"טוקיו היא עיר נפלאה עם הרבה אפשרויות מעניינות!"</div>
+    </div>
+    <div class="voice-card">
+      <div class="principle">חם</div>
+      <div class="principle-en">Warm — Natural language, never jargon</div>
+      <div class="example yes"><b>Yes</b>"שמתי לב שאתה מעדיף מקומות שקטים — תדלג על Tsukiji בשעת פתיחה."</div>
+      <div class="example no"><b>No</b>"בהתאם להעדפות שהוזנו, האתרים הבאים מומלצים."</div>
+    </div>
+    <div class="voice-card">
+      <div class="principle">בטוח</div>
+      <div class="principle-en">Confident — Recommends, doesn't suggest</div>
+      <div class="example yes"><b>Yes</b>"קח את Shinkansen ב-7 בבוקר — שווה להתחיל מוקדם."</div>
+      <div class="example no"><b>No</b>"אולי כדאי לשקול לקחת רכבת מוקדמת, אם אפשרי."</div>
+    </div>
+    <div class="voice-card">
+      <div class="principle">תמציתי</div>
+      <div class="principle-en">Concise — Says what's needed, stops</div>
+      <div class="example yes"><b>Yes</b>"טיסה עוכבה ב-40 דקות. הזזתי ארוחת הערב שלך."</div>
+      <div class="example no"><b>No</b>"זיהינו עדכון לוח זמנים. יש לעיין במידע הבא..."</div>
+    </div>
+    <div class="voice-card">
+      <div class="principle">אישי</div>
+      <div class="principle-en">Personal — References what he knows</div>
+      <div class="example yes"><b>Yes</b>"אהבת את הראמן באוסקה — יש מקום דומה ליד המלון."</div>
+      <div class="example no"><b>No</b>"הנה מסעדות פופולריות ליד מיקומך."</div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 — DESIGN PRINCIPLES -->
+<div class="doc-section" id="principles">
+  <p class="section-label">05 — <span>Philosophy</span></p>
+  <h2>Design Principles</h2>
+  <span class="h2-he">עקרונות עיצוב</span>
+  <p class="lead">
+    Five rules that drive every decision in the system. They exist so we can move fast without
+    re-deciding the basics.
+  </p>
+
+  <div class="principles">
+    <div class="principle-card">
+      <div class="num">01</div>
+      <div class="title">No shadows.</div>
+      <div class="body">
+        Depth comes from contrast and a 1px border. Never from a glow or a drop shadow.
+        The system reads flat and intentional, not glassy.
+      </div>
+    </div>
+    <div class="principle-card">
+      <div class="num">02</div>
+      <div class="title">Intentional motion.</div>
+      <div class="body">
+        Every transition has a job: confirm an action, indicate state, help orient.
+        If removing an animation doesn't hurt comprehension, the animation doesn't belong.
+      </div>
+    </div>
+    <div class="principle-card">
+      <div class="num">03</div>
+      <div class="title">The 8px grid.</div>
+      <div class="body">
+        Every space — gap, padding, margin — is a multiple of 8. This isn't OCD; it's the
+        difference between a layout that feels deliberate and one that feels arbitrary.
+      </div>
+    </div>
+    <div class="principle-card">
+      <div class="num">04</div>
+      <div class="title">Hebrew is first-class.</div>
+      <div class="body">
+        RTL by default for Hebrew content. Heebo paired with Sora for Latin. No transliteration.
+        <em class="em">Tico</em> and <em class="em">Odysee</em> are always written in Latin script
+        regardless of surrounding language.
+      </div>
+    </div>
+    <div class="principle-card">
+      <div class="num">05</div>
+      <div class="title">Three themes, one system.</div>
+      <div class="body">
+        Light, Dark, System. Tokens drive every color; switching themes flips a single attribute
+        on the root element. The brand identity is invariant.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PART DIVIDER ─── -->
+<div class="part-divider">
+  <div class="label">Part II</div>
+  <div class="title">Storybook</div>
+  <div class="sub">
+    Reference for the tokens, components, and patterns that make up the working system.
+    Every value below is exported from <code style="font-family:var(--font-mono);color:#4ECDC4;font-size:13px">brand/odysee-tokens.css</code>.
+  </div>
+</div>
+
+<!-- =========================================
+     PART II — STORYBOOK
+     ========================================= -->
+
+<!-- 06 — LOGO & BRAND MARK -->
+<div class="doc-section" id="logo">
+  <p class="section-label">06 — <span>Storybook</span></p>
+  <h2>Logo &amp; Brand Mark</h2>
+  <span class="h2-he">לוגו וסמל</span>
+  <p>
+    The brand mark is a roundel with a dotted trail. Construction specs:
+    inner circle <em class="em">r=45.4</em>, outer ring <em class="em">stroke-width=9.2</em>,
+    trail arc <em class="em">M 26 50 A 24 24 0 0 0 74 50</em> with
+    <em class="em">dasharray "0.1 12"</em> rotated <em class="em">-32°</em>. Start cap
+    <em class="em">r=3.6</em> (navy), destination cap <em class="em">r=5.4</em> (terracotta).
+  </p>
+
+  <h3>Wordmark</h3>
+  <p>
+    The roundel replaces the 'O' of Odysee. Sora 800, letter-spacing
+    <em class="em">−0.035em</em>. Always lockup — never separated.
+  </p>
+
+  <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:24px;">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:36px 48px;display:flex;align-items:center;gap:4px;">
+      <svg width="58" height="58" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="45.4" fill="#FFFFFF"/>
+        <circle cx="50" cy="50" r="45.4" fill="none" stroke="#0C1F3F" stroke-width="9.2"/>
+        <g transform="rotate(-32 50 50)">
+          <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+          <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+          <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+        </g>
+      </svg>
+      <span style="font-family:'Sora',sans-serif;font-weight:800;font-size:48px;letter-spacing:-0.035em;color:#0C1F3F;">dysee</span>
+    </div>
+    <div style="background:#0C1F3F;border:1px solid var(--border);border-radius:12px;padding:36px 48px;display:flex;align-items:center;gap:4px;">
+      <svg width="58" height="58" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="45.4" fill="#FFFFFF"/>
+        <circle cx="50" cy="50" r="45.4" fill="none" stroke="#F6F4EF" stroke-width="9.2"/>
+        <g transform="rotate(-32 50 50)">
+          <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#F6F4EF" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+          <circle cx="26" cy="50" r="3.6" fill="#F6F4EF"/>
+          <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+        </g>
+      </svg>
+      <span style="font-family:'Sora',sans-serif;font-weight:800;font-size:48px;letter-spacing:-0.035em;color:#F6F4EF;">dysee</span>
+    </div>
+  </div>
+
+  <h3>Roundel-only</h3>
+  <p>Use the roundel alone where the wordmark would compete or wouldn't fit — favicons, avatars, app icons, watermarks at small sizes.</p>
+  <div style="display:flex;gap:20px;align-items:flex-end;margin-top:24px;flex-wrap:wrap;">
+    <div style="text-align:center;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;">
+        <svg width="96" height="96" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="45.4" fill="#FFFFFF"/>
+          <circle cx="50" cy="50" r="45.4" fill="none" stroke="#0C1F3F" stroke-width="9.2"/>
+          <g transform="rotate(-32 50 50)">
+            <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+            <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+            <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+          </g>
+        </svg>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:6px;">96 px</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;">
+        <svg width="56" height="56" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="45.4" fill="#FFFFFF"/>
+          <circle cx="50" cy="50" r="45.4" fill="none" stroke="#0C1F3F" stroke-width="9.2"/>
+          <g transform="rotate(-32 50 50)">
+            <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+            <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+            <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+          </g>
+        </svg>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:6px;">56 px</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;">
+        <svg width="32" height="32" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="45.4" fill="#FFFFFF"/>
+          <circle cx="50" cy="50" r="45.4" fill="none" stroke="#0C1F3F" stroke-width="9.2"/>
+          <g transform="rotate(-32 50 50)">
+            <path d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke="#0C1F3F" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/>
+            <circle cx="26" cy="50" r="3.6" fill="#0C1F3F"/>
+            <circle cx="74" cy="50" r="5.4" fill="#B85A3E"/>
+          </g>
+        </svg>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:6px;">32 px</div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 — COLORS -->
+<div class="doc-section" id="colors">
+  <p class="section-label">07 — <span>Storybook</span></p>
+  <h2>Colors</h2>
+  <span class="h2-he">צבעים</span>
+  <p>
+    Brand foundation (three), mist neutrals (ten-step scale), and accents (four signals).
+    Click any swatch to copy hex.
+  </p>
+
+  <div class="color-group-label">Foundation · יסוד</div>
+  <div class="color-grid">
+    <div class="color-swatch" onclick="copyColor('#0C1F3F')">
+      <div class="swatch-block" style="background:#0C1F3F;"></div>
+      <div class="swatch-info"><div class="swatch-name">Navy</div><div class="swatch-hex">#0C1F3F</div></div>
+    </div>
+    <div class="color-swatch" onclick="copyColor('#B85A3E')">
+      <div class="swatch-block" style="background:#B85A3E;"></div>
+      <div class="swatch-info"><div class="swatch-name">Terracotta</div><div class="swatch-hex">#B85A3E</div></div>
+    </div>
+    <div class="color-swatch" onclick="copyColor('#F6F4EF')">
+      <div class="swatch-block" style="background:#F6F4EF; border-bottom:1px solid var(--border);"></div>
+      <div class="swatch-info"><div class="swatch-name">Ivory</div><div class="swatch-hex">#F6F4EF</div></div>
+    </div>
+  </div>
+
+  <div class="color-group-label">Mist Neutrals · נייטרלים · 50 → 900</div>
+  <p style="font-size:12px;color:var(--text-muted);margin-top:-8px;">Used for surfaces, borders, and text hierarchy across both themes. Verify against <code style="font-family:var(--font-mono);font-size:11px;color:#4ECDC4">odysee-tokens.css</code>.</p>
+  <div class="mist-grid">
+    <div class="mist-cell" onclick="copyColor('#FAFAF6')"><div class="block" style="background:#FAFAF6;border-bottom:1px solid var(--border);"></div><div class="meta"><div class="step">50</div><div class="hex">#FAFAF6</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#ECEAE3')"><div class="block" style="background:#ECEAE3;"></div><div class="meta"><div class="step">100</div><div class="hex">#ECEAE3</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#D8D5CB')"><div class="block" style="background:#D8D5CB;"></div><div class="meta"><div class="step">200</div><div class="hex">#D8D5CB</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#BBB7AA')"><div class="block" style="background:#BBB7AA;"></div><div class="meta"><div class="step">300</div><div class="hex">#BBB7AA</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#948F80')"><div class="block" style="background:#948F80;"></div><div class="meta"><div class="step">400</div><div class="hex">#948F80</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#6D6859')"><div class="block" style="background:#6D6859;"></div><div class="meta"><div class="step">500</div><div class="hex">#6D6859</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#524E41')"><div class="block" style="background:#524E41;"></div><div class="meta"><div class="step">600</div><div class="hex">#524E41</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#38352B')"><div class="block" style="background:#38352B;"></div><div class="meta"><div class="step">700</div><div class="hex">#38352B</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#23211B')"><div class="block" style="background:#23211B;"></div><div class="meta"><div class="step">800</div><div class="hex">#23211B</div></div></div>
+    <div class="mist-cell" onclick="copyColor('#14130E')"><div class="block" style="background:#14130E;"></div><div class="meta"><div class="step">900</div><div class="hex">#14130E</div></div></div>
+  </div>
+
+  <div class="color-group-label">Signal Accents · אותות</div>
+  <div class="color-grid">
+    <div class="color-swatch" onclick="copyColor('#4ECDC4')">
+      <div class="swatch-block" style="background:#4ECDC4;"></div>
+      <div class="swatch-info"><div class="swatch-name">Teal — AI / Interactive</div><div class="swatch-hex">#4ECDC4</div></div>
+    </div>
+    <div class="color-swatch" onclick="copyColor('#7C6FCD')">
+      <div class="swatch-block" style="background:#7C6FCD;"></div>
+      <div class="swatch-info"><div class="swatch-name">Purple — Design</div><div class="swatch-hex">#7C6FCD</div></div>
+    </div>
+    <div class="color-swatch" onclick="copyColor('#F8B743')">
+      <div class="swatch-block" style="background:#F8B743;"></div>
+      <div class="swatch-info"><div class="swatch-name">Amber — Warning</div><div class="swatch-hex">#F8B743</div></div>
+    </div>
+    <div class="color-swatch" onclick="copyColor('#E05A5F')">
+      <div class="swatch-block" style="background:#E05A5F;"></div>
+      <div class="swatch-info"><div class="swatch-name">Red — Error</div><div class="swatch-hex">#E05A5F</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 — TYPOGRAPHY -->
+<div class="doc-section" id="typography">
+  <p class="section-label">08 — <span>Storybook</span></p>
+  <h2>Typography</h2>
+  <span class="h2-he">טיפוגרפיה</span>
+  <p>
+    Three families. <em class="em">Sora</em> for Latin display, UI, and headings.
+    <em class="em">Heebo</em> for all Hebrew. <em class="em">JetBrains Mono</em> for code,
+    hex values, and technical labels.
+  </p>
+
+  <h3>Latin Scale · Sora</h3>
+  <div class="type-stack">
+    <div class="type-row">
+      <div class="specimen t-display">Display — Personal Travel Companion</div>
+      <div class="meta"><span>44 px</span><span>weight 800</span><span>tracking −0.035em</span><span class="tag">Sora</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-h1">H1 — A System That Knows You</div>
+      <div class="meta"><span>32 px</span><span>weight 700</span><span>tracking −0.02em</span><span class="tag">Sora</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-h2">H2 — Multi-Agent Architecture</div>
+      <div class="meta"><span>22 px</span><span>weight 500</span><span class="tag">Sora</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-h3">H3 — Section Label / Terracotta</div>
+      <div class="meta"><span>16 px</span><span>weight 500</span><span>color terracotta</span><span class="tag">Sora</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-body">Body — Odysee analyzes preferences, budget, and schedule to craft a personalized travel experience. Every recommendation is powered by eleven specialized AI agents working in concert.</div>
+      <div class="meta"><span>15 px</span><span>weight 400</span><span>line-height 1.7</span><span class="tag">Sora</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-label">Label — Section Title / Key Info</div>
+      <div class="meta"><span>10 px</span><span>weight 500</span><span>UPPERCASE · 0.16em</span><span class="tag">Sora</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-caption">Caption — Version 1.0 · HIT M.Design · 2026</div>
+      <div class="meta"><span>11 px</span><span>weight 400</span><span>color muted</span><span class="tag">Sora</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-mono">const tico = new TravelCompanion({ lang: 'he' });</div>
+      <div class="meta"><span>13 px</span><span>weight 400</span><span>color teal</span><span class="tag">JetBrains Mono</span></div>
+    </div>
+  </div>
+
+  <h3>Hebrew Scale · Heebo</h3>
+  <div class="type-stack">
+    <div class="type-row">
+      <div class="specimen t-heb-disp hebrew">יועץ נסיעות אישי</div>
+      <div class="meta"><span>38 px</span><span>weight 800</span><span class="tag">Heebo</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-heb-h1 hebrew">מערכת שמכירה אותך</div>
+      <div class="meta"><span>28 px</span><span>weight 700</span><span class="tag">Heebo</span></div>
+    </div>
+    <div class="type-row">
+      <div class="specimen t-heb-body hebrew">Odysee מנתחת את ההעדפות, התקציב ולוח הזמנים שלך כדי לעצב חוויית נסיעה אישית. כל המלצה מופעלת על-ידי אחד-עשר סוכני AI מתמחים שפועלים בתיאום.</div>
+      <div class="meta"><span>15 px</span><span>weight 400</span><span>line-height 1.7</span><span class="tag">Heebo</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 09 — SPACING -->
+<div class="doc-section" id="spacing">
+  <p class="section-label">09 — <span>Storybook</span></p>
+  <h2>Spacing</h2>
+  <span class="h2-he">ריווח</span>
+  <p>All spacing derives from an 8-pixel base unit. Every gap, padding, and margin is a multiple of 8.</p>
+
+  <div style="margin-top:24px;">
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:4px;"></div>
+      <div class="spacing-token">--sp-half</div>
+      <div class="spacing-px">4 px</div>
+      <div class="spacing-use">Icon-to-text gap</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:8px;"></div>
+      <div class="spacing-token">--sp-1</div>
+      <div class="spacing-px">8 px</div>
+      <div class="spacing-use">Base unit · button y-padding</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:16px;"></div>
+      <div class="spacing-token">--sp-2</div>
+      <div class="spacing-px">16 px</div>
+      <div class="spacing-use">Card internal gap · list spacing</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:24px;"></div>
+      <div class="spacing-token">--sp-3</div>
+      <div class="spacing-px">24 px</div>
+      <div class="spacing-use">Card padding · sub-section grouping</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:32px;"></div>
+      <div class="spacing-token">--sp-4</div>
+      <div class="spacing-px">32 px</div>
+      <div class="spacing-use">Section horizontal padding</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:48px;"></div>
+      <div class="spacing-token">--sp-6</div>
+      <div class="spacing-px">48 px</div>
+      <div class="spacing-use">Section vertical padding</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:64px;"></div>
+      <div class="spacing-token">--sp-8</div>
+      <div class="spacing-px">64 px</div>
+      <div class="spacing-use">Between major sections</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:80px;"></div>
+      <div class="spacing-token">--sp-10</div>
+      <div class="spacing-px">80 px</div>
+      <div class="spacing-use">Top-level section blocks</div>
+    </div>
+  </div>
+
+  <h3>Radius Tokens</h3>
+  <div style="margin-top:16px;">
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:8px;height:8px;border-radius:8px;"></div>
+      <div class="spacing-token">--radius-btn</div>
+      <div class="spacing-px">8 px</div>
+      <div class="spacing-use">Buttons, inputs</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:14px;height:14px;border-radius:12px;"></div>
+      <div class="spacing-token">--radius-card</div>
+      <div class="spacing-px">12 px</div>
+      <div class="spacing-use">Cards, panels</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-block" style="width:20px;height:20px;border-radius:20px;"></div>
+      <div class="spacing-token">--radius-pill</div>
+      <div class="spacing-px">20 px</div>
+      <div class="spacing-use">Status pills, theme buttons</div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--text-muted);margin-top:18px;">
+    Max content width: <em class="em">1100 px</em>, centered. No drop shadows anywhere — depth comes from contrast and 1px borders.
+  </p>
+</div>
+
+<!-- 10 — MOTION -->
+<div class="doc-section" id="motion">
+  <p class="section-label">10 — <span>Storybook</span></p>
+  <h2>Motion</h2>
+  <span class="h2-he">תנועה</span>
+  <p>Motion is an information device, not a decoration. Hover any tile to test.</p>
+
+  <div class="motion-grid">
+    <div class="motion-box">
+      <div class="target"></div>
+      <div class="name">Hover Lift</div>
+      <div class="val">0.2s ease</div>
+    </div>
+    <div class="motion-box fade">
+      <div class="target"></div>
+      <div class="name">Fade</div>
+      <div class="val">0.2s ease</div>
+    </div>
+    <div class="motion-box scale">
+      <div class="target"></div>
+      <div class="name">Scale</div>
+      <div class="val">0.25s ease</div>
+    </div>
+    <div class="motion-box pulse">
+      <div class="target"></div>
+      <div class="name">AI Pulse</div>
+      <div class="val">2s infinite</div>
+    </div>
+  </div>
+
+  <p style="margin-top:24px;font-size:13px;">
+    <em class="em">Rule:</em> If removing an animation doesn't hurt comprehension, the animation doesn't belong.
+  </p>
+</div>
+
+<!-- 11 — COMPONENTS -->
+<div class="doc-section" id="components">
+  <p class="section-label">11 — <span>Storybook</span></p>
+  <h2>UI Components</h2>
+  <span class="h2-he">רכיבים</span>
+  <p>The working library — buttons, badges, cards, inputs, tables, and notifications.</p>
+
+  <h3>Buttons</h3>
+  <p style="font-size:13px;">Four variants × three sizes. Terracotta primary; transparent or ghost for everything secondary.</p>
+  <div class="btn-row">
+    <button class="btn btn-primary">Primary Action</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-ghost">Ghost</button>
+    <button class="btn btn-danger">Danger</button>
+    <button class="btn btn-primary" disabled>Disabled</button>
+  </div>
+  <div class="btn-row" style="margin-top:12px;">
+    <button class="btn btn-primary btn-sm">Small</button>
+    <button class="btn btn-primary">Default</button>
+    <button class="btn btn-primary btn-lg">Large</button>
+  </div>
+
+  <h3>Status Pills</h3>
+  <p style="font-size:13px;">Used in the project plan, agent dashboard, and spec documents. Labels stay in English even on Hebrew pages — they are codes, not copy.</p>
+  <div class="pill-row">
+    <span class="pill pill-key">KEY</span>
+    <span class="pill pill-design">DESIGN</span>
+    <span class="pill pill-dev">DEV</span>
+    <span class="pill pill-impl">IMPL</span>
+    <span class="pill pill-qa">QA</span>
+    <span class="pill pill-content">CONTENT</span>
+    <span class="pill pill-docs">DOCS</span>
+    <span class="pill pill-fix">FIX</span>
+    <span class="pill pill-submit">SUBMIT</span>
+    <span class="pill pill-live">LIVE</span>
+  </div>
+
+  <h3>Cards</h3>
+  <p style="font-size:13px;">Base layout unit. 1px border, 12px radius, no shadows. Border lifts to terracotta on hover.</p>
+  <div class="card-grid">
+    <div class="ds-card">
+      <div class="eyebrow">AGT-01 · Stage 1</div>
+      <div class="title">Preference Profiling Agent</div>
+      <div class="body">Builds a structured model of the traveler's style, budget thresholds, interests, and constraints through natural conversation.</div>
+      <div class="foot">
+        <span class="pill pill-impl">✓ Implemented</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ECDC4;">Pinecone · Claude</span>
+      </div>
+    </div>
+    <div class="ds-card">
+      <div class="eyebrow">AGT-04 · Stage 2</div>
+      <div class="title">Location Context Agent</div>
+      <div class="body">Monitors real-time position, crowd levels, and time-of-day to surface proactive, hyper-relevant suggestions before the traveler asks.</div>
+      <div class="foot">
+        <span class="pill pill-impl">✓ Implemented</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ECDC4;">HERE · Google Places</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Inputs</h3>
+  <p style="font-size:13px;">Minimal. Border on focus lifts to terracotta. Errors get a red border and a hint below.</p>
+  <div class="input-stack">
+    <div class="ds-input-wrap">
+      <label class="ds-label">Destination</label>
+      <input class="ds-input" type="text" placeholder="Where to next?" value="Tokyo">
+    </div>
+    <div class="ds-input-wrap">
+      <label class="ds-label">Departure Date</label>
+      <input class="ds-input" type="text" placeholder="MM / DD / YYYY">
+      <div class="input-hint">We'll suggest the best window based on weather and crowds.</div>
+    </div>
+    <div class="ds-input-wrap">
+      <label class="ds-label">Budget</label>
+      <input class="ds-input error" type="text" value="abc">
+      <div class="input-hint error">Numbers only.</div>
+    </div>
+  </div>
+
+  <h3>Tables</h3>
+  <p style="font-size:13px;">Dark navy header. Alternating rows. Monospace + teal for technical fields (hex, ID, version).</p>
+  <div class="ds-table-wrap">
+    <table class="ds-table">
+      <thead>
+        <tr><th>Agent</th><th>Role</th><th>Status</th><th>Stack</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-primary">AGT-01</td><td>Preference Profiling</td><td><span class="pill pill-impl">LIVE</span></td><td class="td-mono">Pinecone · Claude</td></tr>
+        <tr><td class="td-primary">AGT-02</td><td>Itinerary Creation</td><td><span class="pill pill-impl">LIVE</span></td><td class="td-mono">Google Places · OpenAI</td></tr>
+        <tr><td class="td-primary">AGT-04</td><td>Location Context</td><td><span class="pill pill-impl">LIVE</span></td><td class="td-mono">HERE · Foursquare</td></tr>
+        <tr><td class="td-primary">AGT-06</td><td>Language &amp; Culture</td><td><span class="pill pill-impl">LIVE</span></td><td class="td-mono">DeepL · ElevenLabs</td></tr>
+        <tr><td class="td-primary">AGT-03</td><td>Booking &amp; Management</td><td><span class="pill pill-design">CONCEPT</span></td><td class="td-mono">Amadeus · OpenTable</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Notifications</h3>
+  <p style="font-size:13px;">Left-border accent. Four semantic levels mapped to the signal accents.</p>
+  <div class="notif-stack">
+    <div class="ds-notif notif-brand">
+      <div class="icon">✦</div>
+      <div class="body">
+        <div class="title">Itinerary Ready</div>
+        <div class="msg">Your 7-day Tokyo journey has been confirmed and is ready to review.</div>
+      </div>
+    </div>
+    <div class="ds-notif notif-info">
+      <div class="icon">◈</div>
+      <div class="body">
+        <div class="title">AI Processing</div>
+        <div class="msg">Flight Monitor is scanning 14 alternative routes for your connection.</div>
+      </div>
+    </div>
+    <div class="ds-notif notif-warn">
+      <div class="icon">⚠</div>
+      <div class="body">
+        <div class="title">Flight Delay Detected</div>
+        <div class="msg">TLV → NRT delayed 45 min. Budget impact: +₪120. Approve rerouting?</div>
+      </div>
+    </div>
+    <div class="ds-notif notif-error">
+      <div class="icon">✕</div>
+      <div class="body">
+        <div class="title">API Unavailable</div>
+        <div class="msg">Amadeus connection lost. Retrying in 30s with fallback provider.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 12 — STATUS SYSTEM -->
+<div class="doc-section" id="status">
+  <p class="section-label">12 — <span>Storybook</span></p>
+  <h2>Status System</h2>
+  <span class="h2-he">מערכת סטטוסים</span>
+  <p>Consistent across the project plan, agent dashboard, and spec documents.</p>
+
+  <div style="margin-top:24px;">
+    <div class="status-row"><div><span class="pill pill-key">KEY</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#B85A3E;"></div><span class="status-hex">#B85A3E</span></div><div class="status-use">Critical milestones, must-ship features</div></div>
+    <div class="status-row"><div><span class="pill pill-design">DESIGN</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#7C6FCD;"></div><span class="status-hex">#7C6FCD</span></div><div class="status-use">Visual design, UX flows, prototyping</div></div>
+    <div class="status-row"><div><span class="pill pill-dev">DEV</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#4ECDC4;"></div><span class="status-hex">#4ECDC4</span></div><div class="status-use">Frontend / backend development</div></div>
+    <div class="status-row"><div><span class="pill pill-impl">IMPL</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#4ECDC4;"></div><span class="status-hex">#4ECDC4</span></div><div class="status-use">Implementation, integration work</div></div>
+    <div class="status-row"><div><span class="pill pill-qa">QA</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#F8B743;"></div><span class="status-hex">#F8B743</span></div><div class="status-use">Testing, quality assurance</div></div>
+    <div class="status-row"><div><span class="pill pill-content">CONTENT</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#B85A3E;"></div><span class="status-hex">#B85A3E</span></div><div class="status-use">Copy, narrative, scenarios</div></div>
+    <div class="status-row"><div><span class="pill pill-docs">DOCS</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#7C6FCD;"></div><span class="status-hex">#7C6FCD</span></div><div class="status-use">Documentation, academic writing</div></div>
+    <div class="status-row"><div><span class="pill pill-fix">FIX</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#E05A5F;"></div><span class="status-hex">#E05A5F</span></div><div class="status-use">Bug fixes, corrections, patches</div></div>
+    <div class="status-row"><div><span class="pill pill-submit">SUBMIT</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#B85A3E;"></div><span class="status-hex">#B85A3E</span></div><div class="status-use">Submission deadline markers</div></div>
+    <div class="status-row"><div><span class="pill pill-live">LIVE</span></div><div class="status-col-color"><div class="mini-swatch" style="background:#B85A3E;"></div><span class="status-hex">#B85A3E</span></div><div class="status-use">Exhibition days, live deployment</div></div>
+  </div>
+</div>
+
+<!-- 13 — ICONS -->
+<div class="doc-section" id="icons">
+  <p class="section-label">13 — <span>Storybook</span></p>
+  <h2>Icons</h2>
+  <span class="h2-he">אייקונים</span>
+  <p>Inline SVG only. 22×22 default, stroke 1.5. Color via <code style="font-family:var(--font-mono);font-size:13px;color:#4ECDC4">currentColor</code>.</p>
+
+  <div class="icon-grid">
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>clock</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg><span>location</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>hotel</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg><span>flight</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>calendar</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>budget</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span>chat</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg><span>ai</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><span>discover</span></div>
+    <div class="icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg><span>favorite</span></div>
+  </div>
+</div>
+
+<!-- 14 — TOKENS REFERENCE -->
+<div class="doc-section" id="tokens">
+  <p class="section-label">14 — <span>Storybook</span></p>
+  <h2>CSS Tokens Reference</h2>
+  <span class="h2-he">משתני CSS</span>
+  <p>
+    Complete variable list. Imported via
+    <code style="font-family:var(--font-mono);color:#4ECDC4;font-size:13px;">brand/odysee-tokens.css</code>
+    on every page.
+  </p>
+
+  <div class="code-block">
+<pre><span class="c-cmt">/* ── odysee-tokens.css · :root (light by default) ── */</span>
+<span class="c-key">:root</span> {
+  <span class="c-cmt">/* Brand foundation */</span>
+  <span class="c-prop">--od-navy</span>:          <span class="c-val">#0C1F3F</span>;
+  <span class="c-prop">--od-red</span>:           <span class="c-val">#B85A3E</span>;  <span class="c-cmt">/* terracotta */</span>
+  <span class="c-prop">--od-paper</span>:         <span class="c-val">#F6F4EF</span>;  <span class="c-cmt">/* ivory */</span>
+
+  <span class="c-cmt">/* Mist neutrals — verify exact values against tokens.css */</span>
+  <span class="c-prop">--od-mist-50</span>:       <span class="c-val">#FAFAF6</span>;
+  <span class="c-prop">--od-mist-100</span>:      <span class="c-val">#ECEAE3</span>;
+  <span class="c-prop">--od-mist-200</span>:      <span class="c-val">#D8D5CB</span>;
+  <span class="c-prop">--od-mist-300</span>:      <span class="c-val">#BBB7AA</span>;
+  <span class="c-prop">--od-mist-400</span>:      <span class="c-val">#948F80</span>;
+  <span class="c-prop">--od-mist-500</span>:      <span class="c-val">#6D6859</span>;
+  <span class="c-prop">--od-mist-600</span>:      <span class="c-val">#524E41</span>;
+  <span class="c-prop">--od-mist-700</span>:      <span class="c-val">#38352B</span>;
+  <span class="c-prop">--od-mist-800</span>:      <span class="c-val">#23211B</span>;
+  <span class="c-prop">--od-mist-900</span>:      <span class="c-val">#14130E</span>;
+
+  <span class="c-cmt">/* Semantic — light mode */</span>
+  <span class="c-prop">--od-bg</span>:            <span class="c-val">var(--od-paper)</span>;
+  <span class="c-prop">--od-surface</span>:       <span class="c-val">#FFFFFF</span>;
+  <span class="c-prop">--od-fg</span>:            <span class="c-val">var(--od-navy)</span>;
+  <span class="c-prop">--od-fg-subtle</span>:     <span class="c-val">var(--od-mist-500)</span>;
+  <span class="c-prop">--od-border</span>:        <span class="c-val">var(--od-mist-200)</span>;
+
+  <span class="c-cmt">/* Signal accents */</span>
+  <span class="c-prop">--od-teal</span>:          <span class="c-val">#4ECDC4</span>;
+  <span class="c-prop">--od-purple</span>:        <span class="c-val">#7C6FCD</span>;
+  <span class="c-prop">--od-amber</span>:         <span class="c-val">#F8B743</span>;
+  <span class="c-prop">--od-error</span>:         <span class="c-val">#E05A5F</span>;
+
+  <span class="c-cmt">/* Typography */</span>
+  <span class="c-prop">--od-font-sans</span>:     <span class="c-val">'Sora', system-ui, sans-serif</span>;
+  <span class="c-prop">--od-font-hebrew</span>:   <span class="c-val">'Heebo', system-ui, sans-serif</span>;
+  <span class="c-prop">--od-font-mono</span>:     <span class="c-val">'JetBrains Mono', monospace</span>;
+
+  <span class="c-cmt">/* Shape */</span>
+  <span class="c-prop">--radius-btn</span>:       <span class="c-val">8px</span>;
+  <span class="c-prop">--radius-card</span>:      <span class="c-val">12px</span>;
+  <span class="c-prop">--radius-pill</span>:      <span class="c-val">20px</span>;
+  <span class="c-prop">--transition</span>:       <span class="c-val">0.2s ease</span>;
+}
+
+<span class="c-cmt">/* Dark mode — flip semantic layer only */</span>
+<span class="c-key">[data-theme="dark"]</span> {
+  <span class="c-prop">--od-bg</span>:            <span class="c-val">var(--od-navy)</span>;
+  <span class="c-prop">--od-surface</span>:       <span class="c-val">var(--od-mist-800)</span>;
+  <span class="c-prop">--od-fg</span>:            <span class="c-val">var(--od-paper)</span>;
+  <span class="c-prop">--od-fg-subtle</span>:     <span class="c-val">var(--od-mist-400)</span>;
+  <span class="c-prop">--od-border</span>:        <span class="c-val">var(--od-mist-700)</span>;
+}</pre>
+  </div>
+
+  <p style="margin-top:18px;font-size:12px;color:var(--text-muted);">
+    Foundation colors, fonts, and the dotted-trail mark are canonical via
+    <code style="font-family:var(--font-mono);font-size:11px;color:#4ECDC4;">Odysee_Logo.zip</code>.
+    Mist scale values shown here are best-guess approximations — verify the actual
+    <code style="font-family:var(--font-mono);font-size:11px;color:#4ECDC4;">odysee-tokens.css</code>
+    file for the canonical scale.
+  </p>
+</div>
+
+<!-- doc-foot -->
+<div class="doc-foot">
+  <div class="foot-rule"></div>
+  <p>Odysee · Design System · v1.0 · M.Design Thesis · HIT 2026</p>
+  <p style="margin-top:8px;">Brand foundation · Color · Typography · Components · Voice</p>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__left">
+    David Castiel · M.Design Final Project · HIT 2026
+    <div class="site-footer__secondary">
+      <a href="project-plan.html">Project Plan</a><span aria-hidden="true">·</span><a href="odysee-prototype.html">Prototype</a>
+    </div>
+  </div>
+  <div class="site-footer__right">Odysee · Design System · v1.0 · 2026</div>
+</footer>
 
 <div class="copy-toast" id="copy-toast">Copied!</div>
 
 <script>
-/* ── Theme ── */
 const root = document.documentElement;
 const mq = window.matchMedia('(prefers-color-scheme: dark)');
 let current = localStorage.getItem('odysee-theme') || 'dark';
@@ -1207,7 +2028,6 @@ function setTheme(t) { applyTheme(t); }
 mq.addEventListener('change', () => { if (current === 'system') applyTheme('system'); });
 applyTheme(current);
 
-/* ── Copy hex ── */
 function copyColor(hex) {
   navigator.clipboard.writeText(hex).catch(() => {});
   const t = document.getElementById('copy-toast');
@@ -1216,19 +2036,12 @@ function copyColor(hex) {
   setTimeout(() => t.classList.remove('show'), 1800);
 }
 
-/* ── Active nav on scroll ── */
-const sections = document.querySelectorAll('.ds-section');
-const navLinks = document.querySelectorAll('.nav-link');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(l => l.classList.remove('active'));
-      const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
-      if (active) active.classList.add('active');
-    }
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
-}, { rootMargin: '-30% 0px -60% 0px' });
-sections.forEach(s => observer.observe(s));
+});
 </script>
 </body>
 </html>
