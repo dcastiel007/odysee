@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odysee — System Architecture — v2.0</title>
+<title>Odysee — System Architecture — v3.0</title>
 <link rel="stylesheet" href="../brand/odysee-tokens.css" />
   <link rel="stylesheet" href="../assets/css/site.css" />
 <style>
@@ -176,7 +176,7 @@
   /* Prevent horizontal overflow on small screens */
   body { overflow-x: hidden; }
 </style>
-  <meta name="version" content="v2.0">
+  <meta name="version" content="v3.0">
 </head>
 <body>
 
@@ -218,7 +218,7 @@
 
 <!-- Cover -->
 <div class="cover">
-  <div class="cover-tag"  >Architecture Document · v2.0 · 2026</div>
+  <div class="cover-tag"  >Architecture Document · v3.0 · 2026</div>
   <div class="cover-title">Odysee</div>
   <div class="cover-sub"  >Multi-Agent Architecture for Hyper-Personalized Travel</div>
   <div class="cover-rule"></div>
@@ -381,7 +381,7 @@
       <ul class="io-list"><li>User conversations &amp; stated preferences</li><li>Past trip history</li><li>Budget &amp; date constraints</li></ul>
       <div class="io-lbl"  >Outputs</div>
       <ul class="io-list"><li>Structured user profile (JSON)</li><li>Travel style taxonomy</li><li>Interest &amp; constraint vectors</li></ul>
-      <div class="agent-foot"><div class="api-list"><span class="api-tag">GPT-4o</span><span class="api-tag">Vector DB</span><span class="api-tag">Claude</span></div><span class="st-impl">✓ Implemented</span></div>
+      <div class="agent-foot"><div class="api-list"><span class="api-tag">GPT-4o</span><span class="api-tag">Pinecone</span><span class="api-tag">Claude</span></div><span class="st-impl">✓ Implemented</span></div>
     </div>
     <div class="agent-card ac-s1">
       <div class="agent-id">AGT-02</div>
@@ -421,7 +421,7 @@
       <ul class="io-list"><li>GPS coordinates &amp; heading</li><li>Timestamp &amp; local conditions</li><li>Crowd density signals</li></ul>
       <div class="io-lbl"  >Outputs</div>
       <ul class="io-list"><li>Ranked nearby suggestions</li><li>Contextual alerts &amp; detour advice</li></ul>
-      <div class="agent-foot"><div class="api-list"><span class="api-tag">Google Maps</span><span class="api-tag">HERE Maps</span></div><span class="st-conc">○ Conceptual</span></div>
+      <div class="agent-foot"><div class="api-list"><span class="api-tag">Google Maps</span><span class="api-tag">HERE Maps</span></div><span class="st-impl">✓ Implemented</span></div>
     </div>
     <div class="agent-card ac-s2">
       <div class="agent-id">AGT-05</div>
@@ -471,7 +471,7 @@
       <ul class="io-list"><li>Star ratings &amp; comments</li><li>Behavioral signals (time spent, skips)</li><li>Post-trip survey responses</li></ul>
       <div class="io-lbl"  >Outputs</div>
       <ul class="io-list"><li>Updated preference profile</li><li>Insights report per destination</li><li>Recommendation model refinement</li></ul>
-      <div class="agent-foot"><div class="api-list"><span class="api-tag">Sentiment Analysis</span><span class="api-tag">Vector DB</span></div><span class="st-conc">○ Conceptual</span></div>
+      <div class="agent-foot"><div class="api-list"><span class="api-tag">Sentiment Analysis</span><span class="api-tag">Pinecone</span></div><span class="st-conc">○ Conceptual</span></div>
     </div>
   </div>
 
@@ -552,14 +552,14 @@
   <p class="section-label">05 — <span  >Technical Stack</span></p>
   <h2  >Infrastructure &amp; Integrations</h2>
   <div class="stack-grid">
-    <div class="stack-card"><div class="stack-cat">AI / LLM Layer</div><div class="stack-tags"><span class="stack-tag">GPT-4o</span><span class="stack-tag">Claude 3.5</span><span class="stack-tag">LangGraph</span><span class="stack-tag">CrewAI</span></div></div>
+    <div class="stack-card"><div class="stack-cat">AI / LLM Layer</div><div class="stack-tags"><span class="stack-tag">GPT-4o</span><span class="stack-tag">Claude API</span><span class="stack-tag">LangGraph</span><span class="stack-tag">CrewAI</span></div></div>
     <div class="stack-card"><div class="stack-cat">Voice Interface</div><div class="stack-tags"><span class="stack-tag">OpenAI Whisper</span><span class="stack-tag">ElevenLabs TTS</span><span class="stack-tag">WebSpeech API</span></div></div>
     <div class="stack-card"><div class="stack-cat">Location Services</div><div class="stack-tags"><span class="stack-tag">Google Maps</span><span class="stack-tag">Foursquare</span><span class="stack-tag">HERE Maps</span></div></div>
     <div class="stack-card"><div class="stack-cat">Travel &amp; Booking</div><div class="stack-tags"><span class="stack-tag">Amadeus API</span><span class="stack-tag">Booking.com</span><span class="stack-tag">OpenTable</span></div></div>
     <div class="stack-card"><div class="stack-cat">Data &amp; Memory</div><div class="stack-tags"><span class="stack-tag">PostgreSQL</span><span class="stack-tag">Pinecone</span><span class="stack-tag">Redis</span><span class="stack-tag">S3</span></div></div>
     <div class="stack-card"><div class="stack-cat">Frontend</div><div class="stack-tags"><span class="stack-tag">React 18</span><span class="stack-tag">Tailwind CSS</span><span class="stack-tag">Framer Motion</span><span class="stack-tag">Mapbox GL</span></div></div>
     <div class="stack-card"><div class="stack-cat">Backend</div><div class="stack-tags"><span class="stack-tag">Node.js</span><span class="stack-tag">Python FastAPI</span><span class="stack-tag">WebSockets</span><span class="stack-tag">Docker</span></div></div>
-    <div class="stack-card"><div class="stack-cat">External Intelligence</div><div class="stack-tags"><span class="stack-tag">DeepL Translate</span><span class="stack-tag">OpenWeather</span><span class="stack-tag">FlightAware</span></div></div>
+    <div class="stack-card"><div class="stack-cat">External Intelligence</div><div class="stack-tags"><span class="stack-tag">DeepL Translate</span><span class="stack-tag">OpenWeather</span><span class="stack-tag">FlightRadar24</span></div></div>
   </div>
 </div>
 
@@ -567,7 +567,7 @@
 <div class="doc-section" id="demo">
   <p class="section-label">06 — <span  >Demo Scope</span></p>
   <h2  >Exhibition Implementation vs. Full Vision</h2>
-  <p style="margin-top:16px;max-width:680px">The exhibition demo presents a working proof-of-concept for the three highest-impact agents, demonstrating the core interaction loop — from preference intake through personalized itinerary generation — with voice interaction and live visual output.</p>
+  <p style="margin-top:16px;max-width:680px">The exhibition demo presents a working proof-of-concept for the four highest-impact agents, demonstrating the core interaction loop — from preference intake through personalized itinerary generation — with voice interaction and live visual output.</p>
   <div class="demo-grid">
     <div class="demo-col impl">
       <div class="demo-ttl"  >✓ Implemented for Exhibition</div>
@@ -575,6 +575,7 @@
         <li>AGT-01 — Preference Profiling (conversational onboarding)</li>
         <li>AGT-02 — Itinerary Creation (real-time generation + map viz)</li>
         <li>AGT-06 — Language &amp; Culture Agent (live translation)</li>
+        <li>AGT-04 — Location Context (live nearby suggestions + walking-time)</li>
         <li>Voice interaction — speech-to-text via Whisper</li>
         <li>AI voice output — spoken responses via ElevenLabs</li>
         <li>Real-time itinerary visualization on large screen</li>
@@ -585,7 +586,6 @@
       <div class="demo-ttl"  >○ Conceptual / Future Work</div>
       <ul>
         <li>AGT-03 — Actual booking execution (payment integration)</li>
-        <li>AGT-04 — Live GPS recommendations</li>
         <li>AGT-05 — Real disruption handling &amp; rebooking</li>
         <li>AGT-07 — Media curation &amp; social sharing</li>
         <li>AGT-08 — Multi-trip feedback learning loop</li>
@@ -613,7 +613,7 @@
 
 <div class="doc-foot">
   <div class="foot-rule"></div>
-  <p  >Odysee · Architecture Document v2.0 · M.Design Thesis · HIT 2026</p>
+  <p  >Odysee · Architecture Document v3.0 · M.Design Thesis · HIT 2026</p>
   <p style="margin-top:8px"  >11 Agents · 4 Stages · 1 Evolving Companion</p>
 </div>
 
@@ -624,7 +624,7 @@
       <a href="project-plan.html">Project Plan</a><span aria-hidden="true">·</span><a href="odysee-prototype.html">Prototype</a>
     </div>
   </div>
-  <div class="site-footer__right">Odysee · Architecture · v2.0 · 2026</div>
+  <div class="site-footer__right">Odysee · Architecture · v3.0 · 2026</div>
 </footer>
 
 <script>

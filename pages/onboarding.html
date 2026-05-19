@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="version" content="v1.0"/>
-<title>Odysee — Onboarding Dialogue Flows — v1.0</title>
+<title>Odysee — Onboarding Dialogue Flows — v2.0</title>
 <link rel="stylesheet" href="../brand/odysee-tokens.css" />
   <link rel="stylesheet" href="../assets/css/site.css" />
 <style>
@@ -296,7 +296,7 @@
 
 <!-- Hero -->
 <div class="ds-section">
-  <p class="section-label">Onboarding Dialogue Flows · v1.0</p>
+  <p class="section-label">Onboarding Dialogue Flows · v2.0</p>
   <h1>Smart Onboarding — Preference Profiling</h1>
   <p style="color:var(--text-secondary);margin-top:10px;max-width:720px;font-family:var(--font-latin)">A dynamic, adaptive conversation flow that builds a rich traveler profile in under 3 minutes — with zero dropout. Every question responds to previous answers. The system knows when to dig deeper and when to move on.</p>
   <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:20px;font-size:12px;font-family:var(--font-latin)">
@@ -825,11 +825,101 @@
         <td class="q-branch">→ sets exclusion filters</td>
         <td><div class="q-impact"><span class="q-imp-tag">exclusions[]</span></div></td>
       </tr>
+      <!-- SPECIALIZATION QUESTIONS -->
+      <tr><td colspan="7" style="background:rgba(248,183,67,0.08);color:var(--amber);font-size:10px;font-weight:600;letter-spacing:0.08em;padding:8px 12px;font-family:var(--font-latin)">SPECIALIZATION — Track-specific depth, auto-unlocked by profile</td></tr>
+      <tr>
+        <td class="q-id">Q15</td>
+        <td><span class="q-type qt-choice">Choice</span></td>
+        <td><span style="font-size:10px;color:var(--gold);font-family:var(--font-latin)">PHOTO</span></td>
+        <td style="font-size:12px">When are you most likely to be out shooting? <em>[Q04 includes Photography]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Golden hour · Blue hour · Midday · Night</td>
+        <td class="q-branch">Sets prime hours for AGT-04 location suggestions</td>
+        <td><div class="q-impact"><span class="q-imp-tag">photo_hours[]</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q16</td>
+        <td><span class="q-type qt-multi">Multi</span></td>
+        <td><span style="font-size:10px;color:var(--gold);font-family:var(--font-latin)">PHOTO</span></td>
+        <td style="font-size:12px">What draws your lens most often? <em>[Q04 includes Photography]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Landscape · Street · Architecture · Food · Portraits</td>
+        <td class="q-branch">Tunes AGT-02 toward shoot-worthy spots</td>
+        <td><div class="q-impact"><span class="q-imp-tag">photo_subjects[]</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q17</td>
+        <td><span class="q-type qt-choice">Choice</span></td>
+        <td><span style="font-size:10px;color:var(--gold);font-family:var(--font-latin)">PHOTO</span></td>
+        <td style="font-size:12px">How much gear are you traveling with? <em>[Q04 includes Photography]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Phone only · Mirrorless + 1–2 lenses · Full kit (DSLR + tripod)</td>
+        <td class="q-branch">Sets mobility constraints for pacing</td>
+        <td><div class="q-impact"><span class="q-imp-tag">photo_gear</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q18</td>
+        <td><span class="q-type qt-choice">Choice</span></td>
+        <td><span style="font-size:10px;color:var(--teal);font-family:var(--font-latin)">WELL</span></td>
+        <td style="font-size:12px">What kind of wellness experience are you after? <em>[Q04 includes Wellness]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Yoga &amp; meditation · Spa &amp; thermal · Fitness retreat · Nature immersion</td>
+        <td class="q-branch">Unlocks wellness-specific options</td>
+        <td><div class="q-impact"><span class="q-imp-tag">wellness_style</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q19</td>
+        <td><span class="q-type qt-choice">Choice</span></td>
+        <td><span style="font-size:10px;color:var(--teal);font-family:var(--font-latin)">WELL</span></td>
+        <td style="font-size:12px">Morning rhythm? <em>[Q04 includes Wellness]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Sunrise yoga · Slow start with breakfast · Sleep in</td>
+        <td class="q-branch">Affects AGT-02 day-start pacing</td>
+        <td><div class="q-impact"><span class="q-imp-tag">morning_rhythm</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q20</td>
+        <td><span class="q-type qt-choice">Choice</span></td>
+        <td><span style="font-size:10px;color:var(--purple);font-family:var(--font-latin)">BIZ</span></td>
+        <td style="font-size:12px">Meeting density preference? <em>[Q01=Bleisure AND Q02b≥50%]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Back-to-back · Spread over days · Focused blocks with breaks</td>
+        <td class="q-branch">Tunes business itinerary density</td>
+        <td><div class="q-impact"><span class="q-imp-tag">meeting_density</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q21</td>
+        <td><span class="q-type qt-multi">Multi</span></td>
+        <td><span style="font-size:10px;color:var(--purple);font-family:var(--font-latin)">BIZ</span></td>
+        <td style="font-size:12px">What does your ideal business hotel have? <em>[Q01=Bleisure]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Workspace in room · Gym · Business center · Quiet floor</td>
+        <td class="q-branch">Filters AGT-02 hotel selection</td>
+        <td><div class="q-impact"><span class="q-imp-tag">business_amenities[]</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q22</td>
+        <td><span class="q-type qt-choice">Choice</span></td>
+        <td><span style="font-size:10px;color:var(--purple);font-family:var(--font-latin)">BIZ</span></td>
+        <td style="font-size:12px">Lounge access during transit? <em>[Q01=Bleisure AND Q11=Yes]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Required · Nice-to-have · Not important</td>
+        <td class="q-branch">Routes AGT-09 toward lounge-granting programs</td>
+        <td><div class="q-impact"><span class="q-imp-tag">lounge_access</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q23</td>
+        <td><span class="q-type qt-choice">Choice</span></td>
+        <td><span style="font-size:10px;color:var(--red);font-family:var(--font-latin)">LUX</span></td>
+        <td style="font-size:12px">Ground transport at destination? <em>[Q03=Luxury]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Public/taxi · Pre-arranged transfers · Dedicated driver</td>
+        <td class="q-branch">Activates premium logistics in AGT-02/03</td>
+        <td><div class="q-impact"><span class="q-imp-tag">ground_transport</span></div></td>
+      </tr>
+      <tr>
+        <td class="q-id">Q24</td>
+        <td><span class="q-type qt-multi">Multi</span></td>
+        <td><span style="font-size:10px;color:var(--red);font-family:var(--font-latin)">LUX</span></td>
+        <td style="font-size:12px">Exclusive access preferences? <em>[Q03=Luxury]</em></td>
+        <td style="font-size:11px;color:var(--text-secondary)">Michelin dining · Members-only venues · Private guided tours · Yacht/villa rentals</td>
+        <td class="q-branch">Unlocks ultra-premium partners in AGT-03</td>
+        <td><div class="q-impact"><span class="q-imp-tag">luxury_access[]</span></div></td>
+      </tr>
     </tbody>
   </table>
   </div>
-
-  <p style="font-size:11px;color:var(--text-muted);margin-top:12px;font-family:var(--font-latin)">Questions Q15–Q24 are deep specialization questions for specific personas (photographers, wellness travelers, business-only, ultra-luxury) — unlocked automatically based on the declared interest profile.</p>
 </div>
 
 <!-- ══════════════════════════════════════════
@@ -977,7 +1067,7 @@
       <a href="project-plan.html">Project Plan</a><span aria-hidden="true">·</span><a href="odysee-prototype.html">Prototype</a>
     </div>
   </div>
-  <div class="site-footer__right">Odysee · Onboarding · v1.0 · 2026</div>
+  <div class="site-footer__right">Odysee · Onboarding · v2.0 · 2026</div>
 </footer>
 
 <script>
