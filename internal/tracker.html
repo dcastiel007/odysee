@@ -4,854 +4,170 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Odysee — מעקב פרויקט</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../brand/odysee-tokens.css">
+<link rel="stylesheet" href="../assets/css/site.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Hebrew:wght@300;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&family=Heebo:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-:root {
-  --bg:#0A0A0F; --surface:#0F1C2E; --card:#14253C; --card-hover:#1A2D47;
-  --border:#2A3245; --border-soft:rgba(255,255,255,0.04);
-  --gold:#C8A96E; --gold-dim:rgba(200,169,110,0.12); --gold-bright:rgba(200,169,110,0.25);
-  --teal:#4ECDC4; --teal-dim:rgba(78,205,196,0.12);
-  --purple:#7C6FCD; --purple-dim:rgba(124,111,205,0.12);
-  --amber:#F8B743; --amber-dim:rgba(248,183,67,0.12);
-  --red:#E05A5F; --red-dim:rgba(224,90,95,0.12);
-  --text-primary:#F0EDE8; --text-secondary:#8A95AA; --text-muted:#4A5568;
-  --font-latin:'Poppins',system-ui,sans-serif;
-  --font-hebrew:'Noto Sans Hebrew','Assistant',system-ui,sans-serif;
-  --font-mono:'JetBrains Mono',monospace;
-  --radius:8px; --radius-lg:12px;
+
+.iv-brand{display:flex;flex-direction:column;gap:4px}
+.bm{display:inline-flex;align-items:center;gap:2px;text-decoration:none;line-height:.9}
+.bm__o{width:2.2em;height:2.2em}
+.bm__text{font-family:var(--od-font-sans,'Sora',sans-serif);font-weight:800;font-size:34px;
+  letter-spacing:-.035em;color:var(--od-fg)}
+.bm-inner{fill:#fff}.bm-ring{stroke:var(--od-navy)}.bm-trail{stroke:var(--od-navy)}
+.bm-start{fill:var(--od-navy)}.bm-end{fill:var(--od-red)}
+[data-theme="dark"] .bm-ring{stroke:var(--od-paper)}
+.iv-tagline{font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--od-fg-subtle);font-weight:500;margin-top:2px}
+.iv-wrap{max-width:1200px;margin:0 auto;padding:32px 24px 64px}
+.iv-h1{font-family:var(--od-font-sans,'Sora',sans-serif);font-size:28px;font-weight:800;
+  letter-spacing:-.02em;color:var(--od-fg);margin-bottom:4px}
+.iv-meta{font-size:12px;color:var(--od-fg-subtle);margin-bottom:8px;direction:ltr;text-align:left}
+.iv-summary{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 28px}
+.iv-stat{background:var(--od-bg-sunken);border:1px solid var(--od-border);
+  border-radius:var(--od-r-md,10px);padding:12px 18px;min-width:96px}
+.iv-stat .n{font-family:var(--od-font-sans,'Sora',sans-serif);font-size:24px;font-weight:800;color:var(--od-fg)}
+.iv-stat .l{font-size:11px;color:var(--od-fg-subtle);letter-spacing:.04em}
+.iv-phase{margin-top:30px}
+.iv-phase h2{font-family:var(--od-font-sans,'Sora',sans-serif);font-size:16px;font-weight:700;
+  color:var(--od-fg);margin-bottom:2px}
+.iv-phase .sub{font-size:11px;color:var(--od-fg-subtle);direction:ltr;text-align:right;margin-bottom:12px}
+/* pills */
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:9px;font-weight:600;
+  letter-spacing:.10em;text-transform:uppercase;font-family:var(--od-font-sans,'Sora',sans-serif);
+  white-space:nowrap;direction:ltr}
+/* tracker table */
+.iv-table{width:100%;border-collapse:collapse;font-size:13px;
+  font-family:var(--od-font-sans,'Sora',sans-serif)}
+.iv-table th{background:var(--od-navy);color:#fff;font-size:9px;font-weight:600;letter-spacing:.10em;
+  text-transform:uppercase;padding:9px 12px;text-align:right}
+.iv-table td{padding:9px 12px;color:var(--od-fg-muted);border-bottom:1px solid var(--od-border);
+  vertical-align:top}
+.iv-table tr:nth-child(even) td{background:var(--od-bg-sunken)}
+.iv-table .c-num{font-family:var(--od-font-mono,monospace);font-size:11px;color:var(--od-fg-subtle);direction:ltr}
+.iv-table .c-task{color:var(--od-fg);font-weight:500}
+.iv-table .c-date{font-family:var(--od-font-mono,monospace);font-size:11px;color:var(--od-fg-subtle);direction:ltr;white-space:nowrap}
+.iv-table .c-notes{font-size:12px;color:var(--od-fg-subtle);line-height:1.5}
+/* gantt */
+.gantt{margin-top:8px;font-family:var(--od-font-sans,'Sora',sans-serif);direction:ltr}
+.gantt-months{display:flex;border-bottom:1px solid var(--od-border-strong);
+  margin-left:230px;position:relative;height:22px}
+.gantt-month{font-size:10px;color:var(--od-fg-subtle);letter-spacing:.06em;
+  border-right:1px solid var(--od-border);padding:2px 0 0 4px;box-sizing:border-box;text-align:left}
+.gantt-row{display:flex;align-items:center;height:30px;border-bottom:1px solid var(--od-border)}
+.gantt-label{width:230px;flex-shrink:0;font-size:12px;color:var(--od-fg);padding:0 10px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl;text-align:right;
+  display:flex;align-items:center;gap:8px}
+.gantt-label .gtext{overflow:hidden;text-overflow:ellipsis;flex:1}
+.gantt-label .gnum{font-family:var(--od-font-mono,monospace);font-size:10px;color:var(--od-fg-subtle);
+  direction:ltr;flex-shrink:0;min-width:22px;text-align:left;order:2}
+.gantt-track{position:relative;flex:1;height:100%}
+.gantt-bar{position:absolute;top:7px;height:16px;border-radius:4px;opacity:.9;
+  display:flex;align-items:center;direction:ltr}
+.gantt-phase{font-family:var(--od-font-sans,'Sora',sans-serif);font-size:11px;font-weight:700;
+  color:var(--od-red);letter-spacing:.06em;text-transform:uppercase;
+  padding:14px 10px 4px;border-bottom:1px solid var(--od-border-strong);margin-top:6px;direction:rtl;text-align:right}
+.gantt-today{position:absolute;top:0;bottom:0;width:2px;background:var(--od-red);z-index:5}
+.gantt-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;padding-top:16px;
+  border-top:1px solid var(--od-border);direction:rtl}
+.gantt-legend .lg{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--od-fg-muted)}
+.gantt-legend .sw{width:12px;height:12px;border-radius:3px}
+@media(max-width:640px){
+  .gantt-months{margin-left:130px}.gantt-label{width:130px;font-size:11px}
+  .iv-table .c-notes{display:none}
 }
-[data-theme="light"] {
-  --bg:#FAFAF7; --surface:#FFFFFF; --card:#F4F1EB; --card-hover:#EDE9DF;
-  --border:#E2DDD4; --border-soft:rgba(0,0,0,0.04);
-  --gold:#9A7A3E; --gold-dim:rgba(154,122,62,0.10); --gold-bright:rgba(154,122,62,0.22);
-  --text-primary:#1A1814; --text-secondary:#6B6560; --text-muted:#A89F96;
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { background:var(--bg); color:var(--text-primary); font-family:var(--font-hebrew),var(--font-latin); font-weight:300; line-height:1.7; min-height:100vh; }
-button, input, select, textarea { font-family:inherit; font-size:inherit; color:inherit; background:none; border:none; outline:none; }
-button { cursor:pointer; }
-input, select, textarea { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:8px 12px; color:var(--text-primary); transition:border-color 0.15s; }
-input:focus, select:focus, textarea:focus { border-color:var(--gold); }
-input[type="date"] { font-family:var(--font-mono); font-size:12px; direction:ltr; }
 
-/* ===== Header ===== */
-.header { position:sticky; top:0; z-index:10; background:rgba(10,10,15,0.85); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:14px 24px; }
-[data-theme="light"] .header { background:rgba(250,250,247,0.85); }
-.header-inner { max-width:1280px; margin:0 auto; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
-.brand { display:flex; align-items:baseline; gap:10px; direction:ltr; }
-.brand-name { font-family:var(--font-latin); font-size:18px; font-weight:600; letter-spacing:-0.01em; }
-.brand-name .dot { color:var(--gold); }
-.brand-tag { font-family:var(--font-hebrew); font-size:12px; color:var(--gold); font-weight:500; direction:rtl; letter-spacing:0.02em; }
-.header-actions { margin-inline-start:auto; display:flex; gap:8px; flex-wrap:wrap; }
-.btn { font-family:var(--font-hebrew); font-size:12px; font-weight:500; padding:8px 14px; border-radius:var(--radius); border:1px solid var(--border); color:var(--text-secondary); background:transparent; transition:all 0.15s; }
-.btn:hover { color:var(--gold); border-color:var(--gold); }
-.btn-primary { background:var(--gold); color:var(--bg); border-color:var(--gold); }
-.btn-primary:hover { background:transparent; color:var(--gold); }
-.btn-danger:hover { color:var(--red); border-color:var(--red); }
-.btn-icon { padding:8px 10px; font-size:14px; }
-.btn .arrow { font-family:var(--font-latin); margin-inline-end:4px; opacity:0.7; }
-
-/* ===== Main layout ===== */
-main { max-width:1280px; margin:0 auto; padding:36px 24px 80px; }
-
-/* ===== Hero / Overview ===== */
-.overview { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:32px; margin-bottom:32px; position:relative; overflow:hidden; }
-.overview::before { content:''; position:absolute; top:0; inset-inline-start:0; width:240px; height:240px; background:radial-gradient(circle, var(--gold-dim) 0%, transparent 65%); pointer-events:none; }
-.overview-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:28px; gap:16px; flex-wrap:wrap; position:relative; }
-.overview-title { font-family:var(--font-hebrew); font-size:14px; color:var(--gold); font-weight:500; letter-spacing:0.04em; }
-.overview-meta { font-family:var(--font-hebrew); font-size:12px; color:var(--text-muted); }
-.overall-pct { font-family:var(--font-latin); font-size:56px; font-weight:300; letter-spacing:-0.03em; line-height:1; margin-bottom:6px; direction:ltr; }
-.overall-pct .label { font-family:var(--font-hebrew); display:block; font-size:12px; color:var(--text-muted); margin-top:8px; font-weight:500; direction:rtl; letter-spacing:0.02em; }
-.overall-row { display:grid; grid-template-columns:auto 1fr; gap:48px; align-items:center; position:relative; }
-@media (max-width:720px) { .overall-row { grid-template-columns:1fr; gap:24px; } }
-
-.phase-bars { display:flex; flex-direction:column; gap:10px; }
-.phase-bar-row { display:grid; grid-template-columns:140px 1fr 50px; gap:14px; align-items:center; font-size:12px; }
-.phase-bar-row .name { font-family:var(--font-latin); font-weight:500; color:var(--text-secondary); direction:ltr; text-align:start; }
-.phase-bar-row .name .sub { color:var(--text-muted); font-size:10px; margin-inline-start:6px; }
-.phase-bar { height:6px; background:var(--surface); border-radius:3px; overflow:hidden; position:relative; direction:ltr; }
-.phase-bar-fill { height:100%; background:var(--gold); transition:width 0.4s ease; }
-.phase-bar-row .pct { font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); text-align:end; direction:ltr; }
-@media (max-width:560px) {
-  .phase-bar-row { grid-template-columns:100px 1fr 40px; gap:10px; }
-}
-
-/* ===== Filters ===== */
-.filters { display:flex; gap:10px; margin-bottom:24px; align-items:center; flex-wrap:wrap; }
-.filters select { font-size:12px; padding:6px 12px; font-family:var(--font-hebrew); }
-.filters-label { font-family:var(--font-hebrew); font-size:12px; color:var(--text-muted); font-weight:500; margin-inline-end:4px; }
-.filters .spacer { flex:1; }
-.search-box { position:relative; }
-.search-box input { padding-inline-start:32px; min-width:200px; font-size:13px; font-family:var(--font-hebrew); }
-.search-box::before { content:'⌕'; position:absolute; inset-inline-start:10px; top:50%; transform:translateY(-50%); color:var(--text-muted); }
-
-/* ===== Phase groups ===== */
-.phase-group { margin-bottom:32px; }
-.phase-head { display:flex; align-items:center; gap:14px; padding-bottom:12px; border-bottom:1px solid var(--border); margin-bottom:14px; }
-.phase-num { font-family:var(--font-mono); font-size:11px; color:var(--gold); letter-spacing:0.06em; direction:ltr; }
-.phase-name { font-family:var(--font-latin); font-size:14px; font-weight:500; color:var(--text-primary); direction:ltr; }
-.phase-dates { font-family:var(--font-mono); font-size:10px; color:var(--text-muted); margin-inline-start:auto; direction:ltr; }
-.phase-pct { font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); padding:2px 8px; background:var(--surface); border-radius:10px; direction:ltr; }
-
-/* ===== Task cards ===== */
-.task { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:10px; transition:border-color 0.15s; }
-.task:hover { border-color:var(--gold-bright); }
-.task.editing { border-color:var(--gold); }
-.task-row1 { display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:start; margin-bottom:12px; }
-.task-id { font-family:var(--font-mono); font-size:10px; color:var(--text-muted); padding-top:4px; min-width:24px; direction:ltr; }
-.task-name { font-size:15px; font-weight:300; color:var(--text-primary); line-height:1.5; }
-.task-name.hebrew { font-family:var(--font-hebrew); }
-.task-name.latin { font-family:var(--font-latin); font-weight:400; }
-.task-name-input { font-size:14px; width:100%; }
-.task-controls { display:flex; gap:6px; align-items:center; }
-.task-tag { font-family:var(--font-latin); font-size:9px; padding:3px 9px; border-radius:20px; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap; direction:ltr; }
-.tag-KEY, .tag-CONTENT, .tag-SUBMIT, .tag-LIVE { background:var(--gold-dim); color:var(--gold); border:1px solid rgba(200,169,110,0.3); }
-.tag-DESIGN, .tag-DOCS { background:var(--purple-dim); color:var(--purple); border:1px solid rgba(124,111,205,0.3); }
-.tag-DEV, .tag-IMPL { background:var(--teal-dim); color:var(--teal); border:1px solid rgba(78,205,196,0.3); }
-.tag-QA { background:var(--amber-dim); color:var(--amber); border:1px solid rgba(248,183,67,0.3); }
-.tag-FIX { background:var(--red-dim); color:var(--red); border:1px solid rgba(224,90,95,0.3); }
-.tag-PRINT, .tag-HW, .tag-SETUP, .tag-TEARDOWN { background:rgba(255,255,255,0.04); color:var(--text-secondary); border:1px solid var(--border); }
-
-.task-row2 { display:grid; grid-template-columns:1fr auto; gap:18px; align-items:center; }
-@media (max-width:600px) { .task-row2 { grid-template-columns:1fr; } }
-
-.progress-wrap { display:flex; align-items:center; gap:12px; direction:ltr; }
-.progress-slider { flex:1; -webkit-appearance:none; height:4px; background:var(--surface); border-radius:2px; outline:none; }
-.progress-slider::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:14px; height:14px; border-radius:50%; background:var(--gold); cursor:pointer; transition:transform 0.1s; }
-.progress-slider::-webkit-slider-thumb:hover { transform:scale(1.2); }
-.progress-slider::-moz-range-thumb { width:14px; height:14px; border-radius:50%; background:var(--gold); cursor:pointer; border:none; }
-.progress-pct { font-family:var(--font-mono); font-size:11px; color:var(--text-secondary); min-width:40px; text-align:end; }
-.progress-pct.complete { color:var(--gold); }
-
-.task-meta { display:flex; gap:14px; font-size:11px; color:var(--text-muted); align-items:center; flex-wrap:wrap; }
-.task-meta .dates { font-family:var(--font-mono); font-size:10px; direction:ltr; }
-.task-meta .sep { opacity:0.4; }
-.task-meta .updated { font-family:var(--font-hebrew); font-size:11px; }
-.task-meta .updated .ts { font-family:var(--font-mono); font-size:10px; margin-inline-start:4px; direction:ltr; display:inline-block; }
-
-.task-notes { font-size:13px; color:var(--text-secondary); margin-top:10px; padding-top:10px; border-top:1px solid var(--border-soft); line-height:1.7; }
-.task-notes.hebrew { font-family:var(--font-hebrew); }
-.task-notes.latin { font-family:var(--font-latin); }
-
-.task-edit-form { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; padding-top:14px; border-top:1px solid var(--border-soft); }
-.task-edit-form .full { grid-column:1 / -1; }
-.task-edit-form label { display:block; font-family:var(--font-hebrew); font-size:11px; color:var(--text-muted); margin-bottom:5px; font-weight:500; }
-.task-edit-form input, .task-edit-form select, .task-edit-form textarea { width:100%; font-size:13px; padding:7px 10px; }
-.task-edit-form textarea { min-height:60px; resize:vertical; font-family:var(--font-hebrew); }
-
-.icon-btn { width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:var(--radius); color:var(--text-muted); font-size:14px; border:1px solid transparent; transition:all 0.15s; }
-.icon-btn:hover { color:var(--gold); border-color:var(--border); background:var(--surface); }
-.icon-btn.danger:hover { color:var(--red); border-color:var(--red); }
-
-/* ===== Add task ===== */
-.add-task-card { background:transparent; border:1px dashed var(--border); border-radius:var(--radius); padding:24px; text-align:center; cursor:pointer; transition:all 0.15s; margin-bottom:24px; width:100%; font-family:var(--font-hebrew); }
-.add-task-card:hover { border-color:var(--gold); }
-.add-task-card .plus { font-family:var(--font-latin); font-size:18px; font-weight:300; margin-inline-end:8px; color:var(--text-muted); transition:color 0.15s; }
-.add-task-card .label { font-size:13px; color:var(--text-muted); transition:color 0.15s; }
-.add-task-card:hover .plus, .add-task-card:hover .label { color:var(--gold); }
-
-.add-form { background:var(--card); border:1px solid var(--gold); border-radius:var(--radius-lg); padding:24px; margin-bottom:24px; }
-.add-form h3 { font-family:var(--font-hebrew); font-size:13px; color:var(--gold); margin-bottom:18px; font-weight:500; }
-.add-form-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.add-form-grid .full { grid-column:1 / -1; }
-@media (max-width:720px) { .add-form-grid { grid-template-columns:1fr; } }
-.add-form label { display:block; font-family:var(--font-hebrew); font-size:11px; color:var(--text-muted); margin-bottom:5px; font-weight:500; }
-.add-form input, .add-form select, .add-form textarea { width:100%; font-size:13px; padding:8px 11px; }
-.add-form textarea { min-height:60px; font-family:var(--font-hebrew); }
-.add-form-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:18px; padding-top:14px; border-top:1px solid var(--border-soft); }
-
-/* ===== Footer ===== */
-footer { max-width:1280px; margin:0 auto; padding:24px; border-top:1px solid var(--border); text-align:center; font-size:12px; color:var(--text-muted); font-family:var(--font-hebrew); line-height:1.8; }
-footer .ts { font-family:var(--font-mono); direction:ltr; display:inline-block; }
-footer .sync-warn { color:var(--amber); }
-
-/* ===== Toast ===== */
-.toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--surface); border:1px solid var(--gold); color:var(--text-primary); padding:12px 24px; border-radius:var(--radius); font-size:13px; font-family:var(--font-hebrew); box-shadow:0 4px 16px rgba(0,0,0,0.4); transition:transform 0.25s; z-index:100; }
-.toast.show { transform:translateX(-50%) translateY(0); }
-
-/* ===== Password gate ===== */
-.gate-overlay { position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center; z-index:1000; padding:20px; transition:opacity 0.3s; }
-.gate-overlay.hidden { opacity:0; pointer-events:none; }
-.gate-card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:44px 36px 32px; max-width:380px; width:100%; text-align:center; position:relative; }
-.gate-card::before { content:''; position:absolute; top:0; inset-inline-start:0; width:200px; height:200px; background:radial-gradient(circle, var(--gold-dim) 0%, transparent 70%); pointer-events:none; border-radius:var(--radius-lg); }
-.gate-brand { position:relative; font-family:var(--font-latin); font-size:24px; font-weight:600; letter-spacing:-0.02em; margin-bottom:6px; direction:ltr; }
-.gate-brand .dot { color:var(--gold); }
-.gate-tag { position:relative; font-family:var(--font-hebrew); font-size:12px; color:var(--gold); margin-bottom:32px; }
-.gate-label { position:relative; font-family:var(--font-hebrew); font-size:11px; color:var(--text-muted); letter-spacing:0.06em; margin-bottom:8px; text-align:start; display:block; }
-.gate-input { position:relative; width:100%; font-size:14px; padding:10px 14px; font-family:var(--font-mono); letter-spacing:0.05em; text-align:center; direction:ltr; }
-.gate-input.shake { animation:shake 0.4s; border-color:var(--red); }
-@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 50%{transform:translateX(6px)} 75%{transform:translateX(-3px)} }
-.gate-submit { position:relative; width:100%; margin-top:12px; padding:11px 14px; background:var(--gold); color:var(--bg); border:1px solid var(--gold); border-radius:var(--radius); font-family:var(--font-hebrew); font-size:13px; font-weight:500; transition:opacity 0.15s; }
-.gate-submit:hover { opacity:0.85; }
-.gate-hint { position:relative; font-family:var(--font-hebrew); font-size:10px; color:var(--text-muted); margin-top:18px; line-height:1.5; }
-body.gated { overflow:hidden; }
-
-/* ===== Confirm dialog ===== */
-.confirm-overlay { position:fixed; inset:0; background:rgba(10,10,15,0.85); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; z-index:200; opacity:0; pointer-events:none; transition:opacity 0.2s; }
-.confirm-overlay.show { opacity:1; pointer-events:auto; }
-.confirm-box { background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:28px; max-width:420px; width:90%; }
-.confirm-box h3 { font-family:var(--font-hebrew); font-size:14px; color:var(--gold); margin-bottom:12px; font-weight:600; }
-.confirm-box p { font-family:var(--font-hebrew); font-size:14px; color:var(--text-primary); margin-bottom:20px; line-height:1.7; }
-.confirm-box p .em, .confirm-box p strong { color:var(--text-primary); font-weight:500; }
-.confirm-actions { display:flex; gap:10px; justify-content:flex-end; }
-
-.hidden { display:none !important; }
-.empty-state { text-align:center; padding:60px 24px; color:var(--text-muted); font-size:14px; font-family:var(--font-hebrew); }
 </style>
 </head>
-<body class="gated">
-
-<!-- Password gate -->
-<div class="gate-overlay" id="gateOverlay">
-  <div class="gate-card">
-    <div class="gate-brand">Odysee<span class="dot">.</span></div>
-    <div class="gate-tag">מעקב פרויקט</div>
-    <label class="gate-label" for="gateInput">סיסמה</label>
-    <input class="gate-input" id="gateInput" type="password" autocomplete="current-password" autofocus>
-    <button class="gate-submit" id="gateSubmit">היכנס</button>
-    <div class="gate-hint">העמוד מוסתר מאחורי שער. אם הגעת לכאן בטעות — אין כאן מה שמעניין אותך.</div>
-  </div>
+<body>
+<div class="theme-bar">
+  <button class="theme-btn" onclick="setTheme('light')" id="btn-light">☀ בהיר</button>
+  <button class="theme-btn" onclick="setTheme('system')" id="btn-system">⊙ מערכת</button>
+  <button class="theme-btn" onclick="setTheme('dark')" id="btn-dark">● כהה</button>
 </div>
-
-<header class="header">
-  <div class="header-inner">
-    <div class="brand">
-      <span class="brand-name">Odysee<span class="dot">.</span></span>
-      <span class="brand-tag">מעקב פרויקט</span>
-    </div>
-    <div class="header-actions">
-      <button class="btn btn-icon" id="themeToggle" title="החלף תצוגה">◐</button>
-      <button class="btn btn-icon" id="lockBtn" title="נעל את העמוד">🔒</button>
-      <button class="btn" id="exportJson" title="גיבוי המצב הנוכחי לקובץ JSON"><span class="arrow">↓</span>JSON</button>
-      <button class="btn" id="exportXlsx" title="ייצוא לקובץ Excel"><span class="arrow">↓</span>XLSX</button>
-      <button class="btn" id="importJson" title="שחזור מגיבוי JSON"><span class="arrow">↑</span>ייבוא</button>
-      <input type="file" id="importFile" accept=".json" class="hidden">
-      <button class="btn btn-danger" id="resetData" title="איפוס למצב התחלתי"><span class="arrow">⟲</span>איפוס</button>
-    </div>
+<header class="site-header" dir="ltr">
+  <div class="iv-brand">
+    <a href="../index.html" class="bm" aria-label="Odysee — home">
+      <svg class="bm__o" viewBox="0 0 100 100" aria-hidden="true"><circle class="bm-inner" cx="50" cy="50" r="45.4"/><circle class="bm-ring" cx="50" cy="50" r="45.4" fill="none" stroke-width="9.2"/><g transform="rotate(-32 50 50)"><path class="bm-trail" d="M 26 50 A 24 24 0 0 0 74 50" fill="none" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="0.1 12"/><circle class="bm-start" cx="26" cy="50" r="3.6"/><circle class="bm-end" cx="74" cy="50" r="5.4"/></g></svg><span class="bm__text">dysee</span>
+    </a>
+    <span class="iv-tagline">Internal · Tracker</span>
   </div>
+  <nav><ul class="site-nav">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="tracker.html" class="active">Tracker</a></li>
+      <li><a href="gantt.html">Gantt</a></li>
+  </ul></nav>
 </header>
-
-<main>
-
-  <section class="overview">
-    <div class="overview-head">
-      <div class="overview-title">סקירת התוכנית</div>
-      <div class="overview-meta" id="metaInfo"></div>
-    </div>
-    <div class="overall-row">
-      <div>
-        <div class="overall-pct"><span id="overallPct">0</span>%<span class="label">התקדמות כוללת</span></div>
-      </div>
-      <div class="phase-bars" id="phaseBars"></div>
-    </div>
-  </section>
-
-  <div class="filters">
-    <span class="filters-label">סינון:</span>
-    <select id="filterPhase">
-      <option value="">כל הפאזות</option>
-    </select>
-    <select id="filterStatus">
-      <option value="">כל הסטטוסים</option>
-    </select>
-    <select id="filterProgress">
-      <option value="">כל ההתקדמויות</option>
-      <option value="not_started">לא התחיל (0%)</option>
-      <option value="in_progress">בתהליך (1–99%)</option>
-      <option value="complete">הושלם (100%)</option>
-    </select>
-    <div class="spacer"></div>
-    <div class="search-box">
-      <input type="text" id="search" placeholder="חיפוש משימות…">
-    </div>
-  </div>
-
-  <div id="addFormContainer"></div>
-  <button class="add-task-card" id="addTaskBtn">
-    <span class="plus">+</span><span class="label">הוסף משימה חדשה</span>
-  </button>
-
-  <div id="tasksRoot"></div>
-
-</main>
-
-<footer>
-  <div id="footerInfo">טוען…</div>
+<div class="iv-wrap">
+<h1 class="iv-h1">מעקב פרויקט</h1>
+<div class="iv-meta">David Castiel | M.Design in Design for Technological Environment | H.I.T. Holon Institute of Technology |  Exhibition: Aug 6–19, 2026  |  Submission: Aug 4, 2026</div>
+<div class="iv-summary"><div class="iv-stat"><div class="n">29</div><div class="l">משימות</div></div><div class="iv-stat"><div class="n">7</div><div class="l">פאזות</div></div><div class="iv-stat"><div class="n" style="color:#B85A3E">6</div><div class="l">KEY</div></div><div class="iv-stat"><div class="n" style="color:#7C6FCD">5</div><div class="l">DESIGN</div></div><div class="iv-stat"><div class="n" style="color:#4ECDC4">4</div><div class="l">DEV</div></div><div class="iv-stat"><div class="n" style="color:#4ECDC4">3</div><div class="l">IMPL</div></div></div>
+<div class="iv-phase"><h2>Phase 1 — Foundation</h2>
+<table class="iv-table"><thead><tr><th style="width:36px">#</th><th>משימה</th><th style="width:90px">התחלה</th><th style="width:90px">סיום</th><th style="width:50px">ימים</th><th style="width:90px">סטטוס</th><th>הערות</th></tr></thead><tbody>
+<tr><td class="c-num">1</td><td class="c-task">אפיון מפורט + UX flows</td><td class="c-date">2026-04-01</td><td class="c-date">2026-04-12</td><td class="c-num">12</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">KEY</span></td><td class="c-notes">אפיון כולל user journeys, ארכיטקטורת מידע, flow diagrams</td></tr>
+<tr><td class="c-num">2</td><td class="c-task">זהות מותג (שם, לוגו, שפה)</td><td class="c-date">2026-04-05</td><td class="c-date">2026-04-18</td><td class="c-num">14</td><td><span class="pill" style="background:rgba(124,111,205,0.16);color:#7C6FCD">DESIGN</span></td><td class="c-notes">שם הפרויקט, פלטת צבעים, טיפוגרפיה, style guide</td></tr>
+<tr><td class="c-num">3</td><td class="c-task">תסריטי שיחה — dialogue flows</td><td class="c-date">2026-04-08</td><td class="c-date">2026-04-15</td><td class="c-num">8</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">KEY</span></td><td class="c-notes">כל שאלות ה-AI, edge cases, תשובות ל-100-200 מבקרים</td></tr>
+<tr><td class="c-num">4</td><td class="c-task">הכנת תוכן — destinations DB</td><td class="c-date">2026-04-08</td><td class="c-date">2026-04-20</td><td class="c-num">13</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">CONTENT</span></td><td class="c-notes">בסיס נתונים: יעדים, מסלולים, facts תרבותיים</td></tr>
+</tbody></table></div>
+<div class="iv-phase"><h2>Phase 2 — Design</h2>
+<table class="iv-table"><thead><tr><th style="width:36px">#</th><th>משימה</th><th style="width:90px">התחלה</th><th style="width:90px">סיום</th><th style="width:50px">ימים</th><th style="width:90px">סטטוס</th><th>הערות</th></tr></thead><tbody>
+<tr><td class="c-num">5</td><td class="c-task">Style guide + design system</td><td class="c-date">2026-04-12</td><td class="c-date">2026-04-28</td><td class="c-num">17</td><td><span class="pill" style="background:rgba(124,111,205,0.16);color:#7C6FCD">DESIGN</span></td><td class="c-notes">קומפוננטות, spacing, typography, color tokens</td></tr>
+<tr><td class="c-num">6</td><td class="c-task">Wireframes + UI prototypes</td><td class="c-date">2026-04-22</td><td class="c-date">2026-05-10</td><td class="c-num">19</td><td><span class="pill" style="background:rgba(124,111,205,0.16);color:#7C6FCD">DESIGN</span></td><td class="c-notes">Figma mockups למסך הגדול + mobile fallback</td></tr>
+<tr><td class="c-num">7</td><td class="c-task">עיצוב אווטאר / דמות</td><td class="c-date">2026-04-14</td><td class="c-date">2026-05-01</td><td class="c-num">18</td><td><span class="pill" style="background:rgba(124,111,205,0.16);color:#7C6FCD">DESIGN</span></td><td class="c-notes">הדמות שמופיעה על המסך — AI Tico animated</td></tr>
+<tr><td class="c-num">8</td><td class="c-task">קונספט מרחב תצוגה + גלובוס</td><td class="c-date">2026-05-01</td><td class="c-date">2026-05-20</td><td class="c-num">20</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">KEY</span></td><td class="c-notes">Layout פיזי, גלובוס עם חיישנים, flow מבקרים</td></tr>
+<tr><td class="c-num">9</td><td class="c-task">קונספט פוסטרים ומיצבים</td><td class="c-date">2026-05-10</td><td class="c-date">2026-05-25</td><td class="c-num">16</td><td><span class="pill" style="background:rgba(124,111,205,0.16);color:#7C6FCD">DESIGN</span></td><td class="c-notes">פוסטרים A1, מיצבים פיזיים, חומרי הסבר</td></tr>
+</tbody></table></div>
+<div class="iv-phase"><h2>Phase 3 — Development</h2>
+<table class="iv-table"><thead><tr><th style="width:36px">#</th><th>משימה</th><th style="width:90px">התחלה</th><th style="width:90px">סיום</th><th style="width:50px">ימים</th><th style="width:90px">סטטוס</th><th>הערות</th></tr></thead><tbody>
+<tr><td class="c-num">10</td><td class="c-task">Core infrastructure + env</td><td class="c-date">2026-05-01</td><td class="c-date">2026-05-15</td><td class="c-num">15</td><td><span class="pill" style="background:rgba(78,205,196,0.16);color:#4ECDC4">DEV</span></td><td class="c-notes">Cloud setup, DB, auth, CI/CD pipeline</td></tr>
+<tr><td class="c-num">11</td><td class="c-task">API integrations</td><td class="c-date">2026-05-10</td><td class="c-date">2026-05-28</td><td class="c-num">19</td><td><span class="pill" style="background:rgba(78,205,196,0.16);color:#4ECDC4">DEV</span></td><td class="c-notes">OpenAI GPT-4o, Google Maps, ElevenLabs TTS, Whisper STT</td></tr>
+<tr><td class="c-num">12</td><td class="c-task">AGT-01: Preference Profiling</td><td class="c-date">2026-05-22</td><td class="c-date">2026-06-05</td><td class="c-num">15</td><td><span class="pill" style="background:rgba(78,205,196,0.16);color:#4ECDC4">IMPL</span></td><td class="c-notes">סוכן פרופיל משתמש — שאלות, inference, JSON output</td></tr>
+<tr><td class="c-num">13</td><td class="c-task">AGT-02: Itinerary Creation</td><td class="c-date">2026-06-01</td><td class="c-date">2026-06-18</td><td class="c-num">18</td><td><span class="pill" style="background:rgba(78,205,196,0.16);color:#4ECDC4">IMPL</span></td><td class="c-notes">סוכן מסלולים — יום-יום, מפה, עלויות</td></tr>
+<tr><td class="c-num">14</td><td class="c-task">AGT-06: Language &amp; Culture</td><td class="c-date">2026-06-12</td><td class="c-date">2026-06-26</td><td class="c-num">15</td><td><span class="pill" style="background:rgba(78,205,196,0.16);color:#4ECDC4">IMPL</span></td><td class="c-notes">תרגום חי, etiquette, pronunciation</td></tr>
+<tr><td class="c-num">15</td><td class="c-task">Frontend — Exhibition Web App</td><td class="c-date">2026-05-28</td><td class="c-date">2026-07-05</td><td class="c-num">39</td><td><span class="pill" style="background:rgba(78,205,196,0.16);color:#4ECDC4">DEV</span></td><td class="c-notes">מסך מלא, אנימציות, מפה חיה, דיאגרמת סוכנים</td></tr>
+<tr><td class="c-num">16</td><td class="c-task">Voice interface (STT + TTS)</td><td class="c-date">2026-06-20</td><td class="c-date">2026-07-05</td><td class="c-num">16</td><td><span class="pill" style="background:rgba(78,205,196,0.16);color:#4ECDC4">DEV</span></td><td class="c-notes">קלט קולי + פלט קולי — הלב של חוויית התערוכה</td></tr>
+</tbody></table></div>
+<div class="iv-phase"><h2>Phase 4 — Testing</h2>
+<table class="iv-table"><thead><tr><th style="width:36px">#</th><th>משימה</th><th style="width:90px">התחלה</th><th style="width:90px">סיום</th><th style="width:50px">ימים</th><th style="width:90px">סטטוס</th><th>הערות</th></tr></thead><tbody>
+<tr><td class="c-num">17</td><td class="c-task">System integration &amp; QA</td><td class="c-date">2026-07-01</td><td class="c-date">2026-07-12</td><td class="c-num">12</td><td><span class="pill" style="background:rgba(248,183,67,0.16);color:#F8B743">QA</span></td><td class="c-notes">חיבור כל הסוכנים, end-to-end testing</td></tr>
+<tr><td class="c-num">18</td><td class="c-task">Pilot testing (5 users)</td><td class="c-date">2026-07-10</td><td class="c-date">2026-07-20</td><td class="c-num">11</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">KEY</span></td><td class="c-notes">בדיקה עם משתמשים אמיתיים — לגלות הפתעות</td></tr>
+<tr><td class="c-num">19</td><td class="c-task">Bug fixes + refinement</td><td class="c-date">2026-07-15</td><td class="c-date">2026-07-28</td><td class="c-num">14</td><td><span class="pill" style="background:rgba(224,90,95,0.16);color:#E05A5F">FIX</span></td><td class="c-notes">תיקונים בהתאם ל-pilot, UX polish</td></tr>
+<tr><td class="c-num">20</td><td class="c-task">Stress test + contingency plan</td><td class="c-date">2026-07-24</td><td class="c-date">2026-07-31</td><td class="c-num">8</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">KEY</span></td><td class="c-notes">100+ משתמשים, אופליין backup, API fallbacks</td></tr>
+<tr><td class="c-num">21</td><td class="c-task">תיעוד אקדמי (מתמשך) וספר עבודת גמר</td><td class="c-date">2026-06-15</td><td class="c-date">2026-08-03</td><td class="c-num">50</td><td><span class="pill" style="background:rgba(124,111,205,0.16);color:#7C6FCD">DOCS</span></td><td class="c-notes">כתיבת עבודת התזה לאורך כל הפרויקט והכנת ספר עבודת גמר</td></tr>
+</tbody></table></div>
+<div class="iv-phase"><h2>Phase 5 — Production</h2>
+<table class="iv-table"><thead><tr><th style="width:36px">#</th><th>משימה</th><th style="width:90px">התחלה</th><th style="width:90px">סיום</th><th style="width:50px">ימים</th><th style="width:90px">סטטוס</th><th>הערות</th></tr></thead><tbody>
+<tr><td class="c-num">22</td><td class="c-task">ייצור פוסטרים + חומרי הדפסה</td><td class="c-date">2026-08-01</td><td class="c-date">2026-08-05</td><td class="c-num">5</td><td><span class="pill" style="background:rgba(78,205,196,0.16);color:#4ECDC4">PRINT</span></td><td class="c-notes">הדפסת פוסטרים, מיצגים, כרטיסי הסבר</td></tr>
+<tr><td class="c-num">23</td><td class="c-task">הרכבת חומרה + בדיקות</td><td class="c-date">2026-08-01</td><td class="c-date">2026-08-04</td><td class="c-num">4</td><td><span class="pill" style="background:rgba(107,117,136,0.16);color:#6B7588">HW</span></td><td class="c-notes">הרכבת מסכים, רמקולים, מיקרופונים, חיבורים</td></tr>
+<tr><td class="c-num">24</td><td class="c-task">📌 הגשת הפרויקט</td><td class="c-date">2026-08-04</td><td class="c-date">2026-08-04</td><td class="c-num">1</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">SUBMIT</span></td><td class="c-notes">Deadline הגשה — 4 אוגוסט 2026</td></tr>
+<tr><td class="c-num">25</td><td class="c-task">Dry run מלא</td><td class="c-date">2026-08-03</td><td class="c-date">2026-08-05</td><td class="c-num">3</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">KEY</span></td><td class="c-notes">ריצה מלאה של הדמו כמו ביום התערוכה</td></tr>
+</tbody></table></div>
+<div class="iv-phase"><h2>Phase 6 — Exhibition</h2>
+<table class="iv-table"><thead><tr><th style="width:36px">#</th><th>משימה</th><th style="width:90px">התחלה</th><th style="width:90px">סיום</th><th style="width:50px">ימים</th><th style="width:90px">סטטוס</th><th>הערות</th></tr></thead><tbody>
+<tr><td class="c-num">26</td><td class="c-task">הקמת התערוכה</td><td class="c-date">2026-08-05</td><td class="c-date">2026-08-06</td><td class="c-num">2</td><td><span class="pill" style="background:rgba(124,111,205,0.16);color:#7C6FCD">SETUP</span></td><td class="c-notes">התקנת מסכים, חיבורים, בדיקה סופית במקום</td></tr>
+<tr><td class="c-num">27</td><td class="c-task">ימי תערוכה 6–19 אוגוסט</td><td class="c-date">2026-08-06</td><td class="c-date">2026-08-19</td><td class="c-num">14</td><td><span class="pill" style="background:rgba(184,90,62,0.16);color:#B85A3E">LIVE</span></td><td class="c-notes">100–200 מבקרים, הפעלה יומית, תמיכה</td></tr>
+<tr><td class="c-num">28</td><td class="c-task">תיעוד וצילום</td><td class="c-date">2026-08-06</td><td class="c-date">2026-08-19</td><td class="c-num">14</td><td><span class="pill" style="background:rgba(124,111,205,0.16);color:#7C6FCD">DOCS</span></td><td class="c-notes">צילום, סרטון, איסוף feedback מבקרים</td></tr>
+</tbody></table></div>
+<div class="iv-phase"><h2>Phase 7 — Teardown</h2>
+<table class="iv-table"><thead><tr><th style="width:36px">#</th><th>משימה</th><th style="width:90px">התחלה</th><th style="width:90px">סיום</th><th style="width:50px">ימים</th><th style="width:90px">סטטוס</th><th>הערות</th></tr></thead><tbody>
+<tr><td class="c-num">29</td><td class="c-task">פירוק המיצב + איסוף ציוד</td><td class="c-date">2026-08-20</td><td class="c-date">2026-08-20</td><td class="c-num">1</td><td><span class="pill" style="background:rgba(107,117,136,0.16);color:#6B7588">TEARDOWN</span></td><td class="c-notes">פירוק כל הציוד, ניקוי המרחב, תיעוד סיכום</td></tr>
+</tbody></table></div>
+</div><footer class="site-footer">
+  <div class="site-footer__left">David Castiel · M.Design · HIT 2026 — Internal view, generated from xlsx</div>
+  <div class="site-footer__right" dir="ltr">Generated 2026-05-20</div>
 </footer>
-
-<div class="toast" id="toast"></div>
-
-<div class="confirm-overlay" id="confirmOverlay">
-  <div class="confirm-box">
-    <h3 id="confirmTitle">אישור</h3>
-    <p id="confirmMsg"></p>
-    <div class="confirm-actions">
-      <button class="btn" id="confirmCancel">ביטול</button>
-      <button class="btn btn-danger" id="confirmOk">אישור</button>
-    </div>
-  </div>
-</div>
-
 <script>
-// =================================================================
-// Odysee Project Tracker — Hebrew/RTL
-// localStorage key: odysee.tracker
-// =================================================================
-
-// ===== Password gate =====
-// SHA-256 of the current password. Change this hash (and ask whoever
-// maintains the file for the new password) to rotate.
-const PASSWORD_HASH = '328364624174277353490a6ab2258fc7f064d70b3dcb0773def698de0e70b908';
-const UNLOCKED_KEY = 'odysee.tracker.unlocked';
-
-async function sha256Hex(text) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-function unlockPage() {
-  localStorage.setItem(UNLOCKED_KEY, '1');
-  document.getElementById('gateOverlay').classList.add('hidden');
-  document.body.classList.remove('gated');
-}
-
-function lockPage() {
-  localStorage.removeItem(UNLOCKED_KEY);
-  location.reload();
-}
-
-(function initGate() {
-  const overlay = document.getElementById('gateOverlay');
-  const input = document.getElementById('gateInput');
-  const submit = document.getElementById('gateSubmit');
-
-  if (localStorage.getItem(UNLOCKED_KEY) === '1') {
-    overlay.classList.add('hidden');
-    document.body.classList.remove('gated');
-    return;
-  }
-
-  async function tryUnlock() {
-    const val = input.value;
-    if (!val) return;
-    const hash = await sha256Hex(val);
-    if (hash === PASSWORD_HASH) {
-      unlockPage();
-    } else {
-      input.classList.add('shake');
-      input.value = '';
-      setTimeout(() => input.classList.remove('shake'), 500);
-      input.focus();
-    }
-  }
-
-  submit.addEventListener('click', tryUnlock);
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
-  setTimeout(() => input.focus(), 100);
-})();
-
-document.getElementById('lockBtn').onclick = () => lockPage();
-
-// =================================================================
-
-const STORAGE_KEY = 'odysee.tracker';
-const SCHEMA_VERSION = 2;
-const THEME_KEY = 'odysee.tracker.theme';
-
-const PHASES = [
-  { id:'Phase 1', label:'Foundation',  start:'2026-04-01', end:'2026-04-20' },
-  { id:'Phase 2', label:'Design',      start:'2026-04-12', end:'2026-05-25' },
-  { id:'Phase 3', label:'Development', start:'2026-05-01', end:'2026-07-05' },
-  { id:'Phase 4', label:'Testing',     start:'2026-07-01', end:'2026-08-03' },
-  { id:'Phase 5', label:'Production',  start:'2026-08-01', end:'2026-08-05' },
-  { id:'Phase 6', label:'Exhibition',  start:'2026-08-05', end:'2026-08-19' },
-  { id:'Phase 7', label:'Teardown',    start:'2026-08-20', end:'2026-08-20' },
-];
-
-const STATUSES = ['KEY','DESIGN','DEV','IMPL','QA','CONTENT','DOCS','FIX','PRINT','HW','SUBMIT','SETUP','LIVE','TEARDOWN'];
-
-const SEED_TASKS = [
-  { id:1,  phase:'Phase 1', name:'אפיון מפורט + UX flows',                      start:'2026-04-01', end:'2026-04-12', status:'KEY',      progress:90,  lastUpdated:'2026-04-20', notes:'אפיון כולל user journeys, ארכיטקטורת מידע, flow diagrams' },
-  { id:2,  phase:'Phase 1', name:'זהות מותג (שם, לוגו, שפה)',                    start:'2026-04-05', end:'2026-04-18', status:'DESIGN',   progress:100, lastUpdated:'2026-04-18', notes:'שם הפרויקט, פלטת צבעים, טיפוגרפיה, style guide' },
-  { id:3,  phase:'Phase 1', name:'תסריטי שיחה — dialogue flows',                  start:'2026-04-08', end:'2026-04-15', status:'KEY',      progress:0,   lastUpdated:'',           notes:'כל שאלות ה-AI, edge cases, תשובות ל-100-200 מבקרים' },
-  { id:4,  phase:'Phase 1', name:'הכנת תוכן — destinations DB',                   start:'2026-04-08', end:'2026-04-20', status:'CONTENT',  progress:0,   lastUpdated:'',           notes:'בסיס נתונים: יעדים, מסלולים, facts תרבותיים' },
-  { id:5,  phase:'Phase 2', name:'Style guide + design system',                  start:'2026-04-12', end:'2026-04-28', status:'DESIGN',   progress:80,  lastUpdated:'2026-04-28', notes:'קומפוננטות, spacing, typography, color tokens' },
-  { id:6,  phase:'Phase 2', name:'Wireframes + UI prototypes',                   start:'2026-04-22', end:'2026-05-10', status:'DESIGN',   progress:0,   lastUpdated:'',           notes:'Figma mockups למסך הגדול + mobile fallback' },
-  { id:7,  phase:'Phase 2', name:'עיצוב אווטאר / דמות',                          start:'2026-04-14', end:'2026-05-01', status:'DESIGN',   progress:70,  lastUpdated:'2026-05-01', notes:'הדמות שמופיעה על המסך — AI Tico animated' },
-  { id:8,  phase:'Phase 2', name:'קונספט מרחב תצוגה + גלובוס',                    start:'2026-05-01', end:'2026-05-20', status:'KEY',      progress:60,  lastUpdated:'2026-05-01', notes:'Layout פיזי, גלובוס עם חיישנים, flow מבקרים' },
-  { id:9,  phase:'Phase 2', name:'קונספט פוסטרים ומיצבים',                       start:'2026-05-10', end:'2026-05-25', status:'DESIGN',   progress:0,   lastUpdated:'',           notes:'פוסטרים A1, מיצבים פיזיים, חומרי הסבר' },
-  { id:10, phase:'Phase 3', name:'Core infrastructure + env',                    start:'2026-05-01', end:'2026-05-15', status:'DEV',      progress:0,   lastUpdated:'',           notes:'Cloud setup, DB, auth, CI/CD pipeline' },
-  { id:11, phase:'Phase 3', name:'API integrations',                             start:'2026-05-10', end:'2026-05-28', status:'DEV',      progress:0,   lastUpdated:'',           notes:'OpenAI GPT-4o, Google Maps, ElevenLabs TTS, Whisper STT' },
-  { id:12, phase:'Phase 3', name:'AGT-01: Preference Profiling',                 start:'2026-05-22', end:'2026-06-05', status:'IMPL',     progress:0,   lastUpdated:'',           notes:'סוכן פרופיל משתמש — שאלות, inference, JSON output' },
-  { id:13, phase:'Phase 3', name:'AGT-02: Itinerary Creation',                   start:'2026-06-01', end:'2026-06-18', status:'IMPL',     progress:0,   lastUpdated:'',           notes:'סוכן מסלולים — יום-יום, מפה, עלויות' },
-  { id:14, phase:'Phase 3', name:'AGT-06: Language & Culture',                   start:'2026-06-12', end:'2026-06-26', status:'IMPL',     progress:0,   lastUpdated:'',           notes:'תרגום חי, etiquette, pronunciation' },
-  { id:15, phase:'Phase 3', name:'Frontend — Exhibition Web App',                start:'2026-05-28', end:'2026-07-05', status:'DEV',      progress:0,   lastUpdated:'',           notes:'מסך מלא, אנימציות, מפה חיה, דיאגרמת סוכנים' },
-  { id:16, phase:'Phase 3', name:'Voice interface (STT + TTS)',                  start:'2026-06-20', end:'2026-07-05', status:'DEV',      progress:0,   lastUpdated:'',           notes:'קלט קולי + פלט קולי — הלב של חוויית התערוכה' },
-  { id:17, phase:'Phase 4', name:'System integration & QA',                      start:'2026-07-01', end:'2026-07-12', status:'QA',       progress:0,   lastUpdated:'',           notes:'חיבור כל הסוכנים, end-to-end testing' },
-  { id:18, phase:'Phase 4', name:'Pilot testing (5 users)',                      start:'2026-07-10', end:'2026-07-20', status:'KEY',      progress:0,   lastUpdated:'',           notes:'בדיקה עם משתמשים אמיתיים — לגלות הפתעות' },
-  { id:19, phase:'Phase 4', name:'Bug fixes + refinement',                       start:'2026-07-15', end:'2026-07-28', status:'FIX',      progress:0,   lastUpdated:'',           notes:'תיקונים בהתאם ל-pilot, UX polish' },
-  { id:20, phase:'Phase 4', name:'Stress test + contingency plan',               start:'2026-07-24', end:'2026-07-31', status:'KEY',      progress:0,   lastUpdated:'',           notes:'100+ משתמשים, אופליין backup, API fallbacks' },
-  { id:21, phase:'Phase 4', name:'תיעוד אקדמי (מתמשך) וספר עבודת גמר',            start:'2026-06-15', end:'2026-08-03', status:'DOCS',     progress:15,  lastUpdated:'2026-05-11', notes:'כתיבת עבודת התזה לאורך כל הפרויקט והכנת ספר עבודת גמר' },
-  { id:22, phase:'Phase 5', name:'ייצור פוסטרים + חומרי הדפסה',                  start:'2026-08-01', end:'2026-08-05', status:'PRINT',    progress:0,   lastUpdated:'',           notes:'הדפסת פוסטרים, מיצגים, כרטיסי הסבר' },
-  { id:23, phase:'Phase 5', name:'הרכבת חומרה + בדיקות',                         start:'2026-08-01', end:'2026-08-04', status:'HW',       progress:0,   lastUpdated:'',           notes:'הרכבת מסכים, רמקולים, מיקרופונים, חיבורים' },
-  { id:24, phase:'Phase 5', name:'📌 הגשת הפרויקט',                              start:'2026-08-04', end:'2026-08-04', status:'SUBMIT',   progress:0,   lastUpdated:'',           notes:'Deadline הגשה — 4 אוגוסט 2026' },
-  { id:25, phase:'Phase 5', name:'Dry run מלא',                                  start:'2026-08-03', end:'2026-08-05', status:'KEY',      progress:0,   lastUpdated:'',           notes:'ריצה מלאה של הדמו כמו ביום התערוכה' },
-  { id:26, phase:'Phase 6', name:'הקמת התערוכה',                                 start:'2026-08-05', end:'2026-08-06', status:'SETUP',    progress:0,   lastUpdated:'',           notes:'התקנת מסכים, חיבורים, בדיקה סופית במקום' },
-  { id:27, phase:'Phase 6', name:'ימי תערוכה 6–19 אוגוסט',                       start:'2026-08-06', end:'2026-08-19', status:'LIVE',     progress:0,   lastUpdated:'',           notes:'100–200 מבקרים, הפעלה יומית, תמיכה' },
-  { id:28, phase:'Phase 6', name:'תיעוד וצילום',                                 start:'2026-08-06', end:'2026-08-19', status:'DOCS',     progress:0,   lastUpdated:'',           notes:'צילום, סרטון, איסוף feedback מבקרים' },
-  { id:29, phase:'Phase 7', name:'פירוק המיצב + איסוף ציוד',                     start:'2026-08-20', end:'2026-08-20', status:'TEARDOWN', progress:0,   lastUpdated:'',           notes:'פירוק כל הציוד, ניקוי המרחב, תיעוד סיכום' },
-];
-
-let state = loadState();
-let filters = { phase:'', status:'', progress:'', search:'' };
-let editingId = null;
-let addFormOpen = false;
-let confirmCallback = null;
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return defaultState();
-    const parsed = JSON.parse(raw);
-    if (parsed.version !== SCHEMA_VERSION) return defaultState();
-    return parsed;
-  } catch (e) { return defaultState(); }
-}
-function defaultState() {
-  return { version:SCHEMA_VERSION, tasks:JSON.parse(JSON.stringify(SEED_TASKS)), lastSaved:new Date().toISOString() };
-}
-function saveState() {
-  state.lastSaved = new Date().toISOString();
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  renderFooter();
-}
-
-const isHebrew = s => /[\u0590-\u05FF]/.test(s || '');
-const todayISO = () => new Date().toISOString().slice(0,10);
-const nextId = () => state.tasks.length ? Math.max(...state.tasks.map(t => t.id)) + 1 : 1;
-function fmtDate(s) { if (!s) return '—'; return s; }
-function escHtml(s) { return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 2400);
-}
-
-function confirmAction(title, msg, onOk) {
-  document.getElementById('confirmTitle').textContent = title;
-  document.getElementById('confirmMsg').innerHTML = msg;
-  confirmCallback = onOk;
-  document.getElementById('confirmOverlay').classList.add('show');
-}
-document.getElementById('confirmCancel').onclick = () => { document.getElementById('confirmOverlay').classList.remove('show'); confirmCallback = null; };
-document.getElementById('confirmOk').onclick = () => { if (confirmCallback) confirmCallback(); document.getElementById('confirmOverlay').classList.remove('show'); confirmCallback = null; };
-
-function applyTheme(t) {
-  document.documentElement.setAttribute('data-theme', t);
-  localStorage.setItem(THEME_KEY, t);
-}
-applyTheme(localStorage.getItem(THEME_KEY) || 'dark');
-document.getElementById('themeToggle').onclick = () => {
-  const cur = document.documentElement.getAttribute('data-theme');
-  applyTheme(cur === 'dark' ? 'light' : 'dark');
-};
-
-function getFilteredTasks() {
-  return state.tasks.filter(t => {
-    if (filters.phase && t.phase !== filters.phase) return false;
-    if (filters.status && t.status !== filters.status) return false;
-    if (filters.progress) {
-      if (filters.progress === 'not_started' && t.progress !== 0) return false;
-      if (filters.progress === 'in_progress' && (t.progress === 0 || t.progress === 100)) return false;
-      if (filters.progress === 'complete' && t.progress !== 100) return false;
-    }
-    if (filters.search) {
-      const q = filters.search.toLowerCase();
-      if (!(t.name || '').toLowerCase().includes(q) &&
-          !(t.notes || '').toLowerCase().includes(q)) return false;
-    }
-    return true;
-  });
-}
-
-function renderOverview() {
-  const all = state.tasks;
-  const overallPct = all.length ? Math.round(all.reduce((s,t) => s + t.progress, 0) / all.length) : 0;
-  document.getElementById('overallPct').textContent = overallPct;
-
-  const today = new Date();
-  const deadline = new Date('2026-08-04');
-  const daysLeft = Math.ceil((deadline - today) / (1000*60*60*24));
-  const daysText = daysLeft > 0 ? `${daysLeft} ימים עד הגשה` : 'ההגשה עברה';
-  document.getElementById('metaInfo').innerHTML = `${all.length} משימות · ${daysText}`;
-
-  const phaseBarsEl = document.getElementById('phaseBars');
-  phaseBarsEl.innerHTML = PHASES.map(p => {
-    const tasks = all.filter(t => t.phase === p.id);
-    const pct = tasks.length ? Math.round(tasks.reduce((s,t) => s + t.progress, 0) / tasks.length) : 0;
-    return `
-      <div class="phase-bar-row">
-        <div class="name">${p.id} <span class="sub">${p.label}</span></div>
-        <div class="phase-bar"><div class="phase-bar-fill" style="width:${pct}%"></div></div>
-        <div class="pct">${pct}%</div>
-      </div>
-    `;
-  }).join('');
-}
-
-function renderTasks() {
-  const tasks = getFilteredTasks();
-  const root = document.getElementById('tasksRoot');
-
-  if (tasks.length === 0) {
-    root.innerHTML = `<div class="empty-state">אין משימות התואמות את הסינון הנוכחי.</div>`;
-    return;
-  }
-
-  const grouped = {};
-  tasks.forEach(t => { (grouped[t.phase] = grouped[t.phase] || []).push(t); });
-
-  root.innerHTML = PHASES.filter(p => grouped[p.id]).map(p => {
-    const phaseTasks = grouped[p.id];
-    const allInPhase = state.tasks.filter(t => t.phase === p.id);
-    const pct = allInPhase.length ? Math.round(allInPhase.reduce((s,t) => s + t.progress, 0) / allInPhase.length) : 0;
-    return `
-      <div class="phase-group">
-        <div class="phase-head">
-          <span class="phase-num">${p.id.replace('Phase ','0')}</span>
-          <span class="phase-name">${p.label}</span>
-          <span class="phase-pct">${pct}%</span>
-          <span class="phase-dates">${p.start} — ${p.end}</span>
-        </div>
-        ${phaseTasks.map(renderTaskCard).join('')}
-      </div>
-    `;
-  }).join('');
-}
-
-function metaLine(t) {
-  return `
-    <span class="dates">${fmtDate(t.start)} — ${fmtDate(t.end)}</span>
-    <span class="sep">·</span>
-    <span class="updated">עודכן<span class="ts">${fmtDate(t.lastUpdated)}</span></span>
-  `;
-}
-
-function renderTaskCard(t) {
-  const heb = isHebrew(t.name);
-  const nameClass = heb ? 'hebrew' : 'latin';
-  const notesHeb = isHebrew(t.notes);
-  const notesClass = notesHeb ? 'hebrew' : 'latin';
-  const isEditing = editingId === t.id;
-
-  if (isEditing) {
-    return `
-      <div class="task editing" data-id="${t.id}">
-        <div class="task-row1">
-          <div class="task-id">#${t.id}</div>
-          <input class="task-name-input" data-field="name" value="${escHtml(t.name)}" dir="auto">
-          <div class="task-controls">
-            <button class="icon-btn" data-action="save" title="שמור">✓</button>
-            <button class="icon-btn" data-action="cancel" title="ביטול">✕</button>
-          </div>
-        </div>
-        <div class="task-edit-form">
-          <div>
-            <label>פאזה</label>
-            <select data-field="phase">
-              ${PHASES.map(p => `<option value="${p.id}" ${t.phase===p.id?'selected':''}>${p.id} — ${p.label}</option>`).join('')}
-            </select>
-          </div>
-          <div>
-            <label>סטטוס</label>
-            <select data-field="status">
-              ${STATUSES.map(s => `<option value="${s}" ${t.status===s?'selected':''}>${s}</option>`).join('')}
-            </select>
-          </div>
-          <div>
-            <label>תאריך התחלה</label>
-            <input type="date" data-field="start" value="${t.start || ''}">
-          </div>
-          <div>
-            <label>תאריך סיום</label>
-            <input type="date" data-field="end" value="${t.end || ''}">
-          </div>
-          <div class="full">
-            <label>הערות</label>
-            <textarea data-field="notes" dir="auto">${escHtml(t.notes)}</textarea>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="task" data-id="${t.id}">
-      <div class="task-row1">
-        <div class="task-id">#${t.id}</div>
-        <div class="task-name ${nameClass}" dir="auto">${escHtml(t.name)}</div>
-        <div class="task-controls">
-          <span class="task-tag tag-${t.status}">${t.status}</span>
-          <button class="icon-btn" data-action="edit" title="עריכה">✎</button>
-          <button class="icon-btn danger" data-action="delete" title="מחיקה">×</button>
-        </div>
-      </div>
-      <div class="task-row2">
-        <div class="progress-wrap">
-          <input type="range" class="progress-slider" min="0" max="100" step="5" value="${t.progress}" data-action="progress">
-          <div class="progress-pct ${t.progress===100?'complete':''}">${t.progress}%</div>
-        </div>
-        <div class="task-meta">${metaLine(t)}</div>
-      </div>
-      ${t.notes ? `<div class="task-notes ${notesClass}" dir="auto">${escHtml(t.notes)}</div>` : ''}
-    </div>
-  `;
-}
-
-function renderFilters() {
-  const phaseSel = document.getElementById('filterPhase');
-  const statusSel = document.getElementById('filterStatus');
-  if (phaseSel.children.length === 1) {
-    PHASES.forEach(p => {
-      const o = document.createElement('option');
-      o.value = p.id; o.textContent = `${p.id} — ${p.label}`;
-      phaseSel.appendChild(o);
-    });
-  }
-  if (statusSel.children.length === 1) {
-    STATUSES.forEach(s => {
-      const o = document.createElement('option');
-      o.value = s; o.textContent = s;
-      statusSel.appendChild(o);
-    });
-  }
-}
-
-function renderAddForm() {
-  const c = document.getElementById('addFormContainer');
-  const btn = document.getElementById('addTaskBtn');
-  if (!addFormOpen) { c.innerHTML = ''; btn.classList.remove('hidden'); return; }
-  btn.classList.add('hidden');
-  c.innerHTML = `
-    <div class="add-form">
-      <h3>משימה חדשה</h3>
-      <div class="add-form-grid">
-        <div class="full">
-          <label>שם המשימה</label>
-          <input id="nf-name" type="text" placeholder="עברית או אנגלית" dir="auto">
-        </div>
-        <div>
-          <label>פאזה</label>
-          <select id="nf-phase">${PHASES.map(p => `<option value="${p.id}">${p.id} — ${p.label}</option>`).join('')}</select>
-        </div>
-        <div>
-          <label>סטטוס</label>
-          <select id="nf-status">${STATUSES.map(s => `<option value="${s}">${s}</option>`).join('')}</select>
-        </div>
-        <div>
-          <label>התקדמות %</label>
-          <input id="nf-progress" type="number" min="0" max="100" step="5" value="0">
-        </div>
-        <div>
-          <label>תאריך התחלה</label>
-          <input id="nf-start" type="date" value="${todayISO()}">
-        </div>
-        <div>
-          <label>תאריך סיום</label>
-          <input id="nf-end" type="date" value="${todayISO()}">
-        </div>
-        <div class="full">
-          <label>הערות</label>
-          <textarea id="nf-notes" dir="auto"></textarea>
-        </div>
-      </div>
-      <div class="add-form-actions">
-        <button class="btn" id="nf-cancel">ביטול</button>
-        <button class="btn btn-primary" id="nf-save">הוסף</button>
-      </div>
-    </div>
-  `;
-  document.getElementById('nf-cancel').onclick = () => { addFormOpen = false; renderAddForm(); };
-  document.getElementById('nf-save').onclick = () => {
-    const name = document.getElementById('nf-name').value.trim();
-    if (!name) { showToast('שם הוא שדה חובה'); return; }
-    const progress = Math.max(0, Math.min(100, parseInt(document.getElementById('nf-progress').value) || 0));
-    const task = {
-      id: nextId(),
-      phase: document.getElementById('nf-phase').value,
-      name,
-      status: document.getElementById('nf-status').value,
-      progress,
-      start: document.getElementById('nf-start').value,
-      end: document.getElementById('nf-end').value,
-      notes: document.getElementById('nf-notes').value.trim(),
-      lastUpdated: progress > 0 ? todayISO() : '',
-    };
-    state.tasks.push(task);
-    saveState();
-    addFormOpen = false;
-    renderAll();
-    showToast(`נוספה משימה #${task.id}`);
-  };
-  document.getElementById('nf-name').focus();
-}
-
-function renderFooter() {
-  const ts = new Date(state.lastSaved);
-  const dateStr = ts.toLocaleString('he-IL', { dateStyle:'medium', timeStyle:'short' });
-  const note = `<span class="sync-warn">⚠</span> המצב נשמר בדפדפן זה בלבד. השתמש ב-<strong style="color:var(--gold)">↓ JSON</strong> לגיבוי לפני ניקוי נתוני הדפדפן או מעבר למכשיר אחר.`;
-  document.getElementById('footerInfo').innerHTML = `נשמר לאחרונה: <span class="ts">${dateStr}</span> &nbsp;·&nbsp; ${note}`;
-}
-
-function renderAll() {
-  renderOverview();
-  renderTasks();
-  renderFooter();
-}
-
-document.getElementById('tasksRoot').addEventListener('click', e => {
-  const taskEl = e.target.closest('.task');
-  if (!taskEl) return;
-  const id = parseInt(taskEl.dataset.id);
-  const task = state.tasks.find(t => t.id === id);
-  if (!task) return;
-  const action = e.target.dataset.action;
-
-  if (action === 'edit') { editingId = id; renderTasks(); }
-  else if (action === 'cancel') { editingId = null; renderTasks(); }
-  else if (action === 'save') {
-    const inputs = taskEl.querySelectorAll('[data-field]');
-    inputs.forEach(inp => {
-      const f = inp.dataset.field;
-      task[f] = inp.value.trim ? inp.value.trim() : inp.value;
-    });
-    task.lastUpdated = todayISO();
-    editingId = null;
-    saveState();
-    renderAll();
-    showToast(`נשמר #${task.id}`);
-  }
-  else if (action === 'delete') {
-    confirmAction('מחיקת משימה', `למחוק את <span class="em">#${task.id} — ${escHtml(task.name)}</span>? לא ניתן לבטל (אלא אם יש לך גיבוי JSON).`, () => {
-      state.tasks = state.tasks.filter(t => t.id !== id);
-      saveState();
-      renderAll();
-      showToast(`נמחקה #${id}`);
-    });
-  }
-});
-
-document.getElementById('tasksRoot').addEventListener('input', e => {
-  if (e.target.dataset.action !== 'progress') return;
-  const taskEl = e.target.closest('.task');
-  const id = parseInt(taskEl.dataset.id);
-  const task = state.tasks.find(t => t.id === id);
-  if (!task) return;
-  const val = parseInt(e.target.value);
-  task.progress = val;
-  task.lastUpdated = todayISO();
-  const pctEl = taskEl.querySelector('.progress-pct');
-  pctEl.textContent = val + '%';
-  pctEl.classList.toggle('complete', val === 100);
-});
-document.getElementById('tasksRoot').addEventListener('change', e => {
-  if (e.target.dataset.action !== 'progress') return;
-  saveState();
-  renderOverview();
-  const taskEl = e.target.closest('.task');
-  const id = parseInt(taskEl.dataset.id);
-  const task = state.tasks.find(t => t.id === id);
-  const metaEl = taskEl.querySelector('.task-meta');
-  if (metaEl) metaEl.innerHTML = metaLine(task);
-});
-
-['filterPhase','filterStatus','filterProgress'].forEach(id => {
-  document.getElementById(id).addEventListener('change', e => {
-    const key = id.replace('filter','').toLowerCase();
-    filters[key] = e.target.value;
-    renderTasks();
-  });
-});
-document.getElementById('search').addEventListener('input', e => {
-  filters.search = e.target.value;
-  renderTasks();
-});
-
-document.getElementById('addTaskBtn').onclick = () => { addFormOpen = true; renderAddForm(); };
-
-document.getElementById('exportJson').onclick = () => {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type:'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `odysee-tracker-${todayISO()}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-  showToast('גיבוי JSON ירד');
-};
-
-document.getElementById('exportXlsx').onclick = () => {
-  const headers = ['#','פאזה','Phase Name','משימה','תאריך התחלה','תאריך סיום','סטטוס','התקדמות %','תאריך עדכון','הערות'];
-  const rows = state.tasks.map(t => {
-    const ph = PHASES.find(p => p.id === t.phase);
-    return [t.id, t.phase, ph ? ph.label : '', t.name, t.start, t.end, t.status, t.progress, t.lastUpdated || '', t.notes || ''];
-  });
-  const aoa = [
-    ['Odysee — Personal AI Travel Concierge — Project Plan'],
-    [`ייצוא: ${new Date().toLocaleString('he-IL')}`],
-    [],
-    headers,
-    ...rows
-  ];
-  const ws = XLSX.utils.aoa_to_sheet(aoa);
-  ws['!cols'] = [{wch:5},{wch:10},{wch:14},{wch:48},{wch:12},{wch:12},{wch:10},{wch:11},{wch:13},{wch:60}];
-  if (!ws['!views']) ws['!views'] = [{}];
-  ws['!views'][0].rightToLeft = true;
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'Project Plan');
-  XLSX.writeFile(wb, `odysee-project-plan-${todayISO()}.xlsx`);
-  showToast('קובץ Excel ירד');
-};
-
-document.getElementById('importJson').onclick = () => document.getElementById('importFile').click();
-document.getElementById('importFile').onchange = e => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      const data = JSON.parse(ev.target.result);
-      if (!data.tasks || !Array.isArray(data.tasks)) throw new Error('Invalid format');
-      confirmAction('להחליף את המצב הנוכחי?', `הפעולה תחליף את <strong>${state.tasks.length}</strong> המשימות הנוכחיות ב-<strong>${data.tasks.length}</strong> משימות מהקובץ.`, () => {
-        state = { version:SCHEMA_VERSION, tasks:data.tasks, lastSaved:new Date().toISOString() };
-        saveState();
-        renderAll();
-        showToast(`שוחזרו ${data.tasks.length} משימות`);
-      });
-    } catch (err) {
-      showToast('קובץ JSON לא תקין');
-    }
-    e.target.value = '';
-  };
-  reader.readAsText(file);
-};
-
-document.getElementById('resetData').onclick = () => {
-  confirmAction('לאפס את כל הנתונים?', 'הפעולה תמחק את כל השינויים ותחזיר את הרשימה ההתחלתית. <strong>ייצא JSON קודם אם תרצה לשמור את העבודה.</strong>', () => {
-    state = defaultState();
-    saveState();
-    renderAll();
-    showToast('המצב אופס');
-  });
-};
-
-renderFilters();
-renderAll();
+const root=document.documentElement,mq=matchMedia('(prefers-color-scheme: dark)');
+let cur=localStorage.getItem('odysee-theme')||'system';
+function apply(t){root.setAttribute('data-theme',t==='system'?(mq.matches?'dark':'light'):t);
+  ['light','system','dark'].forEach(x=>document.getElementById('btn-'+x).classList.toggle('active',x===t));
+  cur=t;localStorage.setItem('odysee-theme',t);}
+function setTheme(t){apply(t);}
+mq.addEventListener('change',()=>{if(cur==='system')apply('system');});
+apply(cur);
 </script>
 </body>
 </html>
