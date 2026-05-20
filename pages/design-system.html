@@ -952,10 +952,10 @@
 .ds-notif .body { flex: 1; }
 .ds-notif .title { font-weight: 500; margin-bottom: 2px; }
 .ds-notif .msg { font-size: 12px; opacity: 0.85; }
-.notif-info   { background: rgba(78,205,196,0.08); border-color: #4ECDC4; color: #4ECDC4; }
-.notif-warn   { background: rgba(248,183,67,0.08); border-color: #F8B743; color: #F8B743; }
-.notif-error  { background: rgba(224,90,95,0.08);  border-color: #E05A5F; color: #E05A5F; }
-.notif-brand  { background: rgba(184,90,62,0.10);  border-color: #B85A3E; color: #B85A3E; }
+.notif-info    { background: rgba(42,111,219,0.08); border-color: var(--od-info,    #2A6FDB); color: var(--od-info,    #2A6FDB); }
+.notif-success { background: rgba(31,138,91,0.10);  border-color: var(--od-success, #1F8A5B); color: var(--od-success, #1F8A5B); }
+.notif-warn    { background: rgba(197,138,26,0.10); border-color: var(--od-warning, #C58A1A); color: var(--od-warning, #C58A1A); }
+.notif-error   { background: rgba(184,90,62,0.10);  border-color: var(--od-danger,  #B85A3E); color: var(--od-danger,  #B85A3E); }
 
 /* Status table */
 .status-row {
@@ -1283,10 +1283,11 @@ body { overflow-x: hidden; }
   </div>
 
   <p style="margin-top:32px;">
-    Around these three sit a quiet family of mist neutrals (50→900) for surfaces and text, and
-    four signal accents — <em class="em">teal</em> for interaction and AI, <em class="em">purple</em>
-    for design states, <em class="em">amber</em> for warnings, <em class="em">red</em> for errors.
-    The signals appear sparingly. The brand is the three.
+    Around these three sit a quiet family of mist neutrals (50→900) for surfaces and text, and a
+    functional signal layer — <em class="em">blue</em> for info, <em class="em">green</em> for success,
+    <em class="em">amber</em> for warnings, <em class="em">terracotta</em> for errors — defined as semantic
+    tokens outside the brand palette. Teal and purple survive only as a project-management overlay in the
+    status tracker, not as product colour. The signals appear sparingly. The brand is the three.
   </p>
 </div>
 
@@ -1551,23 +1552,24 @@ body { overflow-x: hidden; }
     <div class="mist-cell" onclick="copyColor('#0E1B33')"><div class="block" style="background:#0E1B33;"></div><div class="meta"><div class="step">900</div><div class="hex">#0E1B33</div></div></div>
   </div>
 
-  <div class="color-group-label">Signal Accents · אותות</div>
+  <div class="color-group-label">Status Overlay · שכבת ניהול פרויקט</div>
+  <p style="font-size:12px;color:var(--text-muted);margin:-4px 0 14px;">Tracker and agent-board status colours — outside the brand palette by design. The product's semantic signals (info / success / warning / error) live in the Tokens reference, not here.</p>
   <div class="color-grid">
     <div class="color-swatch" onclick="copyColor('#4ECDC4')">
       <div class="swatch-block" style="background:#4ECDC4;"></div>
-      <div class="swatch-info"><div class="swatch-name">Teal — AI / Interactive</div><div class="swatch-hex">#4ECDC4</div></div>
+      <div class="swatch-info"><div class="swatch-name">Teal — Dev / Interactive</div><div class="swatch-hex">#4ECDC4</div></div>
     </div>
     <div class="color-swatch" onclick="copyColor('#7C6FCD')">
       <div class="swatch-block" style="background:#7C6FCD;"></div>
-      <div class="swatch-info"><div class="swatch-name">Purple — Design</div><div class="swatch-hex">#7C6FCD</div></div>
+      <div class="swatch-info"><div class="swatch-name">Purple — Design / Docs</div><div class="swatch-hex">#7C6FCD</div></div>
     </div>
     <div class="color-swatch" onclick="copyColor('#F8B743')">
       <div class="swatch-block" style="background:#F8B743;"></div>
-      <div class="swatch-info"><div class="swatch-name">Amber — Warning</div><div class="swatch-hex">#F8B743</div></div>
+      <div class="swatch-info"><div class="swatch-name">Amber — QA</div><div class="swatch-hex">#F8B743</div></div>
     </div>
     <div class="color-swatch" onclick="copyColor('#E05A5F')">
       <div class="swatch-block" style="background:#E05A5F;"></div>
-      <div class="swatch-info"><div class="swatch-name">Red — Error</div><div class="swatch-hex">#E05A5F</div></div>
+      <div class="swatch-info"><div class="swatch-name">Red — Fix</div><div class="swatch-hex">#E05A5F</div></div>
     </div>
   </div>
 </div>
@@ -1871,20 +1873,20 @@ body { overflow-x: hidden; }
   </div>
 
   <h3>Notifications</h3>
-  <p style="font-size:13px;">Left-border accent. Four semantic levels mapped to the signal accents.</p>
+  <p style="font-size:13px;">Left-border accent. Four semantic states — info, success, warning, error — mapped to the semantic tokens. "AI processing" is a motion state (see Motion), never a notification colour.</p>
   <div class="notif-stack">
-    <div class="ds-notif notif-brand">
-      <div class="icon">✦</div>
-      <div class="body">
-        <div class="title">Itinerary Ready</div>
-        <div class="msg">Your 7-day Tokyo journey has been confirmed and is ready to review.</div>
-      </div>
-    </div>
     <div class="ds-notif notif-info">
       <div class="icon">◈</div>
       <div class="body">
-        <div class="title">AI Processing</div>
-        <div class="msg">Flight Monitor is scanning 14 alternative routes for your connection.</div>
+        <div class="title">Schedule Updated</div>
+        <div class="msg">Tico moved your dinner to 8:30 PM to absorb the flight change. No action needed.</div>
+      </div>
+    </div>
+    <div class="ds-notif notif-success">
+      <div class="icon">✓</div>
+      <div class="body">
+        <div class="title">Itinerary Ready</div>
+        <div class="msg">Your 7-day Tokyo journey has been confirmed and is ready to review.</div>
       </div>
     </div>
     <div class="ds-notif notif-warn">
